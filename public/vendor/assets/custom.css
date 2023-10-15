@@ -1,0 +1,11 @@
+.light-style .dropzone {
+    border: 2px dashed #d9dee3;
+}
+
+.dropzone {
+    width: 100%;
+    position: relative;
+    padding: 1.5rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+}
