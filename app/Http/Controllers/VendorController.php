@@ -103,11 +103,12 @@ class VendorController extends Controller
     }
     public function payout(VendorRepo $VendorRepo){
         $vendor = Auth::guard('vendor')->user();  
-        $banks = $VendorRepo->listbanks(); 
-        dd($banks);
+        $banks = $VendorRepo->listbanks()['data']; 
+        //dd($banks['data']);
+        
         $banklist = [];
-        for ($index = 0; $index <= 3;$index++){
-            array_push($banklist,$banks['data'][$index]);
+        for ($index = 0; $index <= 20;$index++){
+            array_push($banklist,$banks[$index]);
         }
         return view('vendor.profile.account-validation',compact('vendor','banklist'));
     }
