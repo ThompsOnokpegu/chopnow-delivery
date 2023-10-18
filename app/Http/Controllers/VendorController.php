@@ -12,6 +12,7 @@ use Illuminate\Validation\Rules\Password;
 
 class VendorController extends Controller
 {
+    //edited manifest.json and ran npm run build
     public function login(){
         return view('vendor.login');
     }
