@@ -2,7 +2,7 @@
 <tr>
     <td><a href="{{ route('orders.detail',$order->id) }}">{{ '#'.$order->id }}</a></td>
     
-    <td>{{ '₦'.$order->total - $order->discount }}</td>
+    <td>{{ '₦' . $order->total - $order->discount }}</td>
     <td><span class="">{{ $order->recipient_name }}</span></td>
     <td><span class="badge bg-label-success me-1">Completed</span></td>
     <td><span class="badge bg-label-info me-1">{{ $order->order_status }}</span></td>
