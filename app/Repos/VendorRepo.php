@@ -1,6 +1,7 @@
 <?php
 namespace App\Repos;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rule;
 
 class VendorRepo{
@@ -86,6 +87,26 @@ class VendorRepo{
         } else {
             return $response;
         }
+    }
+    public function fetchBanks(){
+        $response = Http::get('https://api.paystack.co/bank?country=nigeria&currency=NGN');
+        $banks = [];
+        if ($response->successful()) {
+            $data = $response->json('data');
+            // Extract the name and code of each bank
+            foreach ($data as $bank) {
+                $banks[] = [
+                    'name' => $bank['name'],
+                    'code' => $bank['code'],
+                ];
+            }
+        } else {
+            // Handle API request failure
+            return response()->json(['error' => 'Failed to fetch banks'], $response->status());
+        }
+        // Pass the extracted data to the view
+        //return view('your.view.name', ['banks' => $banks]);
+        return $banks;
     }
 
     private function curlHead($endpoint){

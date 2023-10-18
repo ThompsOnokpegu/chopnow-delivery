@@ -44,8 +44,8 @@
                     <!--https://docs.verifyme.ng/identity-verifications/bank-verification-number-->
                     <!--https://paystack.com/docs/identity-verification/validate-customer/-->
                     <option value="">Select Bank</option>
-                    @foreach ($banklist as $bank)
-                      <option value="{{ $bank['code'] }}">{{ $bank['name'] }}</option>
+                    @foreach ($banks as $bank)
+                        <option value="{{ $bank['code'] }}">{{ $bank['name'] }}</option>
                     @endforeach
                   </select>
                 </div>
