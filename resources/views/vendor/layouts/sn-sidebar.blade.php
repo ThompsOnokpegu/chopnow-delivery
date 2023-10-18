@@ -91,6 +91,18 @@
           <div data-i18n="Extended UI">Menu</div>
         </a>
       </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-dish"></i>
+          <div data-i18n="Extended UI">My Deals</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-dish"></i>
+          <div data-i18n="Extended UI">Sales Report</div>
+        </a>
+      </li>
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Account</span>
       </li>

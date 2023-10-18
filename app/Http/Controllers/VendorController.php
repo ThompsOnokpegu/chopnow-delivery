@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class VendorController extends Controller
 {
@@ -67,9 +68,46 @@ class VendorController extends Controller
     public function changePassword(){
         return view('vendor.profile.authentication');
     }
+    public function resetPassword(Request $request){
+        
+        $vendor = Auth::guard('vendor')->user();
+        # Validation
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => ['required','confirmed',Password::defaults()],
+        ]);
+
+        
+        #Match The Old Password
+        if(!Hash::check($request->current_password, $vendor->password)){
+            return back()->with("error", "Old password doesn't match!");
+        }
+
+
+        #Update the new Password
+        Vendor::whereId($vendor->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("status", "Password changed successfully!");
+    }
     
     public function compliance(){
         return view('vendor.profile.compliance');
+    }
+    public function createRecipient(){
+        $vendor = Auth::guard('vendor')->user();
+        
+        return view('vendor.profile.account-validation',compact('vendor'));
+    }
+    public function payout(VendorRepo $VendorRepo){
+        $vendor = Auth::guard('vendor')->user();  
+        $banks = $VendorRepo->listbanks(); 
+        $banklist = [];
+        for ($index = 0; $index <= 3;$index++){
+            array_push($banklist,$banks['data'][$index]);
+        }
+        return view('vendor.profile.account-validation',compact('vendor','banklist'));
     }
     
 }

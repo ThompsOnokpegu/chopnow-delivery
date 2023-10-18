@@ -16,7 +16,7 @@ class MenuController extends Controller
     public function index(){
         $vendor_id = Auth::guard('vendor')->user()->id;
         $menus = Menu::where('vendor_id', $vendor_id)
-               ->orderBy('name')
+               ->orderBy('category')
                ->take(20)
                ->get();
         return view('vendor.menu.index',compact('menus'));

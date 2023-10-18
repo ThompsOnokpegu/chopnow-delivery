@@ -22,8 +22,6 @@
                     </div>
                 </div>
             <!--<form action="" method="POST">-->
-
-                <input type="hidden" name="status" value="inactive">
                 <input type="hidden" name="vendor_id" value="{{ $vendor_id }}">
                 @include('vendor.menu._form')
                 <label class="form-label" for="basic-icon-default-company">Menu Image</label>

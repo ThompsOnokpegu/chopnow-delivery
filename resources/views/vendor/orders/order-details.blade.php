@@ -12,8 +12,8 @@
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
 
               <div class="d-flex flex-column justify-content-center">
-                <h5 class="mb-1 mt-3">Order #32543 <span class="badge bg-label-success me-2 ms-2">Paid</span></h5>
-                <p class="text-body">Aug 17, <span id="orderYear">2023</span>, 5:48 (ET)</p>
+                <h5 class="mb-1 mt-3">Order #{{ $order->id }} <span class="badge bg-label-success me-2 ms-2">Paid</span></h5>
+                <p class="text-body">{{ $order->created_at->toDayDateTimeString() }} (GMT)</p>
               </div>
               <div class="d-flex align-content-center flex-wrap gap-2">
                 {{-- right --}}
@@ -45,9 +45,9 @@
                               <div class="d-flex justify-content-start align-items-center mb-4">
                                 <div class="d-flex flex-column">
                                   <a href="app-user-view-account.html" class="text-body text-nowrap">
-                                    <h6 class="mb-0">Thompson AJ</h6>
+                                    <h6 class="mb-0">{{ $order->recipient_name }}</h6>
                                   </a>
-                                  <small class="text-muted">Customer ID: #58909</small>
+                                  <small class="text-muted">Customer ID: {{ $order->user->id }}</small>
                                 </div>
                               </div>
                               
@@ -55,8 +55,8 @@
                                 <h6>Contact info</h6>
                                 
                               </div>
-                              <p class=" mb-1">Email: thompson889@yahoo.com</p>
-                              <p class=" mb-0">Mobile: +1 (609) 972-22-22</p>
+                              <p class=" mb-1">Email: {{ $order->user->email }}</p>
+                              <p class=" mb-0">Mobile: {{ $order->recipient_phone }}</p>
                             </div>
                           </div>
                           
@@ -65,7 +65,7 @@
                           <div class="card-header">
                             <h5 class="card-title mb-3"><strong> Delivery Address</strong></h5>
                             <div class="card-body">
-                              <p class="mb-2">45 Roker Terrace <br>Latheronwheel <br>KW5 8NW,London <br>UK</p>
+                              <p class="mb-2">{{ $order->recipient_address }}</p>
                             </div>
                           </div>
                         </div>
@@ -85,7 +85,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">4500.6</h6>
+                                    <h6 class="mb-0">{{ $subtotal }}.00</h6>
                                   </div>
                                 </div>
                             </li>
@@ -96,7 +96,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">500.6</h6>
+                                    <h6 class="mb-0">{{ $order->discount }}</h6>
                                   </div>
                                 </div>
                             </li>
@@ -107,7 +107,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">500.6</h6>
+                                    <h6 class="mb-0">0.00</h6>
                                   </div>
                                 </div>
                             </li>
@@ -118,7 +118,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">59000.6</h6>
+                                    <h6 class="mb-0">{{ ($subtotal - $order->discount) }}.00</h6>
                                   </div>
                                 </div>
                             </li>
@@ -129,7 +129,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">5000.6</h6>
+                                    <h6 class="mb-0">0.00</h6>
                                   </div>
                                 </div>
                             </li>
@@ -141,7 +141,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h4 class="mb-0">15000.6</h4>
+                                    <h4 class="mb-0">{{ ($subtotal - $order->discount) }}.00</h4>
                                   </div>
                                 </div>
                             </li>
@@ -151,23 +151,25 @@
                       <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">ORDER STATUS</h5>
                       </div>
+                      <form action="{{ route('order.status',$order->id) }}" method="POST">
+                        @csrf
                         <div class="card-body">
                           <div class="d-flex justify-content-between row py-3 gap-3 gap-md-0">
                             <div class="col-md-12 product_status">
-                              <select id="ProductStatus" class="form-select text-capitalize">
+                              <select id="OrderStatus" name="order_status" class="form-select text-capitalize">
                                 <option value="">Status</option>
-                                <option value="Processing">Processing</option>
-                                <option value="Ready for Pickup">Ready for Pickup</option>
-                                <option value="Enroute">Enroute</option>
-                                <option value="Delivered">Delivered</option>
-                                <option value="Cancelled">Cancelled</option>
+                                <option value="Processing" @selected('Processing'==old('order_status',$order->order_status))>Processing</option>
+                                <option value="Enroute" @selected('Enroute'==old('order_status',$order->order_status))>Enroute</option>
+                                <option value="Delivered" @selected('Delivered'==old('order_status',$order->order_status))>Delivered</option>
+                                <option value="Canceled" @selected('Canceled'==old('order_status',$order->order_status))>Canceled</option>
                               </select>
                             </div>
                             <div class="d-flex align-content-center flex-wrap mt-4">
-                              <a href="{{ route('menus.create') }}" class="btn btn-md btn-primary">Update</a>
+                              <button type="submit" class="btn btn-md btn-primary">Update</button>
                             </div>
                           </div>
                         </div>
+                      </form>
                     </div>
                 </div>
             </div>

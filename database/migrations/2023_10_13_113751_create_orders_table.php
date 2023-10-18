@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('vendor_id');
-            $table->unsignedBigInteger('customer_id');
+            $table->foreignId('vendor_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->string('recipient_address');
             $table->string('recipient_phone');
             $table->string('recipient_name');
             $table->decimal('discount', 10, 2);
             $table->string('payment_method');
-            $table->enum('order_status', ['Pending', 'Processing', 'Enroute', 'Delivered', 'Canceled']);
+            $table->enum('order_status', ['Processing', 'Enroute', 'Delivered', 'Canceled']);
             // Add more order-related fields as needed
             $table->timestamps();
         });

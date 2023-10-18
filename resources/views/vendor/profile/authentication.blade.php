@@ -13,36 +13,55 @@
           
           <hr class="my-0" />
           <div class="card-body">
-            <form id="formAccountSettings" method="POST" onsubmit="return false">
+            @if (session('status'))
+              <div class="alert alert-success" role="alert">
+                  {{ session('status') }}
+              </div>
+            @elseif (session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
+            <form id="formAccountSettings" method="POST" action="{{ route('vendor.resetpassword') }}">
+              @method('put')
+              @csrf
+              <!-- Password Reset Token -->
+              
               <div class="row">
                 <div class="mb-3 col-md-12">
-                  <label for="password" class="form-label">Current Password</label>
+                  <label for="current_password" class="form-label">Current Password</label>
                   <input
                     class="form-control"
                     type="password"
-                    id="password"
-                    name="password"
+                    id="current_password"
+                    name="current_password"
                     autofocus
                   />
+                  @error('current_password') <div class="error">{{ $message }}</div> @enderror
                 </div>
+                
                 <div class="mb-3 col-md-12">
-                  <label for="lastName" class="form-label">New Password</label>
+                  <label for="new_password" class="form-label">New Password</label>
                   <input class="form-control" type="password" name="new_password" id="new_password" />
+                  @error('new_password') <div class="error">{{ $message }}</div> @enderror
                 </div>
+                
                 <div class="mb-3 col-md-12">
-                    <label class="form-label" for="comfirm_password">Confirm New Password</label>
+                    <label class="form-label" for="new_password_confirmation">Confirm New Password</label>
                     <div class="input-group input-group-merge">
                       
                       <input
                         type="password"
-                        id="comfirm_password"
-                        name="comfirm_password"
+                        id="new_password_confirmation"
+                        name="new_password_confirmation"
                         class="form-control"
                       />
                     </div>
-                </div>                  
+                    @error('new_password_confirmation') <div class="error">{{ $message }}</div> @enderror
+                </div> 
+                                 
               </div>
-              <button type="submit" class="btn btn-primary deactivate-account">Change Password</button>
+              <button type="submit" class="btn btn-primary">Change Password</button>
             </form>
           </div>
           <!-- /Account -->

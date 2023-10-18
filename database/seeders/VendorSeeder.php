@@ -15,10 +15,10 @@ class VendorSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('vendors')->insert([
-            'name' => 'Vendor',
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
+        // DB::table('vendors')->insert([
+        //     'name' => 'Vendor',
+        //     'email' => Str::random(10).'@gmail.com',
+        //     'password' => Hash::make('password'),
+        // ]);
     }
 }

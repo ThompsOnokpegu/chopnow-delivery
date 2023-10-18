@@ -31,7 +31,11 @@ Route::prefix('vendor')->group(function(){
     Route::get('/profile',[VendorController::class,'profile'])->name('vendor.profile')->middleware('vendor');
     Route::put('/profile/{vendor}',[VendorController::class,'update'])->name('vendor.update')->middleware('vendor');
     Route::get('/authentication',[VendorController::class,'changePassword'])->name('vendor.auth')->middleware('vendor');
+    Route::put('authentication',[VendorController::class,'resetPassword'])->name('vendor.resetpassword')->middleware('vendor');
     Route::get('/compliance',[VendorController::class,'compliance'])->name('vendor.compliance')->middleware('vendor');
+    Route::get('/payout',[VendorController::class,'payout'])->name('vendor.payout')->middleware('vendor');
+    Route::post('/payout',[VendorController::class,'createRecipient'])->name('vendor.payout')->middleware('vendor');
+
 
 });
 Route::prefix('menus')->group(function(){
@@ -52,6 +56,7 @@ Route::prefix('orders')->group(function(){
     //ORDER ROUTE
     Route::get('/', [OrderController::class,'index'])->name('orders.index')->middleware('vendor');
     Route::get('/{order}', [OrderController::class,'orderDetails'])->name('orders.detail')->middleware('vendor');
+    Route::post('/{order}',[OrderController::class,'updateOrderStatus'])->name('order.status')->middleware('vendor');
     
 
 });

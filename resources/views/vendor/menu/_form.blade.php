@@ -61,6 +61,17 @@
                     @error('sales_price') <div class="error">{{ $message }}</div> @enderror
                 </div>
             </div>
+            <div class="card-body">
+                
+                <div class="d-flex justify-content-between mb-2">
+                    <label for="payment-terms" class="mb-0">Available to Customers?</label>
+                    <label class="switch switch-primary me-0">
+                        <div class="form-check form-switch">
+                            <input name="status" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        </div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 </div>

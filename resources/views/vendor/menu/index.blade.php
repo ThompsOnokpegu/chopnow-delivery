@@ -26,9 +26,7 @@
         <table class="table card-table">
           <thead>
             <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Price</th>
+              <th>Menu</th>
               <th>Category</th>
               <th>Actions</th>
             </tr>

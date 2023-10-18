@@ -19,11 +19,12 @@
                 <div class="mb-3 col-md-12">
                   <label for="language" class="form-label">Verification Type</label>
                   <select id="language" name="kyc_type" class="select2 form-select" autofocus>
+                    <!--https://docs.verifyme.ng/identity-verifications/bank-verification-number-->
+                    <!--https://paystack.com/docs/identity-verification/validate-customer/-->
                     <option value="">Select Document</option>
                     <option value="BVN">BVN</option>
-                    <option value="Passport">International Passport</option>
                     <option value="NIN">NIN</option>
-                    <option value="Driver License">Driver License</option>
+                    <option value="Driver License">Drivers License</option>
                   </select>
                 </div>
                 <div class="mb-3 col-md-12">
