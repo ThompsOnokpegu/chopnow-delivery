@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://fierce-gorge-87952-222b53e122e1.herokuapp.com/'),
 
     'asset_url' => env('ASSET_URL'),
 
