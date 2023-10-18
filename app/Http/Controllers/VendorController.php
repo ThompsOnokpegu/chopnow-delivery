@@ -104,6 +104,7 @@ class VendorController extends Controller
     public function payout(VendorRepo $VendorRepo){
         $vendor = Auth::guard('vendor')->user();  
         $banks = $VendorRepo->listbanks(); 
+        dd($banks);
         $banklist = [];
         for ($index = 0; $index <= 3;$index++){
             array_push($banklist,$banks['data'][$index]);
