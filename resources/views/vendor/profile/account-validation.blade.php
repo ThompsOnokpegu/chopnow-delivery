@@ -20,16 +20,7 @@
             <form id="formAccountSettings" method="POST">
               @csrf
               <div class="row">
-                <div class="mb-3 col-md-12">
-                  <label for="Name" class="form-label">Account Number</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="account_name"
-                    name="account_name"
-                    value="{{ $vendor->first_name.' '.$vendor->first_name }}"
-                  />
-                </div>
+                
                 <div class="mb-3 col-md-12">
                   <label for="Name" class="form-label">Account Number</label>
                   <input
@@ -41,21 +32,15 @@
                 <div class="mb-4 col-md-12">
                   <label for="language" class="form-label">Bank Name</label>
                   <select id="language" name="bank_code" class="select2 form-select" autofocus>
-                    <!--https://docs.verifyme.ng/identity-verifications/bank-verification-number-->
-                    <!--https://paystack.com/docs/identity-verification/validate-customer/-->
                     <option value="">Select Bank</option>
                     @foreach ($banks as $bank)
                         <option value="{{ $bank['code'] }}">{{ $bank['name'] }}</option>
                     @endforeach
                   </select>
                 </div>
-                <div class="button-wrapper col-md-12">
-                  <button type="submit" class="btn btn-primary me-2 mb-4">
-                    Verify Account
-                  </button>  
-                </div>            
               </div> 
             </form>
+            @livewire('resolve-bank')
           </div>
           <!-- /Account -->
         </div>

@@ -27,16 +27,13 @@ class VendorRepo{
 
     public function resolveBank($account_number, $bank_code){
 
-        $curl = $this->curlHead('https://api.paystack.co/bank/resolve?account_number='.$account_number.'&bank_code='.$bank_code);
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        
-        curl_close($curl);
-        
-        if ($err) {
-            return "cURL Error #:" . $err;
+        $response = Http::get('https://api.paystack.co/bank/resolve?account_number='.$account_number.'&bank_code='.$bank_code);
+        if ($response->successful()) {
+            $data = $response->json('data');
+            return $data;
         } else {
-            return $response;
+            // Handle API request failure
+            return response()->json(['error' => 'Failed to fetch banks'], $response->status());
         }
     }
 
@@ -104,8 +101,7 @@ class VendorRepo{
             // Handle API request failure
             return response()->json(['error' => 'Failed to fetch banks'], $response->status());
         }
-        // Pass the extracted data to the view
-        //return view('your.view.name', ['banks' => $banks]);
+
         return $banks;
     }
 

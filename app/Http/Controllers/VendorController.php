@@ -96,16 +96,28 @@ class VendorController extends Controller
     public function compliance(){
         return view('vendor.profile.compliance');
     }
+
+    
+    public function payout(VendorRepo $VendorRepo){
+        $vendor = Auth::guard('vendor')->user();  
+        //$banks = $VendorRepo->fetchBanks(); 
+        return view('vendor.profile.account-validation',compact('vendor'));
+    }
+
+    public function verifyBank(Request $request, VendorRepo $VendorRepo){
+        $account_number = $request->account_number;
+        $bank_code = $request->bank_code;
+
+        $data = $VendorRepo->resolveBank($account_number,$bank_code);
+
+        return view('vendor.profile.account-validation',compact('data'));
+    }
+
+    
     public function createRecipient(){
         $vendor = Auth::guard('vendor')->user();
         
         return view('vendor.profile.account-validation',compact('vendor'));
     }
-    public function payout(VendorRepo $VendorRepo){
-        $vendor = Auth::guard('vendor')->user();  
-        $banks = $VendorRepo->fetchBanks(); 
-        return view('vendor.profile.account-validation',compact('vendor','banks'));
-    }
-    
 }
 
