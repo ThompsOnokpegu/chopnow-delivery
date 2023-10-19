@@ -100,8 +100,8 @@ class VendorController extends Controller
     
     public function payout(VendorRepo $VendorRepo){
         $vendor = Auth::guard('vendor')->user();  
-        //$banks = $VendorRepo->fetchBanks(); 
-        return view('vendor.profile.account-validation',compact('vendor'));
+        $banks = $VendorRepo->fetchBanks(); 
+        return view('vendor.profile.account-validation',compact('vendor','banks'));
     }
 
     public function verifyBank(Request $request, VendorRepo $VendorRepo){
