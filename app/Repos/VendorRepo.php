@@ -11,7 +11,7 @@ class VendorRepo{
             'last_name' => 'required|min:3|nullable',
             'email' => 'required|email',
             'business_name' => 'required',
-            'kitchen_banner_image' =>'required|nullable',
+            'kitchen_banner_image' =>'nullable',
             'state' => ['required','nullable', Rule::in(['Cross River', 'Rivers', 'Bayelsa','Akwa Ibom'])],
             'address' => 'required|nullable',
             'city' => 'required|nullable',
@@ -105,7 +105,7 @@ class VendorRepo{
         return $banks;
     }
 
-    private function curlHead($endpoint){
+    public function curlHead($endpoint){
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $endpoint,

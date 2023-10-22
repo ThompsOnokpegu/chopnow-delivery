@@ -1,9 +1,60 @@
 <div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
-    <div class="alert alert-success">
-        {{ $account }}
+  @if ($account_name == '')
+    <div class="mb-3 col-12 mb-0">
+      <div class="alert alert-warning">
+        <h6 class="alert-heading fw-bold mb-1">Why do I need to enter my bank account?</h6>
+        <p class="mb-0">We want to ensure that the money is sent to the right account when you request payout.</p>
+      </div>
     </div>
-    <button wire:click="resolve" class="btn btn-primary me-2 mb-4">
-        Verify Account
-    </button> 
+    <form>
+      <div class="row">
+        <div class="mb-3 col-md-12">
+          <label for="Name" class="form-label">
+            @if($account_name)
+                <div class="alert alert-success">
+                    <p>Payout account created for {{ $account_name }}
+                </div>
+            @endif 
+          </label>
+        </div>
+        <div class="mb-3 col-md-12">
+          <label for="Name" class="form-label">Account Number</label>
+          <input
+            class="form-control"
+            type="text"
+            id="account_number"
+            wire:model="account_number"/>
+        </div>
+        <div class="mb-4 col-md-12">
+          <label for="language" class="form-label">Bank Name</label>
+          <select id="language" wire:model="bank_code" class="select2 form-select" autofocus>
+            <option value="">Select Bank</option>
+            @foreach ($banks as $bank)
+                <option value="{{ $bank['code'] }}">{{ $bank['name'] }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div wire:loading.class="d-block" wire:target="reinitialize" class="d-none">
+            <div class="spinner-border load-spinner text-tertiary p-0 me-2"></div>
+        </div>
+        
+      </div>
+      
+      <button wire:click.prevent="resolve" class="btn btn-primary me-2 mb-4">
+        Submit Account
+      </button> 
+    </form>
+  @else
+    <div class="mb-3 col-12 mb-0">
+      <div class="alert alert-primary">
+        <h6 class="alert-heading fw-bold mb-1">Account Details</h6>
+        <p class="mb-0">
+          {{ $account_name }}<br>
+          {{ $account_number }}<br>
+          {{ $bank_name }}
+        </p>
+      </div>
+    </div>
+  @endif  
+    
 </div>

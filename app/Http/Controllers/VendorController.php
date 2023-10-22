@@ -8,7 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Str;
 
 class VendorController extends Controller
 {
@@ -60,8 +62,36 @@ class VendorController extends Controller
     }
 
     public function update(Request $request, Vendor $vendor, VendorRepo $val){
+        
+        $filename = "";
+        //validate input
         $validated = $request->validate($val->rules(),$val->messages());
-       
+
+        
+        //check whether vendor uploaded a new image for this vendor
+        if($request->hasFile('kitchen_banner_image')){
+            
+            //if product image already exist for this vendor
+            if($vendor->kitchen_banner_image != null){
+                //check if the image is still in the directory: prevent file not found exception
+                if (Storage::exists(public_path('vendor/assets/img/brands/'.$vendor->kitchen_banner_image))){
+                    //delete the old file
+                    $oldfile = public_path('vendor/assests/img/brands/').$vendor->kitchen_banner_image;
+                    unlink($oldfile);
+                }
+            }
+            //upload the new file
+            $image = $request->file('kitchen_banner_image');
+            $filename = Str::orderedUuid()->toString().'.'.$image->extension(); 
+            $image->move(public_path('vendor/assets/img/brands/'),$filename);
+            
+        }else{
+            //product image did not change
+            $filename = $vendor->kitchen_banner_image;   
+        }
+        //update the file name
+        $validated['kitchen_banner_image'] = $filename;
+        //update the vendor record
         $vendor->update($validated);
         return redirect()->route('vendor.profile')->with('message','Details updated successfully!');
     }
@@ -69,6 +99,7 @@ class VendorController extends Controller
     public function changePassword(){
         return view('vendor.profile.authentication');
     }
+
     public function resetPassword(Request $request){
         
         $vendor = Auth::guard('vendor')->user();

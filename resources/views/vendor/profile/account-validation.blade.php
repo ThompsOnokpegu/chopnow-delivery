@@ -11,36 +11,9 @@
           <!-- Account -->
           <hr class="my-0" />
           <div class="card-body">
-            <div class="mb-3 col-12 mb-0">
-              <div class="alert alert-warning">
-                <h6 class="alert-heading fw-bold mb-1">Why do I need to enter my bank account?</h6>
-                <p class="mb-0">We want to ensure that the money is sent to the right account when you request payout.</p>
-              </div>
-            </div>
-            <form id="formAccountSettings" method="POST">
-              @csrf
-              <div class="row">
-                
-                <div class="mb-3 col-md-12">
-                  <label for="Name" class="form-label">Account Number</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="account_number"
-                    name="account_number"/>
-                </div>
-                <div class="mb-4 col-md-12">
-                  <label for="language" class="form-label">Bank Name</label>
-                  <select id="language" name="bank_code" class="select2 form-select" autofocus>
-                    <option value="">Select Bank</option>
-                    @foreach ($banks as $bank)
-                        <option value="{{ $bank['code'] }}">{{ $bank['name'] }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div> 
-            </form>
-            @livewire('resolve-bank')
+                       
+            {{-- livewire component --}}
+            @livewire('resolve-bank') 
           </div>
           <!-- /Account -->
         </div>

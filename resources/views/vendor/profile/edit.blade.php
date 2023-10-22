@@ -9,7 +9,7 @@
         </div>
       @endif
       <div class="row">
-        <form action="{{ route('vendor.update',$vendor->id) }}" method="post">
+        <form action="{{ route('vendor.update',$vendor->id) }}" method="post" enctype="multipart/form-data">
           @method('put')
           @csrf
         <div class="col-md-12">
@@ -51,7 +51,7 @@
                       name="email"
                       value="{{ old('email',$vendor->email) }}"
                       placeholder="john.doe@example.com"
-                      disabled
+                      readonly
                     />
                     @error('email') <div class="error">{{ $message }}</div> @enderror
                   </div>
@@ -81,7 +81,7 @@
             <div class="card-body">
               <div class="d-flex align-items-start align-items-sm-center gap-4">
                 <img
-                  src="{{ asset('vendor/assets/img/avatars/brand-image.png') }}"
+                  src="{{ asset('vendor/assets/img/brands/'.$vendor->kitchen_banner_image) }}"
                   alt="brand-image"
                   class="d-block rounded"
                   height="100"

@@ -91,15 +91,15 @@
           <div data-i18n="Extended UI">Menu</div>
         </a>
       </li>
-      <li class="menu-item">
+      {{-- <li class="menu-item">
         <a href="#" class="menu-link">
           <i class="menu-icon tf-icons bx bx-dish"></i>
           <div data-i18n="Extended UI">My Deals</div>
         </a>
-      </li>
+      </li> --}}
       <li class="menu-item">
         <a href="#" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-dish"></i>
+          <i class="menu-icon tf-icons bx bx-bar-chart"></i>
           <div data-i18n="Extended UI">Sales Report</div>
         </a>
       </li>
@@ -110,6 +110,12 @@
         <a class="menu-link" href="{{ route('vendor.profile') }}">
           <i class="bx bx-cog me-2"></i>
           <span class="align-middle">My Profile</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a class="menu-link" href="{{ route('vendor.payout') }}">
+          <i class="bx bx-transfer me-2"></i>
+          <span class="align-middle">Payout</span>
         </a>
       </li>
       <li class="menu-item">
