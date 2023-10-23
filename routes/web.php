@@ -3,6 +3,7 @@
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\VendorController;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Route;
@@ -53,13 +54,20 @@ Route::prefix('menus')->group(function(){
 
 });
 Route::prefix('orders')->group(function(){
-    //ORDER ROUTE
+    //ORDER ROUTES
     Route::get('/', [OrderController::class,'index'])->name('orders.index')->middleware('vendor');
     Route::get('/{order}', [OrderController::class,'orderDetails'])->name('orders.detail')->middleware('vendor');
     Route::post('/{order}',[OrderController::class,'updateOrderStatus'])->name('order.status')->middleware('vendor');
     
 
 });
+
+
+ //CUSTOM USER ROUTES
+ Route::get('/restaurants', [RestaurantController::class,'single'])->name('restaurant.home');
+ Route::get('/restaurants/{vendor-slug}', [RestaurantController::class,'single'])->name('restaurant.home');
+    
+
 
 
 // Route::controller(ItemController::class)->group(function(){
