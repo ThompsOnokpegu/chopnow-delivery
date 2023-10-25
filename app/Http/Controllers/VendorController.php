@@ -45,7 +45,7 @@ class VendorController extends Controller
 
     public function create(Request $request){
         $vendor = new Vendor;
- 
+                     
         $vendor->first_name = $request->first_name;
         $vendor->email = $request->email;
         $vendor->password = Hash::make($request->password);
@@ -91,6 +91,7 @@ class VendorController extends Controller
         }
         //update the file name
         $validated['kitchen_banner_image'] = $filename;
+        
         //update the vendor record
         $vendor->update($validated);
         return redirect()->route('vendor.profile')->with('message','Details updated successfully!');

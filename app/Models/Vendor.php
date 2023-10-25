@@ -62,8 +62,8 @@ class Vendor extends Authenticatable
     public function orders(){
         return $this->hasMany(Order::class);
     }
-    // public function getRouteKeyName()
-    // {
-    //     return 'slug';
-    // }
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
