@@ -48,6 +48,7 @@ class VendorController extends Controller
                      
         $vendor->first_name = $request->first_name;
         $vendor->email = $request->email;
+        $vendor->kitchen_banner_image="brand-image.png";
         $vendor->password = Hash::make($request->password);
         $vendor->created_at = Carbon::now();
 
