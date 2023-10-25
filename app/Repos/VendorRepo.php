@@ -16,7 +16,8 @@ class VendorRepo{
             'address' => 'required|nullable',
             'city' => 'required|nullable',
             'phone' => 'required',
-            'slug' => 'required|nullable'
+            'slug' => 'required|nullable',
+            'business_phone' => 'required|nullable'
         ];
     }
 

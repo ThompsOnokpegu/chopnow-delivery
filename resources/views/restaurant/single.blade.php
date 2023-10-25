@@ -15,7 +15,7 @@
         <div class="restuarent-details">
             <div class="media">
                 <div class="thumb">
-                    <img src="{{ asset('customer/assets/img/restaurant/1.png') }}" alt="img">
+                    <img src="{{ asset('vendor/assets/img/brands/'.$vendor->kitchen_banner_image) }}" width="70" style="background-color: #fff;" class="rounded" alt="img">
                     <span>Open</span>
                 </div>
                 <div class="media-body">

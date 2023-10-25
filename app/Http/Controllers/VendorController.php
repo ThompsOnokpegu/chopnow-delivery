@@ -64,6 +64,7 @@ class VendorController extends Controller
 
     public function update(Request $request, Vendor $vendor, VendorRepo $val){
         
+        $request['slug'] = str()->slug($request->business_name);
         $filename = "";
         //validate input
         $validated = $request->validate($val->rules(),$val->messages());

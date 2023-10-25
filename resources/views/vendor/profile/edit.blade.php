@@ -98,7 +98,6 @@
                         class="account-file-input"
                         hidden
                         name="kitchen_banner_image"
-                        accept="image/png, image/jpeg"
                         value="{{ old('kitchen_banner_image',$vendor->kitchen_banner_image) }}"
                       /> 
                     </label>
@@ -117,7 +116,7 @@
                 <!-- <form id="formAccountSettings" method="POST" onsubmit="return false"> -->
                   <div class="row">
                     <div class="mb-3 col-md-6">
-                      <label for="business_name" class="form-label">Name</label>
+                      <label for="business_name" class="form-label">Business Name</label>
                       <input
                         class="form-control"
                         type="text"
@@ -128,10 +127,10 @@
                       />
                       @error('business_name') <div class="error">{{ $message }}</div> @enderror
                     </div>
-                    @livewire('make-slug')
+                   
                   
                     <div class="mb-3 col-md-6">
-                      <label class="form-label" for="business_phone">Phone Number</label>
+                      <label class="form-label" for="business_phone">Business Phone</label>
                       <div class="input-group input-group-merge">
                         <span class="input-group-text">NG (+234)</span>
                         <input
@@ -140,7 +139,7 @@
                           name="business_phone"
                           class="form-control"
                           placeholder="202 555 0111"
-                          value="{{ old('business_phone') }}"
+                          value="{{ old('business_phone',$vendor->business_phone) }}"
                         />
                         @error('business_phone') <div class="error">{{ $message }}</div> @enderror
                       </div>
