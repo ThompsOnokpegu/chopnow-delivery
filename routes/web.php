@@ -65,8 +65,8 @@ Route::prefix('orders')->group(function(){
 
  //CUSTOM USER ROUTES
  Route::get('/restaurants', [RestaurantController::class,'index'])->name('restaurants.index');
- Route::get('/restaurants/{slug}', [RestaurantController::class,'show'])->name('restaurants.show');
- Route::get('/restaurants/{vendor}/{slug}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
+ Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
+ Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
     
 
 

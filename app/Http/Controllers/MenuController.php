@@ -28,17 +28,19 @@ class MenuController extends Controller
     }
 
     public function update(Menu $menu, Request $request, MenuRepo $MenuRepo){
+        
+        $request['slug'] = str()->slug($request->name);
         $filename = "";
         //validate input
         $validated = $request->validate($MenuRepo->rules());
 
-        
         //check whether vendor uploaded a new image for this menu
         if($request->hasFile('product_image')){
+            //dd('has file');
             //if product image already exist for this menu
             if($menu->product_image != null){
                 //check if the image is still in the directory: prevent file not found exception
-                if (Storage::exists(public_path('product-images/'.$menu->product_image))){
+                if (public_path('product-images/'.$menu->product_image)){
                     //delete the old file
                     $oldfile = public_path('product-images/').$menu->product_image;
                     unlink($oldfile);
@@ -53,6 +55,7 @@ class MenuController extends Controller
             //product image did not change
             $filename = $menu->product_image;   
         }
+
         //update the file name
         $validated['product_image'] = $filename;
         //update the menu record
@@ -60,14 +63,14 @@ class MenuController extends Controller
         return redirect()->route('menus.index')->with('message','Menu updated successfully!');
     }
 
-    public function create(Menu $menu){  
-          
+    public function create(Menu $menu){    
         $vendor_id = Auth::guard('vendor')->user()->id;
         return view('vendor.menu.create',compact('vendor_id','menu'));
     }
 
     
     public function store(Request $request, MenuRepo $MenuRepo){
+        $request['slug'] = str()->slug($request->name);
         //set default product image
         $filename = "main-dish.png";
         //validate input

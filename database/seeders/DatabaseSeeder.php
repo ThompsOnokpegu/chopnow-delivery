@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        \App\Models\Order::factory()->has(OrderItem::factory()->count(4),'orderItems')->count(4)->create();
+        \App\Models\Vendor::factory()->count(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

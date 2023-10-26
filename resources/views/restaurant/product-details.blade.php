@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="product-details-wrap text-center">
-            <h5>Double Cheese Pan</h5>
+            <h5>{{ $menu->name }}</h5>
             <p>Mixed Pizza with Cheese</p>
             <img src="{{ asset('customer/assets/img/item/single-product.png') }}" alt="img">
         </div>

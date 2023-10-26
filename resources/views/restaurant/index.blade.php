@@ -67,96 +67,27 @@
         @include('restaurant._popular')
 
         <h5 class="section-title">All Restaurant</h5>
-        <div class="single-product-wrap">
-            <div class="thumb">
-                <span class="tag">15% Off</span>
-                <a href="single-restuarent.html">
-                    <img src="{{ asset('customer/assets/img/product/01.png') }}" alt="img">
-                </a>
-                <a class="fav-btn" href="#"><i class="fa fa-heart"></i></a>
-            </div>
-            <div class="details">
-                <h6><a href="single-restuarent.html">Pizza Hut</a> <span>Open</span></h6>
-                <div class="ratting">
-                    <i class="ri-star-fill ps-0"></i>4.9
-                    <span>(6k)</span>
-                    <span>Birch Street El Paso</span>
+        @foreach ($vendors as $restaurant)  
+            <div class="single-product-wrap">
+                <div class="thumb">
+                    <span class="tag">15% Off</span>
+                    <a href="{{ route('restaurants.show',$restaurant->id) }}">
+                        <img src="{{ asset('customer/assets/img/product/01.png') }}" alt="img">
+                    </a>
+                    <a class="fav-btn" href="#"><i class="fa fa-heart"></i></a>
                 </div>
-                <span>20-25 Min <span class="ms-3">Free Delivery</span></span>
-            </div>
-        </div>
-        <div class="single-product-wrap">
-            <div class="thumb">
-                <span class="tag">15% Off</span>
-                <a href="single-restuarent.html">
-                    <img src="{{ asset('customer/assets/img/product/02.png') }}" alt="img">
-                </a>
-                <a class="fav-btn" href="#"><i class="fa fa-heart"></i></a>
-            </div>
-            <div class="details">
-                <h6><a href="single-restuarent.html">Mcdonald’s</a> <span>Open</span></h6>
-                <div class="ratting">
-                    <i class="ri-star-fill ps-0"></i>4.9
-                    <span>(6k)</span>
-                    <span>Birch Street El Paso</span>
+                <div class="details">
+                    <h6><a href="{{ route('restaurants.show',$restaurant->id) }}">{{ $restaurant->business_name }}</a> <span>Open</span></h6>
+                    <div class="ratting">
+                        <i class="ri-star-fill ps-0"></i>4.9
+                        <span>(6k)</span>
+                        <span>{{ $restaurant->address }}</span>
+                    </div>
+                    <span>20-25 Min <span class="ms-3">Free Delivery</span></span>
                 </div>
-                <span>20-25 Min <span class="ms-3">Free Delivery</span></span>
-            </div>
-        </div>
-        <div class="single-product-wrap">
-            <div class="thumb">
-                <span class="tag">15% Off</span>
-                <a href="single-restuarent.html">
-                    <img src="{{ asset('customer/assets/img/product/03.png') }}" alt="img">
-                </a>
-                <a class="fav-btn" href="#"><i class="fa fa-heart"></i></a>
-            </div>
-            <div class="details">
-                <h6><a href="single-restuarent.html">Domino’s Pizza</a> <span>Open</span></h6>
-                <div class="ratting">
-                    <i class="ri-star-fill ps-0"></i>4.9
-                    <span>(6k)</span>
-                    <span>Birch Street El Paso</span>
-                </div>
-                <span>20-25 Min <span class="ms-3">Free Delivery</span></span>
-            </div>
-        </div>
-        <div class="single-product-wrap">
-            <div class="thumb">
-                <span class="tag">15% Off</span>
-                <a href="single-restuarent.html">
-                    <img src="{{ asset('customer/assets/img/product/04.png') }}" alt="img">
-                </a>
-                <a class="fav-btn" href="#"><i class="fa fa-heart"></i></a>
-            </div>
-            <div class="details">
-                <h6><a href="single-restuarent.html">Burger King</a> <span>Open</span></h6>
-                <div class="ratting">
-                    <i class="ri-star-fill ps-0"></i>4.9
-                    <span>(6k)</span>
-                    <span>Birch Street El Paso</span>
-                </div>
-                <span>20-25 Min <span class="ms-3">Free Delivery</span></span>
-            </div>
-        </div>
-        <div class="single-product-wrap">
-            <div class="thumb">
-                <span class="tag">15% Off</span>
-                <a href="single-restuarent.html">
-                    <img src="{{ asset('customer/assets/img/product/05.png') }}" alt="img">
-                </a>
-                <a class="fav-btn" href="#"><i class="fa fa-heart"></i></a>
-            </div>
-            <div class="details">
-                <h6><a href="single-restuarent.html">KFC</a> <span>Open</span></h6>
-                <div class="ratting">
-                    <i class="ri-star-fill ps-0"></i>4.9
-                    <span>(6k)</span>
-                    <span>Birch Street El Paso</span>
-                </div>
-                <span>20-25 Min <span class="ms-3">Free Delivery</span></span>
-            </div>
-        </div>
+            </div> 
+        @endforeach
+
     </div>
 </div> 
 

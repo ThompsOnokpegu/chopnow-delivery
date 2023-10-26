@@ -17,15 +17,24 @@ class VendorFactory extends Factory
      */
     public function definition(): array
     {
+        $business_name = fake()->company();
+        $first_name = fake()->firstName();
         return [
-            'first_name' => fake()->firstName(),
+            'first_name' => $first_name,
             'last_name' => fake()->lastName(),
-            'email' => fake()->firstName().'@gmail.com',
+            'email' => Str::lower($first_name).'@gmail.com',
+            'business_name'=> $business_name,
+            'slug' => str()->slug($business_name),
+            'phone' => fake()->phoneNumber(),
+            'business_phone'=>fake()->phoneNumber(),
+            'address' => fake()->address(),
             'kitchen_banner_image' => 'brand-image.png',
             'email_verified_at' => now(),
+            
             //'password' => Hash::make('naija123'),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            
         ];
     }
 }

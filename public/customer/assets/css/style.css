@@ -3701,28 +3701,29 @@ ul {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   background: #FFFFFF;
   border-radius: 12px;
-  padding: 9px 20px 5px 7px;
-  margin-bottom: 10px;
+  padding: 12px 9px 12px 9px;
+  margin-bottom: 15px;
+  border: 1px solid #dfdfdf;
 }
 .single-item-wrap .thumb {
   -webkit-box-flex: 0;
       -ms-flex: none;
           flex: none;
-  margin-left: -20px;
+  margin-left: 3px;
 }
 .single-item-wrap .details {
-  margin-left: -20px;
+  margin-left: 10px;
 }
 .single-item-wrap .details h6 {
   font-weight: 500;
   font-size: 16px;
 }
 .single-item-wrap .details p {
-  font-size: 12px;
+  font-size: 14px;
 }
 .single-item-wrap .details .price {
   font-weight: 500;

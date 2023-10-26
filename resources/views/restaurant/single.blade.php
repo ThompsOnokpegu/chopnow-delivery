@@ -2,6 +2,7 @@
 
 @section('title')
     ChopNow Food Delivery - {{ $vendor->business_name }}
+
 @endsection
 
 @section('content')
@@ -15,12 +16,12 @@
         <div class="restuarent-details">
             <div class="media">
                 <div class="thumb">
-                    <img src="{{ asset('vendor/assets/img/brands/'.$vendor->kitchen_banner_image) }}" width="70" style="background-color: #fff;" class="rounded" alt="img">
+                    <img src="{{ asset('vendor/assets/img/brands/'.$vendor->kitchen_banner_image) }}" width="70" style="background-color: #fff;" class="rounded-2" alt="img">
                     <span>Open</span>
                 </div>
                 <div class="media-body">
-                    <h3>Pizza Hut</h3>
-                    <p>Birch Street El Paso</p>
+                    <h3>{{ $vendor->business_name }}</h3>
+                    <p>{{ $vendor->address }}</p>
                 </div>
             </div>
             <div class="rating">
@@ -41,17 +42,20 @@
         </div>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                @foreach ($menus as $product)                    
                 <div class="single-item-wrap">
                     <div class="thumb">
-                        <img src="{{ asset('customer/assets/img/item/1.png') }}" alt="img">
+                        <img src="{{ asset('product-images/'.$product->product_image) }}" width="80" class="rounded-2" alt="{{ $product->slug}}">
                     </div>
                     <div class="details">
-                        <h6><a href="{{ route('restaurants.show',$vendor->slug) }}">Dodo Cheese Pan</a></h6>
-                        <p>Mounds of golden melting cheese on a rich bed </p>
-                        <span class="price">₦2,400.00</span>
+                        <h6><a href="{{ route('restaurants.product',$product->id)}}">{{ $product->name }}</a></h6>
+                        <p>{{ Illuminate\Support\Str::limit($product->description, 45) }}</p>
+                        <span class="price">₦{{ $product->regular_price }}</span>
                     </div>
-                    <a class="btn back-page-btn" href="{{ route('restaurants.product',['domino-pizza','dodo-cheese-pan'])}}"><i class="ri-add-line"></i></a>
+                    <a class="btn back-page-btn" href="{{ route('restaurants.product',$product->id)}}"><i class="ri-add-line"></i></a>
                 </div>
+                @endforeach
+                
             </div>
         </div>
     </div>
