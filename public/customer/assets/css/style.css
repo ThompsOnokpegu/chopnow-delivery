@@ -585,8 +585,7 @@ ul {
   -webkit-transform: perspective(1px) translateZ(0);
           transform: perspective(1px) translateZ(0);
   border-radius: 16px;
-  height: 64px;
-  line-height: 64px;
+  line-height: 54px;
 }
 .btn i,
 .btn svg {
@@ -3138,7 +3137,7 @@ ul {
 }
 .main-footer-bottom:after {
   content: "";
-  background: url(../img/subtract.png);
+  /* background: url(../img/subtract.png); */
   height: 100%;
   width: 100%;
   top: -28px;
@@ -4516,7 +4515,7 @@ ul {
   border-radius: 6px;
 }
 .quantity input {
-  background: #FAF7F2;
+  background: #ce2829;
   border: 0;
   height: 56px;
   padding: 0;
@@ -4524,6 +4523,7 @@ ul {
   text-align: center;
   cursor: pointer;
   margin-left: -3px;
+  color:white;
 }
 .quantity input.minus {
   border-radius: 6px 0 0 6px;

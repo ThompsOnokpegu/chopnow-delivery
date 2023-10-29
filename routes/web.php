@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\VendorController;
+use App\Livewire\UpdateCart;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Route;
 
@@ -67,6 +68,8 @@ Route::prefix('orders')->group(function(){
  Route::get('/restaurants', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
  Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
+ Route::get('/cart',[RestaurantController::class,'cart'])->name('restaurants.cart');
+ Route::get('/cart/{item}/edit',[UpdateCart::class,'render'])->name('cart.edit');
     
 
 

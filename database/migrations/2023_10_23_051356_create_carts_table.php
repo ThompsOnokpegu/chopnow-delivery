@@ -13,17 +13,20 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Reference to the user who owns the cart
-            $table->unsignedBigInteger('menu_id'); // Reference to the product in the cart
-            $table->integer('quantity'); // Quantity of the product in the cart
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('session_id')->nullable(); // Add sessionId field
+            $table->unsignedBigInteger('menu_id');
+            $table->integer('quantity');
             $table->timestamps();
 
-            // Define foreign key constraints
-            $table->foreign('user_id')->references('id')->on('users');
+            // Define foreign key constraints for menu_id
             $table->foreign('menu_id')->references('id')->on('menus');
 
-            // Add unique constraint to ensure a user can't have the same product in the cart multiple times
+            // Add a unique constraint for user_id and menu_id
             $table->unique(['user_id', 'menu_id']);
+
+            // Define a foreign key constraint for user_id
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

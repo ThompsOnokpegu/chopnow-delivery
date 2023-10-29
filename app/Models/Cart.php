@@ -7,5 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
+    
     use HasFactory;
+    protected $fillable = [
+       'user_id',
+       'menu_id',
+       'quantity',
+       'session_id'
+    ];
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

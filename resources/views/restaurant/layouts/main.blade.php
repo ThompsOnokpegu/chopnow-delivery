@@ -26,7 +26,7 @@
 
 
 </head>
-<body class='sc5'>
+<body class='sc5 bg-white'>
     <!-- preloader area start -->
     {{-- <div class="preloader" id="preloader">
         <div class="preloader-inner">
@@ -57,33 +57,35 @@
         <div class="main-footer-bottom d-block text-center">
             <ul>
                 <li>
-                    <a href="main-home.html">
+                    <a href="{{ route('restaurants.index') }}">
                         <img src="{{ asset('customer/assets/img/icon/svg/home.svg') }}" alt="icon">
                     </a>
                 </li>
                 <li>
-                    <a href="search.html">
+                    <a href="#">
                         <img src="{{ asset('customer/assets/img/icon/svg/search.svg') }}" alt="img">
                     </a>
                 </li>
                 <li class="shop-btn">
-                    <a class="menu-bar" href="cart-page.html">
+                    <a class="menu-bar" href="{{ route('restaurants.cart') }}">
                         <img src="{{ asset('customer/assets/img/icon/svg/bag.svg') }}" alt="img">
                     </a>
                 </li>
                 <li>
-                    <a href="vouchers.html">
+                    <a href="#">
                         <img src="{{ asset('customer/assets/img/icon/svg/discount.svg') }}" alt="img">
                     </a>
                 </li>
                 <li>
-                    <a href="profile.html">
+                    <a href="#">
                         <img src="{{ asset('customer/assets/img/icon/svg/profile.svg') }}" alt="img">
                     </a>
                 </li>
             </ul>
         </div>
-    </div>  
+    </div>
+    
+    @yield('modal')
     
 
     <!-- all plugins here -->

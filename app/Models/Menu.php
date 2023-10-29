@@ -26,7 +26,7 @@ class Menu extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
-
+    
     protected $attributes = [
         'status' => 'inactive',
     ];

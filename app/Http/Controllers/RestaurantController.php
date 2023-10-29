@@ -26,4 +26,8 @@ class RestaurantController extends Controller
     public function productDetails(Menu $menu){
         return view('restaurant.product-details',compact('menu'));
     }
+
+    public function cart(){
+        return view('restaurant.cart');
+    }
 }
