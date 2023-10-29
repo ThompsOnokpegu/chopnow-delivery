@@ -19,8 +19,8 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-        'user_id' => User::factory(),
-        'vendor_id'=> Vendor::factory(),
+        'user_id' =>1,
+        'vendor_id'=> 1,
         'recipient_address' => fake()->address(),
         'recipient_phone' => fake()->phoneNumber(),
         'recipient_name' =>fake()->firstName(),

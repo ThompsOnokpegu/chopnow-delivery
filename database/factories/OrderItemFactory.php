@@ -18,9 +18,9 @@ class OrderItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => Order::factory(),
-            'name' => 'Spicy Chicken',
-            'price' => fake()->numberBetween(4500,15000),
+            'order_id' => 1,
+            'name' => 'Soulfully Spiced Chicken',
+            'price' => fake()->numberBetween(1500,5000),
             'quantity' => fake()->numberBetween(1,3)
         ];
     }
