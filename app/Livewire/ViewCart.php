@@ -15,17 +15,6 @@ class ViewCart extends Component
         $user_id = session()->getId();
         $this->cartItems = Cart::where('session_id', $user_id)->get();
     }
-
-    // public function updateQuantity($cartItemId)
-    // {
-    //     // Update the quantity of a cart item
-    //     $cartItem = Cart::findOrFail($cartItemId);
-    //     // $cartItem->update(['quantity' => $quantity]);
-    //     $cartItem->update(['quantity' => $this->cartItems[$cartItemId]['quantity']]);
-
-    //     // Refresh the cart items
-    //     $this->cartItems = Cart::where('session_id', session()->getId())->get();
-    // }
    
 
     public function removeItem($cartItemId)

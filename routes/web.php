@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
@@ -64,11 +65,13 @@ Route::prefix('orders')->group(function(){
 });
 
 
- //CUSTOM USER ROUTES
+ //CUSTOM RESTAURANT ROUTES
  Route::get('/restaurants', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
  Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
- Route::get('/cart',[RestaurantController::class,'cart'])->name('restaurants.cart');
+
+ //CUSTOM USER ROUTES
+ Route::get('/cart',[CartController::class,'index'])->name('user.cart');
  Route::get('/cart/{item}/edit',[UpdateCart::class,'render'])->name('cart.edit');
     
 

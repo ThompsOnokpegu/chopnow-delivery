@@ -53,7 +53,9 @@
     <!-- //. search Popup -->
     
     <div class="single-restuarent-area">
+
         @yield('content')
+        
         <div class="main-footer-bottom d-block text-center">
             <ul>
                 <li>
@@ -67,7 +69,7 @@
                     </a>
                 </li>
                 <li class="shop-btn">
-                    <a class="menu-bar" href="{{ route('restaurants.cart') }}">
+                    <a class="menu-bar" href="{{ route('user.cart') }}">
                         <img src="{{ asset('customer/assets/img/icon/svg/bag.svg') }}" alt="img">
                     </a>
                 </li>

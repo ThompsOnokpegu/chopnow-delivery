@@ -15,6 +15,7 @@
                             <h6>{{ $item->menu->name }}</h6>
                             <p><span>₦{{ $item->menu->regular_price }}</span><i class="ri-checkbox-blank-circle-fill"></i> x {{ $item->quantity }}</p>
                         </div>
+
                         <button data-bs-toggle="modal" data-bs-target="#exampleModal" href="{{ route('cart.edit', $item->id) }}">
                             Edit
                         </button>
