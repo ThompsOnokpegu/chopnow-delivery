@@ -6,6 +6,7 @@ use App\Models\Menu;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Darryldecode\Cart;
 
 class RestaurantController extends Controller
 {
@@ -19,8 +20,7 @@ class RestaurantController extends Controller
     }
 
     public function show(Vendor $vendor){
-        $menus = Menu::where('vendor_id',$vendor->id)->get();
-        return view('restaurant.single',compact('vendor','menus'));
+        return view('restaurant.single',compact('vendor'));
     }
     
     public function productDetails(Menu $menu){

@@ -70,9 +70,6 @@ Route::prefix('orders')->group(function(){
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
  Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
 
- //CUSTOM USER ROUTES
- Route::get('/cart',[CartController::class,'index'])->name('user.cart');
- Route::get('/cart/{item}/edit',[UpdateCart::class,'render'])->name('cart.edit');
     
 
 

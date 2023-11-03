@@ -20,7 +20,7 @@
         <div class="wrap-details text-center">
             <p>{{ $menu->description }}</p>
         </div>
-        @livewire('add-to-cart',['menu' => $menu])
+       
         {{-- <div class="wrap-details text-center">
             <h6>Special instructions</h6>
             <p>Please let us know if you are allergic to anything or if we need to avoid anything.</p>

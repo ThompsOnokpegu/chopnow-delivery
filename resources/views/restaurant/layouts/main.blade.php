@@ -23,6 +23,7 @@
 
     <!--Google Fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 
 
 </head>
@@ -69,7 +70,7 @@
                     </a>
                 </li>
                 <li class="shop-btn">
-                    <a class="menu-bar" href="{{ route('user.cart') }}">
+                    <a data-bs-toggle="modal" data-bs-target="#cartModal"class="menu-bar">
                         <img src="{{ asset('customer/assets/img/icon/svg/bag.svg') }}" alt="img">
                     </a>
                 </li>
@@ -107,5 +108,6 @@
     <script src="{{ asset('customer/assets/js/tweenmax.min.js') }}"></script>
     <!-- main js  -->
     <script src="{{ asset('customer/assets/js/main.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script> --}}
 </body>
 </html>
