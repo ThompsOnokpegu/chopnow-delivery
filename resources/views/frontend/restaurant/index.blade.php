@@ -1,4 +1,4 @@
-@extends('restaurant.layouts.main')
+@extends('frontend.restaurant.layouts.main')
 
 @section('content')
 <!-- search popup area start -->
@@ -25,7 +25,19 @@
                     </select>
                 </div>
             </div>
-            <a class="notification-btn" href="#"><img src="{{ asset('customer/assets/img/icon/notification.svg') }}" alt="icon"></a>
+            {{-- <a class="notification-btn" href="#"><img src="{{ asset('customer/assets/img/icon/notification.svg') }}" alt="icon">
+            
+            </a> --}}
+            <div class="notification-btn media">
+                <img src="{{ asset('customer/assets/img/icon/map-marker.svg') }}" alt="img">
+                <div class="media-body">
+                    @if(Auth::check())
+                        <span>{{ Auth::user()->name }}</span>   
+                    @else
+                        <span>Guest</span>   
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="home-search-wrap">
             <div class="default-form-wrap">
@@ -58,13 +70,13 @@
     <div class="main-home-area pt-0">
 
          {{--Categories  --}}
-        @include('restaurant._category')
+        @include('frontend.restaurant._category')
 
         <h5 class="section-title">Nearby Restaurant</h5>
-        @include('restaurant._nearby')
+        @include('frontend.restaurant._nearby')
         
         <h5 class="section-title">Popular Restaurant</h5>
-        @include('restaurant._popular')
+        @include('frontend.restaurant._popular')
 
         <h5 class="section-title">All Restaurant</h5>
         @foreach ($vendors as $restaurant)  
@@ -92,6 +104,6 @@
 </div> 
 
 <!-- Modal -->
-@include('restaurant._filter')
+@include('frontend.restaurant._filter')
 
 @endsection

@@ -1,4 +1,4 @@
-@extends('restaurant.layouts.main')
+@extends('frontend.restaurant.layouts.main')
 
 @section('title')
  {{ $menu->name }}

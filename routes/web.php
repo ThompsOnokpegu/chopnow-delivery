@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Livewire\UpdateCart;
 use App\Models\Menu;
@@ -66,9 +67,23 @@ Route::prefix('orders')->group(function(){
 
 
  //CUSTOM RESTAURANT ROUTES
- Route::get('/restaurants', [RestaurantController::class,'index'])->name('restaurants.index');
+ Route::get('/', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
  Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
+ Route::get('/checkout',[CheckoutController::class,'show'])->name('user.checkout')->middleware(['has.products','auth']);
+ Route::post('/checkout',[CheckoutController::class,'placeorder'])->name('order.checkout');
+ Route::get('/cart',[CheckoutController::class,'showCart'])->name('order.cart');
+ 
+ 
+ 
+ 
+ //CUSTOM USER ROUTES
+ Route::get('/login',[UserController::class,'showLogin'])->name('user.login')->middleware('has.products');
+ Route::get('/register',[UserController::class,'register'])->name('user.register');
+ Route::post('/register',[UserController::class,'create'])->name('user.create');
+ Route::post('/login',[UserController::class,'login'])->name('login');
+
+ 
 
     
 
@@ -97,19 +112,19 @@ Route::prefix('orders')->group(function(){
 
 
 /*------------------User Routes------------------*/
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';
 /*------------------END User Routes------------------*/

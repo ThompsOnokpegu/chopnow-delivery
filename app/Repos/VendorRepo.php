@@ -2,6 +2,7 @@
 namespace App\Repos;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rule;
 
 class VendorRepo{
@@ -18,6 +19,12 @@ class VendorRepo{
             'phone' => 'required',
             'slug' => 'required|nullable',
             'business_phone' => 'required|nullable'
+        ];
+    }
+
+    public function signUpValidation(){
+        return [
+            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
         ];
     }
 

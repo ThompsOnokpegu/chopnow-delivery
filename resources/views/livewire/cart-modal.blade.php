@@ -1,11 +1,17 @@
-<div wire:ignore.self class="modal fade modal-fullscreen filter-modal-popup" id="cartModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="container">
-                <div class="modal-header">
-                    <h5 class="modal-title">My Cart</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+
+    <div>
+        <div class="container">
+            <div class="modal-header">
+                <h5 class="modal-title">Basket</h5>
+            </div>
+            @if ($cart->isEmpty())
+                <div class="d-flex bd-highlight mb-3 mt-3 ">
+                    <div class="p-5 bd-highlight flex-shrink-0 text-center">
+                        <p class="">Your cart is empty! <span><a class="btn-white w-100" href="{{ route('restaurants.index') }}"> Back to Restaurants</a></span></p>
+                        
+                    </div>
+                </div>     
+            @else
                 @foreach($items as $item)
                     <div class="d-flex bd-highlight mb-3 mt-3 single-item-wrap">
                         <div class="p-2 bd-highlight flex-shrink-0">
@@ -28,28 +34,23 @@
                         </div>
                     </div>     
                 @endforeach
-            </div>
-            <div class="order-cart-area">
-                <form class="order-cart">
-                    <ul>
-                        <li>Subtotal<span>₦{{   $cart->getSubTotal() }}</span></li>
-                        <li>Delivery Fee<span>₦750.00</span></li>
-                        <li>
-                            <div class="single-input-wrap with-btn">
-                                <input type="text" class="form-control" placeholder="Apply your couons">
-                                <button class="btn">Apply</button>
-                            </div>
-                        </li>
-                        <li class="total">Total<span>₦{{   $cart->getTotal() }}</span></li>
-                    </ul>
-                    <a class="btn btn-white w-100" href="{{ route('user.checkout') }}"> Checkout</a>
-                </form>
-            </div>
+            @endif
+        </div>
+        <div class="order-cart-area d-block">
+            <form class="order-cart">
+                <ul>
+                    <li>Subtotal<span>₦{{   $cart->getSubTotal() }}</span></li>
+                    <li>Delivery Fee<span>₦750.00</span></li>
+                    <li>
+                        <div class="single-input-wrap with-btn">
+                            <input type="text" class="form-control" placeholder="Apply your couons">
+                            <button class="btn">Apply</button>
+                        </div>
+                    </li>
+                    <li class="total">Total<span>₦{{   $cart->getTotal() }}</span></li>
+                </ul>
+                <a class="btn btn-white w-100" href="{{ route('user.checkout') }}"> Checkout</a>
+            </form>
         </div>
     </div>
-</div>
-
- 
-    
-
 

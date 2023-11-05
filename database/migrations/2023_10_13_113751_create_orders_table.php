@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('recipient_name');
             $table->decimal('discount', 10, 2);
             $table->string('payment_method');
-            $table->enum('order_status', ['Processing', 'Enroute', 'Delivered', 'Canceled']);
+            $table->enum('order_status', ['Processing','Pending', 'Enroute', 'Delivered', 'Canceled']);
             // Add more order-related fields as needed
             $table->timestamps();
         });
