@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 use Darryldecode\Cart\Cart;
 use Darryldecode\Cart\CartCondition;
 use Illuminate\Support\Facades\Auth;
+use App\Repos\Paystack;
+use Ramsey\Uuid\Uuid;
 
 class CheckoutController extends Controller
 {
 
-    public function show(){
+    public function checkoutPage(){
         //Initialize Cart
         $cart = $this->cart(); 
         $vendor = $this->vendor();      
@@ -21,17 +23,22 @@ class CheckoutController extends Controller
         return view('frontend.checkout.checkout',compact('cart','vendor'));
 
     }
+    public function cartPage(){
+        return view('frontend.checkout.cart');
+    }
 
-    public function placeorder(Request $request){
+    public function placeOrder(Request $request){
+        $uuid = Uuid::uuid4()->toString(); // Get the UUID as a string
         //create new order
         $order = new Order();
-        
+          
+        $order->reference = $uuid; 
         $order->vendor_id = $this->vendor()->id;
         $order->user_id = Auth::user()->id; // Assuming a customer places the order
         $order->recipient_address = $request->address1 .' - '.$request->address2;
         $order->recipient_phone = $request->phone;
         $order->recipient_name = $request->name;
-        $order->order_status = "Processing";
+        $order->order_status = "Awaiting Payment";
         $order->payment_method = "COD";
         $order->discount = 0;
         //$order->tracking_code = "CN-".rand(10111, 99999);
@@ -42,7 +49,6 @@ class CheckoutController extends Controller
 
         //create new order items
         foreach($cartItems as $item){
-            $vendor = $item->associatedModel->vendor_id;
             OrderItem::create([
                 'order_id' => $order->id,
                 'name' => $item->name,
@@ -52,15 +58,22 @@ class CheckoutController extends Controller
             ]);
         }
 
+        // //send order notification - Vendor
+
+        // //send order notification - Customer
+
+        //process payment
+        $amount = str_replace(',','', $this->cart()->getTotal());
+        $vendor_id = $this->vendor()->id;
+        $user = Auth::user()->name;
+        $email = $request->email;
+        
         //clear cart
         $this->cart()->clear();
 
-        //send order notification - Vendor
-
-        //send order notification - Customer
-
-        //redirect to home
-        return redirect(route('restaurants.index'));
+        $paystack = new Paystack();
+        $response = $paystack->getPaymentLink($amount,$vendor_id,$user,$email,$uuid);
+        return redirect()->away($response['authorization_url']);   
     }
 
     private function cart(){ 
@@ -78,7 +91,7 @@ class CheckoutController extends Controller
             'type' => 'shipping',
             'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
             'value' => '+750',
-            'order' => 2 // the order of calculation of cart base conditions. The bigger the later to be applied.
+            'order' => 1 // the order of calculation of cart base conditions. The bigger the later to be applied.
         ));
         // $condition2 = new CartCondition(array(
         //     'name' => 'VAT 7.5%',
@@ -109,7 +122,5 @@ class CheckoutController extends Controller
          return $vendor;
     }
 
-    public function showCart(){
-        return view('frontend.checkout.cart');
-    }
+    
 }

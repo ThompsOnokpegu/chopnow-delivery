@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\WebhookController;
 use App\Livewire\UpdateCart;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Route;
@@ -70,10 +71,10 @@ Route::prefix('orders')->group(function(){
  Route::get('/', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
  Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
- Route::get('/checkout',[CheckoutController::class,'show'])->name('user.checkout')->middleware(['has.products','auth']);
- Route::post('/checkout',[CheckoutController::class,'placeorder'])->name('order.checkout');
- Route::get('/cart',[CheckoutController::class,'showCart'])->name('order.cart');
- 
+ Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['has.products','auth']);
+ Route::post('/checkout',[CheckoutController::class,'placeOrder'])->name('order.checkout');
+ Route::get('/cart',[CheckoutController::class,'cartPage'])->name('order.cart');
+ Route::post('/webhook',[WebhookController::class,'handle']);
  
  
  

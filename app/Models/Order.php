@@ -10,7 +10,8 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', // Assuming a customer places the order
+        'reference',
+        'user_id',
         'vendor_id',
         'recipient_address',
         'recipient_phone',
