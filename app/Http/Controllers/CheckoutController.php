@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vendor;
+use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Darryldecode\Cart\CartCondition;
 use Illuminate\Support\Facades\Auth;
 use App\Repos\Paystack;
 use Ramsey\Uuid\Uuid;
+use App\Notifications\NewOrder;
 
 class CheckoutController extends Controller
 {
@@ -59,8 +61,13 @@ class CheckoutController extends Controller
         }
 
         // //send order notification - Vendor
+       
+        $vendor = $this->vendor();
+        $vendor->notify(new NewOrder($order->id));
 
-        // //send order notification - Customer
+        //send order notification - Customer
+        $user = User::where('id',Auth::user()->id);
+        $user->notify(new NewOrder($order->id));
 
         //process payment
         $amount = str_replace(',','', $this->cart()->getTotal());
