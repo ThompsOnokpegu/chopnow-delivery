@@ -11,7 +11,7 @@ class RestaurantController extends Controller
     public function index(){
 
         $vendors = Vendor::all();
-        for ($i=0; $i < 4; $i++) { 
+        for ($i=2; $i < 6; $i++) { 
             $nearby[] = $vendors[$i];
         }
         return view('frontend.restaurant.index',compact('vendors','nearby'));

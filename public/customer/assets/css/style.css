@@ -3558,7 +3558,8 @@ ul {
   top: 0;
   left: 0;
   z-index: -1;
-  background: linear-gradient(359.59deg, #191720 43.91%, rgba(25, 23, 32, 0) 89.68%);
+  /* background: linear-gradient(359.59deg, #191720 43.91%, rgba(25, 23, 32, 0) 89.68%); */
+  background: linear-gradient(359.59deg, #000 3.91%, rgba(25, 23, 32, 0) 89.68%);
 }
 .single-restuarent-area .single-banner-area h3 {
   font-weight: 600;

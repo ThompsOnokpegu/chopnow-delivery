@@ -52,7 +52,7 @@
         </div>   
     </div>
 </div>
-<div class="banner-slider-wrap">
+{{-- <div class="banner-slider-wrap">
     <div class="banner-slider owl-carousel">
         <div class="item">
             <img src="{{ asset('customer/assets/img/banner/1.png') }}" alt="img">
@@ -64,7 +64,7 @@
             <img src="{{ asset('customer/assets/img/banner/3.png') }}" alt="img">
         </div>
     </div> 
-</div> 
+</div>  --}}
 
 <div class="container">
     <div class="main-home-area pt-0">
@@ -72,11 +72,11 @@
          {{--Categories  --}}
         @include('frontend.restaurant._category')
 
-        <h5 class="section-title">Nearby Restaurant</h5>
+        <h5 class="section-title">Promotions</h5>
         @include('frontend.restaurant._nearby')
         
-        <h5 class="section-title">Popular Restaurant</h5>
-        @include('frontend.restaurant._popular')
+        {{-- <h5 class="section-title">Popular Restaurant</h5>
+        @include('frontend.restaurant._popular') --}}
 
         <h5 class="section-title">All Restaurant</h5>
         @foreach ($vendors as $restaurant)  
@@ -84,18 +84,19 @@
                 <div class="thumb">
                     <span class="tag">15% Off</span>
                     <a href="{{ route('restaurants.show',$restaurant->id) }}">
-                        <img src="{{ asset('customer/assets/img/product/01.png') }}" alt="img">
+                        <img src="{{ asset('vendor/assets/img/brands/'.$restaurant->kitchen_banner_image) }}" alt="img">
                     </a>
                     <a class="fav-btn" href="#"><i class="fa fa-heart"></i></a>
                 </div>
                 <div class="details">
-                    <h6><a href="{{ route('restaurants.show',$restaurant->id) }}">{{ $restaurant->business_name }}</a> <span>Open</span></h6>
+                    <h6><a href="{{ route('restaurants.show',$restaurant->id) }}">{{ $restaurant->business_name }}</a> <span></span></h6>
                     <div class="ratting">
                         <i class="ri-star-fill ps-0"></i>4.9
                         <span>(6k)</span>
-                        <span>{{ $restaurant->address }}</span>
+                        <span>20-25 Min <span class="ms-3"><i class="fa fa-motorcycle"></i> ₦500.00</span></span>
+                        
                     </div>
-                    <span>20-25 Min <span class="ms-3">Free Delivery</span></span>
+                    
                 </div>
             </div> 
         @endforeach
