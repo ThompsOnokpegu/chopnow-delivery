@@ -2,6 +2,6 @@
 
 @section('content')
 <div>
-    @livewire('cart-modal')
+    @livewire('cart-page')
 </div>
 @endsection

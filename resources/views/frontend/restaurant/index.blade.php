@@ -1,7 +1,7 @@
 @extends('frontend.restaurant.layouts.main')
 
 @section('content')
-<!-- search popup area start -->
+{{-- <!-- search popup area start -->
 <div class="body-overlay" id="body-overlay"></div>
 <div class="td-search-popup" id="td-search-popup">
     <form action="index.html" class="search-form">
@@ -11,41 +11,26 @@
         <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
     </form>
 </div>
-<!-- //. search Popup -->
+<!-- //. search Popup --> --}}
+
 <div class="container">
     <div class="main-home-area pb-0 mt-5">
         <div class="location-area">
-            <div class="media">
-                <img src="{{ asset('customer/assets/img/icon/map-marker.svg') }}" alt="img">
-                <div class="media-body">
-                    <span>Delivery to</span>
-                    <select class="single-select">
-                        <option>San Francisco, US</option>
-                        <option value="asc">Dhaka, Bangladesh</option>
-                    </select>
-                </div>
-            </div>
-            {{-- <a class="notification-btn" href="#"><img src="{{ asset('customer/assets/img/icon/notification.svg') }}" alt="icon">
-            
-            </a> --}}
-            <div class="notification-btn media">
-                <img src="{{ asset('customer/assets/img/icon/map-marker.svg') }}" alt="img">
-                <div class="media-body">
-                    @if(Auth::check())
-                        <span>{{ Auth::user()->name }}</span>   
-                    @else
-                        <span>Guest</span>   
-                    @endif
-                </div>
-            </div>
+            <a style="padding-left:15px;" class="navbar-brand" href="{{ route('restaurants.index') }}">
+                <img src="{{ asset('customer/assets/img/fevicon.png') }}" alt="img" style="height: 36px;width:auto;">
+            </a>
+            @livewire('view-address')
+            <a class="navbar-brand" href="{{ route('user.register') }}">
+                <img src="{{ asset('customer/assets/img/icon/user.png') }}" alt="img" style="height: 30px;width:auto;">
+            </a> 
         </div>
         <div class="home-search-wrap">
             <div class="default-form-wrap">
                 <div class="single-input-wrap">
                     <label><img src="{{ asset('customer/assets/img/icon/search.svg') }}" alt="img"></label>
-                    <input type="text" class="form-control" placeholder="Search for food">
+                    <input type="text" class="form-control" placeholder="Search restaurants" data-bs-toggle="modal" data-bs-target="#searchModal">
                 </div>
-                <button type="button" class="btn btn-border" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-border" data-bs-toggle="modal" data-bs-target="#categoryModal">
                     <img src="{{ asset('customer/assets/img/icon/filter.svg') }}" alt="img">
                 </button>
             </div>
@@ -82,7 +67,7 @@
         @foreach ($vendors as $restaurant)  
             <div class="single-product-wrap">
                 <div class="thumb">
-                    <span class="tag">15% Off</span>
+                    {{-- <span class="tag">15% Off</span> --}}
                     <a href="{{ route('restaurants.show',$restaurant->id) }}">
                         <img src="{{ asset('vendor/assets/img/brands/'.$restaurant->kitchen_banner_image) }}" alt="img">
                     </a>
@@ -104,7 +89,11 @@
     </div>
 </div> 
 
-<!-- Modal -->
-@include('frontend.restaurant._filter')
+<!-- Modals-->
+@include('frontend.restaurant._filter-popup')
+@include('frontend.restaurant._address-popup')
+@include('frontend.restaurant._category-modal')
+@include('frontend.restaurant._search-modal')
+@livewire('view-cart')
 
 @endsection

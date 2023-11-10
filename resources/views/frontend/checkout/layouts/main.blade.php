@@ -24,7 +24,21 @@
 
     <!--Google Fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <style>
+        .alert-warning {
+            color: #ffffff;
+            background-color: #ce2829;
+            border-color: #ce2829;
+        }
+        body {
+            margin: 0;
+            color: var(--paragraph-color);
+            font-family: var(--body-font);
+            line-height: var(--line-height30);
+            font-size: var(--body-font-size);
+            background-color: #F9FAFC;
+        }
+    </style>
 
 </head>
 <body class='sc5-2'>
@@ -52,14 +66,29 @@
         </form>
     </div>
     <!-- //. search Popup -->
-    
+
+
+    <div class="container">
+        <div class="main-home-area pb-0 mt-5">
+            <div class="location-area">
+                <a style="padding-left:15px;" class="navbar-brand" href="{{ route('restaurants.index') }}">
+                    <img src="{{ asset('customer/assets/img/fevicon.png') }}" alt="img" style="height: 36px;width:auto;">
+                </a>
+                @livewire('view-address')
+                {{-- <a class="navbar-brand" href="{{ route('restaurants.index') }}">
+                    <img src="{{ asset('customer/assets/img/icon/user.png') }}" alt="img" style="height: 30px;width:auto;">
+                </a>  --}}
+            </div>
+             
+        </div>
+    </div>
     @yield('content')
 
     <!-- back-to-top end -->
     <div class="back-to-top">
         <span class="back-top"><i class="fas fa-angle-double-up"></i></span>
     </div>
-
+    @include('frontend.restaurant._address-popup')
     
 
     <!-- all plugins here -->

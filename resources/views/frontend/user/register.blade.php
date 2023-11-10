@@ -5,8 +5,8 @@
     <div class="align-items-center d-flex justify-content-center">
         <div class="register-page pt-4">
             <a class="btn back-page-btn" href="onboard.html"><i class="ri-arrow-left-s-line"></i></a>
-            <h3>Let’s register you in.</h3>
-            <p>Welcome back to our Food delivery app. Search your favorte food.</p>
+            <h3>Welcome</h3>
+            <p>Let’s register you.</p>
             <form class="default-form-wrap" action="{{ route('user.create') }}" method="POST">
                 @csrf()
                

@@ -5,7 +5,7 @@ use Darryldecode\Cart\Cart;
 use Darryldecode\Cart\CartCondition;
 use Livewire\Component;
 
-class CartModal extends Component
+class CartPage extends Component
 {
     protected $listeners = ['update-cart' => 'render'];
     protected $cart;
@@ -40,7 +40,7 @@ class CartModal extends Component
         $this->cartContent = $this->cart->getContent();
 
         $cart = $this->cart;
-        return view('livewire.cart-modal',compact('items','cart'));
+        return view('livewire.cart-page',compact('items','cart'));
     }  
     
     public function updateQuantity($product_id){

@@ -2997,7 +2997,7 @@ ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background: url(../img/maps.png);
+  /* background: url(../img/maps.png); */
   width: 100%;
   -webkit-box-align: end;
       -ms-flex-align: end;
@@ -3068,14 +3068,14 @@ ul {
       -ms-flex-align: center;
           align-items: center;
   position: fixed;
-  background: #F9FAFC;
+  background: #FFC244;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   width: 100%;
   top: 0;
   left: 0;
-  padding: 30px 20px 13px;
+  padding: 5px 5px 13px;
   z-index: 999;
 }
 .main-home-area .location-area .media {
@@ -3103,9 +3103,9 @@ ul {
   line-height: inherit;
 }
 .main-home-area .location-area .media .media-body .nice-select span {
-  font-weight: normal;
+  font-weight: 700;
   font-size: 14px;
-  color: var(--paragraph-color);
+  color: #000000;
 }
 .main-home-area .location-area .notification-btn {
   margin-left: auto;
