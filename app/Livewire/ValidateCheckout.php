@@ -22,7 +22,7 @@ class ValidateCheckout extends Component
     public $address;
     public $address2;
     public $payment_method;
-
+    protected $listeners = ['address-added' => 'updateAddress'];
     public function render()
     {
         //Initialize Cart
@@ -30,6 +30,9 @@ class ValidateCheckout extends Component
         $vendor = $this->vendor();      
         //return view
         return view('livewire.validate-checkout',compact('cart','vendor'));
+    }
+    public function updateAddress(){
+        $this->address = session('delivery_address');
     }
     public function mount(){
         $this->email = Auth::user()->email;
@@ -70,7 +73,6 @@ class ValidateCheckout extends Component
         //send order notification - TODO: move this action to webhook
         $this->notify($order);
     }
-
     private function createOrder($validated){
         $uuid = Uuid::uuid4()->toString(); // Get the UUID as a string
         //create new order
@@ -132,7 +134,6 @@ class ValidateCheckout extends Component
         
         return $cart;
     }
-
     private function vendor(){
         $vendor_id = "";
          //Initialize Cart

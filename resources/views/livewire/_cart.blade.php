@@ -5,7 +5,7 @@
     @if ($cart->isEmpty())
         <div class="d-flex bd-highlight mb-3 mt-3 ">
             <div class="p-5 bd-highlight flex-shrink-0 text-center">
-                <p class="">Your cart is empty! <span><a class="btn-white w-100" href="{{ route('restaurants.index') }}"> Back to Restaurants</a></span></p>
+                <p class="">Your cart is empty! <span><a class="btn-white w-100" style="padding:3px;border-radious:0px;" href="{{ route('restaurants.index') }}"> Back to Restaurants</a></span></p>
                 
             </div>
         </div>     
@@ -32,6 +32,11 @@
                 </div>
             </div>     
         @endforeach
+        <div class="mb-2 mt-2">
+            <div class="p-2 flex-shrink-0 text-center">
+                <p class="text-center"><span><a class="btn-white w-100" style="padding:10px;border-radius:5px;" href="{{ route('restaurants.index') }}"> Continue Shopping</a></span></p>    
+            </div>
+        </div>  
     @endif
 </div>
 <div class="order-cart-area d-block">
@@ -47,6 +52,6 @@
             </li>
             <li class="total">Total<span>₦{{ $cart->isEmpty()? '0.00': $cart->getTotal()    }}</span></li>
         </ul>
-        <a class="btn btn-white w-100" href="{{ route('user.checkout') }}"> Checkout</a>
+        <a class="btn btn-white w-100" href="{{ route('user.checkout') }}"> CHECKOUT</a>
     </form>
 </div>
