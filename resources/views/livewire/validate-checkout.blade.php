@@ -1,4 +1,4 @@
-<form action="{{ route('order.checkout') }}" method="POST">
+<form wire:submit="placeOrder">
     <div class="container">
         <div class="cardd">
             <a class="btn back-page-btn mt-3" href="{{ route('order.cart') }}"><i class="ri-arrow-left-s-line"></i></a>
@@ -30,31 +30,31 @@
                                 <h4>Delivery Details</h4>
                                 <p class="text-uppercase fw-bold mb-3 text-font">Email address</p>
                                 <p>Logged in as {{ Auth::user()->email }}</p>
-                                <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+                                <input type="hidden" wire:model="email">
                                 <label>Add a Name<small class="error">*</small></label>
                                 <div class=" style-2">
-                                    <input type="text" value="{{ old('name') }}" name="name" class="form-control" style="height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
+                                    <input type="text" wire:model="name" class="form-control" style="height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
                                     @error('name')
                                         <div class="error">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <label>Contact Phone<small class="error">*</small></label>
                                 <div class=" style-2">
-                                    <input type="text" value="{{ old('phone') }}" name="phone" class="form-control" style=" height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
+                                    <input type="text" wire:model="phone" class="form-control" style=" height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
                                     @error('phone')
                                         <div class="error">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <label>Delivery Address<small class="error">*</small></label>
                                 <div class="style-2">
-                                    <input value="{{ old('address',session('delivery_address')) }}" type="text" name="address" class="form-control" style="height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
+                                    <input type="text" wire:model="address" class="form-control" style="height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
                                     @error('address')
                                         <div class="error">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <label>Floor, Flat, Instruction<small> (optional)</small></label>
                                 <div class="single-input-wra style-2">
-                                    <input type="text" value="{{ old('address2') }}" name="address2" class="form-control" style="height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
+                                    <input type="text" wire:model="address2" class="form-control" style="height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
                                 </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                         <ul class="payment-check">
                             <li>
                                 <div class="form-check">
-                                    <input name="payment_method" class="form-check-input" value="COD" type="radio" name="flexRadioDefault" id="payment1">
+                                    <input wire:model="payment_method" class="form-check-input" value="COD" type="radio" name="flexRadioDefault" id="payment1">
                                     <label class="form-check-label" for="payment1">
                                     </label>
                                     Cash on delivery
@@ -100,7 +100,7 @@
                             </li>
                             <li>
                                 <div class="form-check">
-                                    <input name="payment_method" class="form-check-input" value="Paystack" type="radio" name="flexRadioDefault" id="payment2">
+                                    <input wire:model="payment_method" class="form-check-input" value="Paystack" type="radio" name="flexRadioDefault" id="payment2">
                                     <label class="form-check-label" for="payment2">
                                     </label>
                                     Credit or Debit card
