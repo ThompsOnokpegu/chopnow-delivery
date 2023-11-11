@@ -47,16 +47,11 @@ class WebhookController extends Controller
                     if ($order) {
                         // Update the order status to 'Processing' and save it
                         $order->order_status = 'Processing';
+                        $order->payment_status = 'paid';
                         $order->save();
                         return response('Webhook Processed', 200);
                     }
                     break;
-
-                case 'subscription.disable':
-                    // Handle subscription.disable event
-                    break;
-
-                case 'invoice.create':
                 case 'invoice.update':
                     // Handle invoice.create and invoice.update events
                     break;

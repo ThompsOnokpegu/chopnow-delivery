@@ -12,7 +12,7 @@
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
 
               <div class="d-flex flex-column justify-content-center">
-                <h5 class="mb-1 mt-3">Order #{{ $order->id }} <span class="badge bg-label-success me-2 ms-2">Paid</span></h5>
+                <h5 class="mb-1 mt-3">Order #{{ $order->id }} <span class="badge bg-label-success me-2 ms-2">{{ $order->order_status }}</span></h5>
                 <p class="text-body">{{ $order->created_at->toDayDateTimeString() }} (GMT)</p>
               </div>
               <div class="d-flex align-content-center flex-wrap gap-2">
@@ -45,16 +45,17 @@
                               <div class="d-flex justify-content-start align-items-center mb-4">
                                 <div class="d-flex flex-column">
                                   <a href="app-user-view-account.html" class="text-body text-nowrap">
-                                    <h6 class="mb-0">{{ $order->recipient_name }}</h6>
+                                    <h6 class="mb-0">{{ $order->user->name }}</h6>
                                   </a>
                                   <small class="text-muted">Customer ID: {{ $order->user->id }}</small>
                                 </div>
                               </div>
                               
                               <div class="d-flex justify-content-between">
-                                <h6>Contact info</h6>
+                                <h6>Delivery Contact</h6>
                                 
                               </div>
+                              <p class=" mb-1">Name: {{ $order->recipient_name }}</p>
                               <p class=" mb-1">Email: {{ $order->user->email }}</p>
                               <p class=" mb-0">Mobile: {{ $order->recipient_phone }}</p>
                             </div>
@@ -129,7 +130,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">0.00</h6>
+                                    <h6 class="mb-0">{{ $order->shipping }}</h6>
                                   </div>
                                 </div>
                             </li>
@@ -141,7 +142,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h4 class="mb-0">{{ ($subtotal - $order->discount) }}.00</h4>
+                                    <h4 class="mb-0">{{ ($subtotal - $order->discount) + $order->shipping }}.00</h4>
                                   </div>
                                 </div>
                             </li>
@@ -158,6 +159,7 @@
                             <div class="col-md-12 product_status">
                               <select id="OrderStatus" name="order_status" class="form-select text-capitalize">
                                 <option value="">Status</option>
+                                <option value="Awaiting Payment" @selected('Awaiting Payment'==old('order_status',$order->order_status))>Awaiting Payment</option>
                                 <option value="Processing" @selected('Processing'==old('order_status',$order->order_status))>Processing</option>
                                 <option value="Enroute" @selected('Enroute'==old('order_status',$order->order_status))>Enroute</option>
                                 <option value="Delivered" @selected('Delivered'==old('order_status',$order->order_status))>Delivered</option>

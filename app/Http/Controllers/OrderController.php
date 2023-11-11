@@ -18,7 +18,7 @@ class OrderController extends Controller
         foreach($orders as $order){
             $items = new OrderItemsRepo;
             $amount = $items->orderTotal($order->id);
-            $order->total = $amount;
+            $order->total = $amount + $order->shipping;
             // return $order;
         }
         return view('vendor.orders.index', compact('orders'));

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FoodKapp - Food Ordering, Delivery Mobile Template</title>
     <!--fivicon icon-->
-    <link rel="icon" href="{{'customer/ass'}}ts/img/fevicon.png">
+    <link rel="icon" href="{{ asset('customer/assets/img/fevicon.png') }}">
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{'customer/assets/css/animate.min.css'}}">

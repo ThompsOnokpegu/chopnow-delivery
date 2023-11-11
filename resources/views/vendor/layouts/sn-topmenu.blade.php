@@ -74,6 +74,12 @@ id="layout-navbar">
           </a>
         </li>
         <li>
+          <a class="dropdown-item" href="{{ route('vendor.payout') }}">
+            <i class="bx bx-transfer me-1"></i> 
+            <span class="align-middle">Payout</span>
+          </a>
+        </li>
+        <li>
           <a class="dropdown-item" href="{{ route('vendor.auth') }}">
               <i class="flex-shrink-0 bx bx-lock me-2"></i>
               <span class="flex-grow-1 align-middle">Change Password</span>

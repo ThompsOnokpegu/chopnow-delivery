@@ -17,6 +17,17 @@
           </div>
           <!-- /Account -->
         </div>
+        <div class="card mb-4">
+          <h5 class="card-header">Request Payout</h5>
+          <!-- Account -->
+          <hr class="my-0" />
+          <div class="card-body">
+                       
+            {{-- livewire component --}}
+            @livewire('resolve-bank') 
+          </div>
+          <!-- /Account -->
+        </div>
       </div>
     </div>
   </div>

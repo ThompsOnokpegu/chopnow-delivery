@@ -96,6 +96,7 @@ class ValidateCheckout extends Component
         $order->recipient_phone = $validated['phone'];
         $order->recipient_name = $validated['name'];
         $order->order_status = "Awaiting Payment";
+        $order->payment_status = "pending";
         $order->payment_method = $validated['payment_method'];
         $order->discount = 0;
         $order->shipping = $this->cart->vendor()->delivery_fee;
