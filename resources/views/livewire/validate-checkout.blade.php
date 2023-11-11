@@ -72,7 +72,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
                           Shipping
-                          <span>₦750.00</span>
+                          <span>₦{{ $vendor->delivery_fee }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             VAT (7.5%)

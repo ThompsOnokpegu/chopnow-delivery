@@ -19,6 +19,7 @@ class Order extends Model
         'discount',
         'payment_method',
         'order_status',
+        'shipping',
     ];
 
     // Define relationships here, e.g., customer, items (order items), etc.

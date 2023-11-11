@@ -43,10 +43,10 @@
     <form class="order-cart">
         <ul>
             <li>Subtotal<span>₦{{   $cart->getSubTotal() }}</span></li>
-            <li>Delivery Fee<span>{{ $cart->isEmpty()? '₦0.00':'₦750.00' }}</span></li>
+            <li>Delivery Fee<span>{{ $cart->isEmpty()? '₦0.00': '₦'.$cart->vendor()->delivery_fee }}</span></li>
             <li>
                 <div class="single-input-wrap with-btn">
-                    <input type="text" class="form-control" placeholder="Apply your couons">
+                    <input type="text" class="form-control" placeholder="Apply your coupons">
                     <button class="btn">Apply</button>
                 </div>
             </li>

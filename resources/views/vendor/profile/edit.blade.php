@@ -85,7 +85,7 @@
                     alt="brand-image"
                     class="d-block rounded"
                     height="100"
-                    width="100"
+                    width=auto
                     id="preview"
                     />
                   <div class="button-wrapper">
@@ -127,8 +127,31 @@
                       />
                       @error('business_name') <div class="error">{{ $message }}</div> @enderror
                     </div>
-                   
-                  
+                    <div class="mb-3 col-md-6">
+                      <label for="language" class="form-label">Restaurant Type</label>
+                      <select id="language" name="restaurant_type" class="select2 form-select">
+                        <option value="">Restaurant Type</option>
+                        <option value='International' @selected('International' == old('restaurant_type',$vendor->restaurant_type))>International</option>
+                        <option value='Breakfast' @selected('Breakfast' == old('restaurant_type',$vendor->restaurant_type))>Breakfast</option>
+                        <option value='Pastries' @selected('Pastries' == old('restaurant_type',$vendor->restaurant_type))>Pastries</option>
+                        <option value='Shawarma' @selected('Shawarma' == old('restaurant_type',$vendor->restaurant_type))>Shawarma</option>
+                        <option value='Vegeterian' @selected('Vegeterian' == old('restaurant_type',$vendor->restaurant_type))>Vegeterian</option>
+                        <option value='Grill' @selected('Grill' == old('restaurant_type',$vendor->restaurant_type))>Grill</option>
+                        <option value='Bakery and Pastry' @selected('Bakery and Pastry' == old('restaurant_type',$vendor->restaurant_type))>Bakery and Pastry</option>
+                        <option value='Pasta' @selected('Pasta' == old('restaurant_type',$vendor->restaurant_type))>Pasta</option>
+                        <option value='Nigerian' @selected('Nigerian' == old('restaurant_type',$vendor->restaurant_type))>Nigerian</option>
+                        <option value='Snacks' @selected('Snacks' == old('restaurant_type',$vendor->restaurant_type))>Snacks</option>
+                        <option value='Pizza' @selected('Pizza' == old('restaurant_type',$vendor->restaurant_type))>Pizza</option>
+                        <option value='Juices' @selected('Juices' == old('restaurant_type',$vendor->restaurant_type))>Juices</option>
+                        <option value='Deserts' @selected('Deserts' == old('restaurant_type',$vendor->restaurant_type))>Deserts</option>
+                        <option value='Burgers' @selected('Burgers' == old('restaurant_type',$vendor->restaurant_type))>Burgers</option>
+                        <option value='Jollof' @selected('Jollof' == old('restaurant_type',$vendor->restaurant_type))>Jollof</option>
+                      </select>
+                      
+                      @error('restaurant_type') <div class="error">{{ $message }}</div> @enderror
+                    </div>
+                  </div>
+                  <div class="row">
                     <div class="mb-3 col-md-6">
                       <label class="form-label" for="business_phone">Business Phone</label>
                       <div class="input-group input-group-merge">
@@ -176,15 +199,59 @@
                         </select>
                         @error('state') <div class="error">{{ $message }}</div> @enderror
                     </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="row">
+                          <div class="mb-3 col-md-6">
+                            <label for="language" class="form-label">Prep Time<small> (mins)</small></label>
+                            <select id="language" name="preparation_time" class="select2 form-select">
+                              <option value="">Prep Time</option>
+                              <option value=15 @selected(15 == old('preparation_time',$vendor->preparation_time))>15</option>
+                              <option value=20 @selected(20 == old('preparation_time',$vendor->preparation_time))>20</option>
+                              <option value=25 @selected(25 == old('preparation_time',$vendor->preparation_time))>25</option>
+                              <option value=30 @selected(30 == old('preparation_time',$vendor->preparation_time))>30</option>
+                              <option value=35 @selected(35 == old('preparation_time',$vendor->preparation_time))>35</option>
+                              <option value=40 @selected(40 == old('preparation_time',$vendor->preparation_time))>40</option>
+                              <option value=45 @selected(45 == old('preparation_time',$vendor->preparation_time))>45</option>
+                              <option value=50 @selected(50 == old('preparation_time',$vendor->preparation_time))>50</option>
+                              <option value=55 @selected(55 == old('preparation_time',$vendor->preparation_time))>55</option>
+                              <option value=60 @selected(60 == old('preparation_time',$vendor->preparation_time))>60</option>
+                            </select>
+                            <small>How soon can you deliver your orders?</small>
+                            @error('preparation_time') <div class="error">{{ $message }}</div> @enderror
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="language" class="form-label">Delivery Fee</label>
+                            <div class="input-group input-group-merge">
+                              <span class="input-group-text">₦</span>
+                              <input type="text" 
+                                name="delivery_fee" 
+                                value="{{ old('delivery_fee',$vendor->delivery_fee) }}" 
+                                class="form-control" 
+                                placeholder="100" 
+                                aria-label="Amount (to the nearest Naira)">
+                              <span class="input-group-text">NGN</span>
+                            </div>
+                            @error('delivery_fee') <div class="error">{{ $message }}</div> @enderror
+                          </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                      <label for="language" class="form-label">Business Type<small> (mins)</small></label>
+                      <select id="language" name="business_type" class="select2 form-select">
+                        <option value="">Business Type</option>
+                        <option value='Personal' @selected('Personal' == old('business_type',$vendor->business_type))>Personal Business</option>
+                        <option value='Registered' @selected('Registered' == old('business_type',$vendor->business_type))>Registered Business</option>
+                      </select>
+                      <small>Registered business require extra verification</small>
+                      @error('business_type') <div class="error">{{ $message }}</div> @enderror
+                    </div>
                   </div>
                   <div class="mt-2">
                     <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                  </div>
-                
+                  </div>  
               </div>
               <!-- /Account -->
-            </div>
-            
+            </div> 
           </div>
         </form>
       </div>

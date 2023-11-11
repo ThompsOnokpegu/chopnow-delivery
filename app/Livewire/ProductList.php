@@ -3,35 +3,30 @@
 namespace App\Livewire;
 
 use App\Models\Menu;
-use Darryldecode\Cart\Cart;
+use App\Repos\ChopCart;
 use Livewire\Component;
 
 class ProductList extends Component
 {
-    private $config = [
-        'format_numbers' => true,
-        'decimals' => 2,
-        'dec_point' => '.',
-        'thousands_sep' => ',',
-    ];
+    
     public $cartContent;
     public array $quantity = [];
     public $products;
     protected $cart; // Declare a property to hold the Cart instance;
     protected $listeners = ['update-cart' => 'render'];
+
     
     public function render()
     {
-        // Instantiate the Cart class if it's null
-        if (is_null($this->cart)) {
-            $this->cart = new Cart(app('session'), app('events'), 'default', 'cart',$this->config);
-        }
+        //Create Cart instance
+        $this->cart = new ChopCart();
         $cart = $this->cart->getContent();
         $this->cartContent = $cart;
         return view('livewire.product-list',compact('cart'));
     }
     
     public function mount($vendorId){
+        //TODO: CHECK CART'S VENOR IS THE SAME
         $this->products = Menu::where('vendor_id',$vendorId)->get();
         foreach($this->products as $product){
             $this->quantity[$product->id] = 1;
@@ -40,10 +35,8 @@ class ProductList extends Component
     
     public function addToCart($product_id){
         
-        // Instantiate the Cart class if it's null
-        if (is_null($this->cart)) {
-            $this->cart = new Cart(app('session'), app('events'), 'default', 'cart',$this->config);
-        }
+        //Create Cart instance
+        $this->cart = new ChopCart();
 
         //find the product
         $product = Menu::findOrFail($product_id);
@@ -66,11 +59,8 @@ class ProductList extends Component
 
     public function reduceQuantity($product_id)
     {
-        // Instantiate the Cart class if it's null
-        if (is_null($this->cart)) {
-           
-            $this->cart = new Cart(app('session'), app('events'), 'default', 'cart', $this->config);
-        }
+        //Create Cart instance
+        $this->cart = new ChopCart();
 
        // Item quanity is more than 1? 
        if ($this->cartContent[$product_id]['quantity'] != 1) {

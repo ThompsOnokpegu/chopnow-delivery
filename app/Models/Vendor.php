@@ -35,6 +35,10 @@ class Vendor extends Authenticatable
         'kyc_number',
         'kyc_document',
         'account_status',
+        'delivery_fee',
+        'preparation_time',
+        'restaurant_type',
+        'business_type',
     ];
 
     /**

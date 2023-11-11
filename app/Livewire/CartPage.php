@@ -1,39 +1,21 @@
 <?php
 
 namespace App\Livewire;
-use Darryldecode\Cart\Cart;
-use Darryldecode\Cart\CartCondition;
+
+use App\Repos\ChopCart;
 use Livewire\Component;
 
 class CartPage extends Component
 {
     protected $listeners = ['update-cart' => 'render'];
     protected $cart;
-    protected $config = [
-        'format_numbers' => true,
-        'decimals' => 2,
-        'dec_point' => '.',
-        'thousands_sep' => ',',
-    ];
     private $cartContent;
     public array $quantity = [];
 
     public function render()
     {
-        if (is_null($this->cart)) {
-            $this->cart = new Cart(app('session'), app('events'), 'default', 'cart', $this->config);
-        }
-        
-        // add condition to only apply on totals, not in subtotal
-        $condition = new CartCondition(array(
-            'name' => 'Delivery ₦750',
-            'type' => 'shipping',
-            'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
-            'value' => '+750',
-            'order' => 1 // the order of calculation of cart base conditions. The bigger the later to be applied.
-        ));
-        $this->cart->condition($condition);
-        
+        //Create Cart instance
+        $this->cart = new ChopCart();
 
         $items = $this->cart->getContent();
         
@@ -44,9 +26,8 @@ class CartPage extends Component
     }  
     
     public function updateQuantity($product_id){
-        if (is_null($this->cart)) {            
-            $this->cart = new Cart(app('session'), app('events'), 'default', 'cart', $this->config);
-        }
+        //Create Cart instance
+        $this->cart = new ChopCart();
         // you may also want to update a product's quantity
         $this->cart->update($product_id, array(
             'quantity' => 1, // so if the current product has a quantity of 4, another 1 will be added so this will result to 5
@@ -58,11 +39,8 @@ class CartPage extends Component
     public function reduceQuantity($product_id)
     {
         
-        // Instantiate the Cart class if it's null
-        if (is_null($this->cart)) {
-           
-            $this->cart = new Cart(app('session'), app('events'), 'default', 'cart', $this->config);
-        }
+        //Create Cart instance
+        $this->cart = new ChopCart();
         
         $this->cartContent = $this->cart->getContent();
 

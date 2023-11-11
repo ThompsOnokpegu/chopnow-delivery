@@ -13,6 +13,7 @@ class Paystack {
         try {
             // Set the API endpoint
             $endpoint = $this->api . '/transaction/initialize';
+            //$callback = url(route('restaurants.index'));//TODO: CHANGE TO THANKYOU PAGE
             
             // Define metadata for the payment
             $metadata = [
