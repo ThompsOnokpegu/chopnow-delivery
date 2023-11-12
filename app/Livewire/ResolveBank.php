@@ -15,7 +15,7 @@ class ResolveBank extends Component
     public $account_name = '';
     public $banks = '';
     public $paystack = 'https://api.paystack.co';
-    public $payout ='';
+    
 
 
     public function mount(){
@@ -90,7 +90,6 @@ class ResolveBank extends Component
 
     private function setVendorPayoutAccount($payload){
         $vendor = Auth::guard('vendor')->user();
-        //dd($payload['details']['account_name']);
         $payout = PayoutAccount::create([
             'vendor_id' => $vendor->id,
             'account_name' => $payload['details']['account_name'],
@@ -100,8 +99,9 @@ class ResolveBank extends Component
             'recipient_code' => $payload['recipient_code'],
             'status' => 'verified'
         ]);
-        $this->account_name = $payload['details']['account_name'];
-        return redirect()->route('vendor.payout')->with('message','Payout account created successfully!');
+        $this->bank_name = $payout->bank_name;
+        $this->account_name = $payout->account_name;
+        $this->dispatch('payout-account-added');
     }
 
     public function render(){

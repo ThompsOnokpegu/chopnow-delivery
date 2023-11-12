@@ -6,7 +6,7 @@
         <p class="mb-0">We want to ensure that the money is sent to the right account when you request payout.</p>
       </div>
     </div>
-    <form>
+    <form wire:loading.remove>
       <div class="row">
         <div class="mb-3 col-md-12">
           <label for="Name" class="form-label">
@@ -44,6 +44,7 @@
         Submit Account
       </button> 
     </form>
+    <div wire:loading>Fetching your account...</div>
   @else
     <div class="mb-3 col-12 mb-0">
       <div class="alert alert-primary">

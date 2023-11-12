@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -38,12 +39,11 @@ class WebhookController extends Controller
 
             // Retrieve the reference from the Paystack event
             $reference = $event->data->reference;
-
-            // Find the order associated with the reference
-            $order = Order::where('reference', $reference)->first();
-            
+ 
             switch ($event->event) {
                 case 'charge.success':
+                    // Find the order associated with the reference
+                    $order = Order::where('reference', $reference)->first();
                     if ($order) {
                         // Update the order status to 'Processing' and save it
                         $order->order_status = 'Processing';
@@ -52,8 +52,14 @@ class WebhookController extends Controller
                         return response('Webhook Processed', 200);
                     }
                     break;
-                case 'invoice.update':
-                    // Handle invoice.create and invoice.update events
+                case 'transfer.success':
+                    // Handle transfer.success
+                    $transaction = Transaction::where('reference',$reference)->first();
+                    if($transaction){
+                        $transaction->status = $event->data->status;
+                        $transaction->save();
+                        return response('Webook Processed', 200);
+                    }
                     break;
             }
         } else {

@@ -21,6 +21,7 @@ class Order extends Model
         'payment_status',
         'order_status',
         'shipping',
+        'total',
     ];
 
     // Define relationships here, e.g., customer, items (order items), etc.

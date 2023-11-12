@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PayoutAccount;
 use App\Models\Vendor;
 use App\Repos\VendorRepo;
 use Carbon\Carbon;
@@ -133,6 +134,7 @@ class VendorController extends Controller
 
     
     public function payout(VendorRepo $VendorRepo){
+        
         $vendor = Auth::guard('vendor')->user();  
         $banks = $VendorRepo->fetchBanks(); 
         return view('vendor.profile.account-validation',compact('vendor','banks'));

@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
                 <div class="d-flex flex-column justify-content-center">
-                    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Orders/</span> All</h4>
+                    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('orders.index') }}" >Orders</a></span>/ Details</h4>
                 </div>
             </div>
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">

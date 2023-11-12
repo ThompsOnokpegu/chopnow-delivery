@@ -100,6 +100,7 @@ class ValidateCheckout extends Component
         $order->payment_method = $validated['payment_method'];
         $order->discount = 0;
         $order->shipping = $this->cart->vendor()->delivery_fee;
+        $order->total = str_replace(',','', $this->cart->getTotal());
         //$order->tracking_code = "CN-".rand(10111, 99999);
         $order->save();
         
