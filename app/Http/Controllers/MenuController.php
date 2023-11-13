@@ -40,7 +40,8 @@ class MenuController extends Controller
             //if product image already exist for this menu
             if($menu->product_image != null){
                 //check if the image is still in the directory: prevent file not found exception
-                if (public_path('product-images/'.$menu->product_image)){
+                if (file_exists(public_path('product-images/'.$menu->product_image)))
+                {
                     //delete the old file
                     $oldfile = public_path('product-images/').$menu->product_image;
                     unlink($oldfile);
