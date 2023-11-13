@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\PayoutAccount;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
@@ -17,16 +18,17 @@ class ResolveBank extends Component
     public $paystack = 'https://api.paystack.co';
     
 
+    public function render(){
+        $id = Auth::guard('vendor')->user()->id; 
+        $hasPayoutAccount = $this->hasPayoutAccount($id);
+        return view('livewire.resolve-bank',compact('hasPayoutAccount'));
+    }
 
     public function mount(){
         $vendor = Auth::guard('vendor')->user();
-        $payout = PayoutAccount::where('vendor_id',$vendor->id)->first(); 
+        $hasPayoutAccount = $this->hasPayoutAccount($vendor->id); 
             
-        if($payout!=null){
-            $this->account_name = $payout->account_name;
-            $this->account_number = $payout->account_number;
-            $this->bank_name = $payout->bank_name;
-        }else{
+        if(!$hasPayoutAccount){
             $response = Http::get($this->paystack.'/bank?country=nigeria&currency=NGN');
             $banks = [];
             if ($response->successful()) {
@@ -47,7 +49,6 @@ class ResolveBank extends Component
         }
     }
 
-
     public function resolve(){
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.env('PAYSTACK_SECRET_KEY'),
@@ -56,7 +57,6 @@ class ResolveBank extends Component
 
         if ($response->successful()) {
             $data = $response->json('data');
-            $this->account_name = $data['account_name'];
             $this->createTransferRecipient();
         } else {
             // Handle API request failure
@@ -89,9 +89,10 @@ class ResolveBank extends Component
     }
 
     private function setVendorPayoutAccount($payload){
-        $vendor = Auth::guard('vendor')->user();
+        $id = Auth::guard('vendor')->user()->id;
+        //save payout account details
         $payout = PayoutAccount::create([
-            'vendor_id' => $vendor->id,
+            'vendor_id' => $id,
             'account_name' => $payload['details']['account_name'],
             'bank_code' => $payload['details']['bank_code'],
             'bank_name' => $payload['details']['bank_name'],
@@ -99,13 +100,30 @@ class ResolveBank extends Component
             'recipient_code' => $payload['recipient_code'],
             'status' => 'verified'
         ]);
-        $this->bank_name = $payout->bank_name;
-        $this->account_name = $payout->account_name;
+
+        //Approve if account is Personal Business
+        $vendor = Vendor::where('id',$id)->first();
+        if($vendor->business_type == "Personal"){
+            $vendor->account_status = 'approved';
+            $vendor->save();
+        }
+
         $this->dispatch('payout-account-added');
     }
-
-    public function render(){
-        $account_name = $this->account_name;
-        return view('livewire.resolve-bank',compact('account_name'));
-    } 
+  
+    public function hasPayoutAccount($vendor){
+        /*
+            $vendor = Vendor:id
+        */
+        //fetch vendor with given id
+        $payoutAccount = PayoutAccount::where('vendor_id',$vendor)->first(); 
+        
+        if($payoutAccount){
+            $this->account_number = $payoutAccount->account_number;
+            $this->bank_name = $payoutAccount->bank_name;
+            $this->account_name = $payoutAccount->account_name;
+            return true;
+        }
+        return false;
+    }
 }

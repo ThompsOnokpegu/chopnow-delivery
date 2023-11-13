@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
-            $table->enum('kyc_type', ['NIN', 'BVN', 'Passport'])->nullable();
+            $table->enum('kyc_type', ['BN', 'CAC'])->nullable();
             $table->string('kyc_number')->nullable();
             $table->string('kyc_document')->nullable();
-            $table->enum('account_status', ['active', 'inactive'])->nullable();
+            $table->enum('account_status', ['approved', 'pending'])->nullable();
             // Add more vendor-specific fields as needed
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

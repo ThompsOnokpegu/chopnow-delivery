@@ -15,17 +15,16 @@ class RequestPayout extends Component
 {
     public $amount;
     private $data;
-    public $payoutAccount;
     protected $listeners = ['payout-account-added' => 'render'];//I want you to eavesdrop on ResolveBank
     public function render()
     {
         $id = Auth::guard('vendor')->user()->id;
         //check whether payout account has been set
-        $payout = PayoutAccount::where('vendor_id',$id)->first(); 
+        $hasPayoutAccount = $this->hasPayoutAccount($id); 
         
         $data = $this->data;
         $balance = $this->getBalance($id);
-        return view('livewire.request-payout',compact('data','balance','payout'));
+        return view('livewire.request-payout',compact('data','balance','hasPayoutAccount'));
     }
 
     public function transfer(){
@@ -47,6 +46,7 @@ class RequestPayout extends Component
                 'recipient' => $vendorAccount->recipient_code,
             ]);
             if ($response->successful()) {
+                // Handle the response data here
                 $data = $response->json()['data'];
                 $transaction = Transaction::create([
                     'vendor_id'=>$id,
@@ -57,7 +57,7 @@ class RequestPayout extends Component
                     'status' => $data['status'],
                 ]); 
                 $this->data = $transaction;
-                // Handle the response data here
+                
             } else {
                 // Handle API request failure
                 return response()->json(['error' => 'Failed to send POST request'], $response->status());
@@ -68,7 +68,9 @@ class RequestPayout extends Component
         
     }
     public function getBalance($vendor){
-
+        /*
+            $vendor = Vendor:id
+        */
         $orders = Order::where('vendor_id',$vendor)
             ->where('payment_status','paid')
             ->get();
@@ -89,5 +91,18 @@ class RequestPayout extends Component
         $balance = $order_sum - $payout_sum;
 
         return $balance;
+    }
+
+    public function hasPayoutAccount($vendor){
+        /*
+            $vendor = Vendor:id
+        */
+        //fetch vendor with given id
+        $payoutAccount = PayoutAccount::where('vendor_id',$vendor)->first(); 
+        
+        if($payoutAccount){
+            return true;
+        }
+        return false;
     }
 }

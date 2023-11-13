@@ -65,7 +65,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a data-bs-toggle="modal" data-bs-target="#searchModal"class="menu-bar">
                         <img src="{{ asset('customer/assets/img/icon/svg/search.svg') }}" alt="img">
                     </a>
                 </li>

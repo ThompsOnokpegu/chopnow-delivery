@@ -1,5 +1,6 @@
 <div class="row">
-    @if($payout)
+    @if($hasPayoutAccount)
+
         <div class="col-md-6 align-self-center">
             <div class="report-list-item rounded-2">
                 <div class="d-flex align-items-start">

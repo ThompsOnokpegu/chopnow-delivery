@@ -205,16 +205,16 @@
                             <label for="language" class="form-label">Prep Time<small> (mins)</small></label>
                             <select id="language" name="preparation_time" class="select2 form-select">
                               <option value="">Prep Time</option>
-                              <option value=15 @selected(15 == old('preparation_time',$vendor->preparation_time))>15</option>
-                              <option value=20 @selected(20 == old('preparation_time',$vendor->preparation_time))>20</option>
-                              <option value=25 @selected(25 == old('preparation_time',$vendor->preparation_time))>25</option>
-                              <option value=30 @selected(30 == old('preparation_time',$vendor->preparation_time))>30</option>
-                              <option value=35 @selected(35 == old('preparation_time',$vendor->preparation_time))>35</option>
-                              <option value=40 @selected(40 == old('preparation_time',$vendor->preparation_time))>40</option>
-                              <option value=45 @selected(45 == old('preparation_time',$vendor->preparation_time))>45</option>
-                              <option value=50 @selected(50 == old('preparation_time',$vendor->preparation_time))>50</option>
-                              <option value=55 @selected(55 == old('preparation_time',$vendor->preparation_time))>55</option>
-                              <option value=60 @selected(60 == old('preparation_time',$vendor->preparation_time))>60</option>
+                              <option value=15 @selected(15 == old('preparation_time',$vendor->preparation_time))>15 mins</option>
+                              <option value=20 @selected(20 == old('preparation_time',$vendor->preparation_time))>20 mins</option>
+                              <option value=25 @selected(25 == old('preparation_time',$vendor->preparation_time))>25 mins</option>
+                              <option value=30 @selected(30 == old('preparation_time',$vendor->preparation_time))>30 mins</option>
+                              <option value=35 @selected(35 == old('preparation_time',$vendor->preparation_time))>35 mins</option>
+                              <option value=40 @selected(40 == old('preparation_time',$vendor->preparation_time))>40 mins</option>
+                              <option value=45 @selected(45 == old('preparation_time',$vendor->preparation_time))>45 mins</option>
+                              <option value=50 @selected(50 == old('preparation_time',$vendor->preparation_time))>50 mins</option>
+                              <option value=55 @selected(55 == old('preparation_time',$vendor->preparation_time))>55 mins</option>
+                              <option value=60 @selected(60 == old('preparation_time',$vendor->preparation_time))>60 mins</option>
                             </select>
                             <small>How soon can you deliver your orders?</small>
                             @error('preparation_time') <div class="error">{{ $message }}</div> @enderror

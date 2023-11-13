@@ -11,6 +11,7 @@ use App\Repos\Paystack;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\DB;
 
 class ValidateCheckout extends Component
 {
@@ -88,35 +89,37 @@ class ValidateCheckout extends Component
         $uuid = Uuid::uuid4()->toString(); // Get the UUID as a string
         //create new order
         $order = new Order();
-          
-        $order->reference = $uuid; 
-        $order->vendor_id = $this->cart->vendor()->id;
-        $order->user_id = Auth::user()->id; // Assuming a customer places the order
-        $order->recipient_address = $validated['address'] .' - '.$validated['address2'];
-        $order->recipient_phone = $validated['phone'];
-        $order->recipient_name = $validated['name'];
-        $order->order_status = "Awaiting Payment";
-        $order->payment_status = "pending";
-        $order->payment_method = $validated['payment_method'];
-        $order->discount = 0;
-        $order->shipping = $this->cart->vendor()->delivery_fee;
-        $order->total = str_replace(',','', $this->cart->getTotal());
-        //$order->tracking_code = "CN-".rand(10111, 99999);
-        $order->save();
         
-        //get cart items
-        $cartItems = $this->cart->getContent();
-
-        //create new order items
-        foreach($cartItems as $item){
-            OrderItem::create([
-                'order_id' => $order->id,
-                'name' => $item->name,
-                'price' => $item->price,
-                'quantity' =>$item->quantity,
-                //'total' => $item->getPriceSum(),//price*quanity
-            ]);
-        }
+        DB::beginTransaction();
+            $order->reference = $uuid; 
+            $order->vendor_id = $this->cart->vendor()->id;
+            $order->user_id = Auth::user()->id; // Assuming a customer places the order
+            $order->recipient_address = $validated['address'] .' - '.$validated['address2'];
+            $order->recipient_phone = $validated['phone'];
+            $order->recipient_name = $validated['name'];
+            $order->order_status = "Awaiting Payment";
+            $order->payment_status = "pending";
+            $order->payment_method = $validated['payment_method'];
+            $order->discount = 0;
+            $order->shipping = $this->cart->vendor()->delivery_fee;
+            $order->total = str_replace(',','', $this->cart->getTotal());
+            //$order->tracking_code = "CN-".rand(10111, 99999);
+            $order->save();
+            
+            //get cart items
+            $cartItems = $this->cart->getContent();
+            
+            //create new order items
+            foreach($cartItems as $item){
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'name' => $item->name,
+                    'price' => $item->price,
+                    'quantity' =>$item->quantity,
+                ]);
+            }
+        DB::commit();
+        
         return $order;
     }
     

@@ -1,5 +1,5 @@
 <div>
-  @if ($account_name == '')
+  @if (!$hasPayoutAccount)
     <div class="mb-3 col-12 mb-0">
       <div class="alert alert-warning">
         <h6 class="alert-heading fw-bold mb-1">Why do I need to enter my bank account?</h6>

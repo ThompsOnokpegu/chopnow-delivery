@@ -30,7 +30,7 @@
                     <label><img src="{{ asset('customer/assets/img/icon/search.svg') }}" alt="img"></label>
                     <input type="text" class="form-control" placeholder="Search restaurants" data-bs-toggle="modal" data-bs-target="#searchModal">
                 </div>
-                <button type="button" class="btn btn-border" data-bs-toggle="modal" data-bs-target="#categoryModal">
+                <button type="button" class="btn btn-border" data-bs-toggle="modal" data-bs-target="#categoryyyyyModal">
                     <img src="{{ asset('customer/assets/img/icon/filter.svg') }}" alt="img">
                 </button>
             </div>
