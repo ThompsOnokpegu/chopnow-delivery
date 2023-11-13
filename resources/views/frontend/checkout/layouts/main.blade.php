@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>FoodKapp - Food Ordering, Delivery Mobile Template</title>
+    <title>ChopNow - Food Ordering and Delivery</title>
     <!--fivicon icon-->
     <link rel="icon" href="{{ asset('customer/assets/img/fevicon.png') }}">
 

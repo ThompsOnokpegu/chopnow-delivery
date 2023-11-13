@@ -11,6 +11,10 @@ class Paystack {
     
     public function getPaymentLink($amount, $vendor_id, $user, $email, $ref) {
         try {
+            //set callback url
+            $callback_url = url(route('order.thankyou'));
+            //$callback_url = 'https://8b35-102-91-54-66.ngrok-free.app';
+
             // Set the API endpoint
             $endpoint = $this->api . '/transaction/initialize';
             //$callback = url(route('restaurants.index'));//TODO: CHANGE TO THANKYOU PAGE
@@ -39,6 +43,7 @@ class Paystack {
                 'email' => $email,
                 'amount' => $amount * 100, // Paystack expects the amount in kobo
                 'reference' => $ref,
+                'callback_url' => $callback_url,
                 'currency' => 'NGN',
                 'metadata' => $metadata['metadata'],
             ];

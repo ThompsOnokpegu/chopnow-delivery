@@ -34,17 +34,16 @@
             @endforeach
           </select>
         </div>
-        <div wire:loading.class="d-block" wire:target="reinitialize" class="d-none">
-            <div class="spinner-border load-spinner text-tertiary p-0 me-2"></div>
-        </div>
-        
       </div>
       
       <button wire:click.prevent="resolve" class="btn btn-primary me-2 mb-4">
         Submit Account
       </button> 
     </form>
-    <div wire:loading>Fetching your account...</div>
+    <div wire:loading class="demo-inline-spacing">
+      <div class="spinner-border text-primary" role="status"></div>
+      <span class="visuall-hidden">Fetching your account...</span>
+    </div>
   @else
     <div class="mb-3 col-12 mb-0">
       <div class="alert alert-primary">

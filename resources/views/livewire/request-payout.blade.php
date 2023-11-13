@@ -40,8 +40,10 @@
                 <span class="input-group-text">NGN</span>
             </div>
             @error('amount') <div class="error">{{ $message }}</div> @enderror
-            <div wire:loading style="color:696cff">
-                Processing...
+            <div wire:loading class="demo-inline-spacing">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
             <div class="col-12 col-sm-3 mt-2" wire:loading.remove>
                 <button wire:click.prevent="transfer" class="btn btn-primary"><i class="bx bx-check me-2"></i>Confirm</button>

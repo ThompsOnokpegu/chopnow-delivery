@@ -16,7 +16,7 @@
     />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Dashboard - Analytics | ChopNow</title>
+    <title>Dashboard - Analytics | Sneat</title>
 
     <meta name="description" content="" />
 
@@ -46,7 +46,97 @@
     <link rel="stylesheet" href="{{ asset('vendor/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
     <link rel="stylesheet" href="{{ asset('vendor/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+    <style>
+      .timeline {
+          position: relative;
+          height: 100%;
+          width: 100%;
+          padding: 0;
+          list-style: none;
+      }
+      .timeline .timeline-item {
+          position: relative;
+      }
+      .timeline .timeline-item .timeline-point-wrapper {
+          position: absolute;
+          top: -0.5rem;
+          left: -0.43rem;
+          z-index: 2;
+          display: block;
+          height: 2.25rem;
+          width: 2.25rem;
+      }
 
+      .timeline .timeline-item .timeline-point {
+          position: absolute;
+          left: 0;
+          top: 0.75rem;
+          z-index: 3;
+          display: block;
+          height: 0.75rem;
+          width: 0.75rem;
+          border-radius: 50%;
+          background-color: #696cff;
+      } 
+      .timeline .timeline-point-success {
+          background-color: #71dd37 !important;
+          box-shadow: 0 0 0 0.1875rem rgba(113,221,55,.16);
+      }
+      
+      html:not([dir=rtl]) .timeline-item {
+          border-left: 1px solid #d9dee3;
+      }
+      .timeline .timeline-item {
+          position: relative;
+      }
+      *, *::before, *::after {
+          box-sizing: border-box;
+      }
+      li {
+          display: list-item;
+          text-align: -webkit-match-parent;
+      }
+      .timeline .timeline-item.timeline-item-transparent .timeline-event {
+          top: -1.4rem;
+          background-color: rgba(0,0,0,0);
+      }
+      .timeline .timeline-item .timeline-event {
+          position: relative;
+          top: -1rem;
+          width: 100%;
+          top: -0.85rem;
+          min-height: 4rem;
+          background-color: #fff;
+          border-radius: 0.375rem;
+          padding: 1.25rem 1.5rem 0.75rem;
+      }
+      @media (max-width: 575.98px){.timeline .timeline-header {
+          flex-direction: column;
+          align-items: flex-start;
+      }}
+      
+      .timeline .timeline-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-direction: row;
+      }
+      .timeline .timeline-item .timeline-indicator, .timeline .timeline-item .timeline-indicator-advanced {
+        background-color: #f5f5f9;
+        position: absolute;
+        left: -0.75rem;
+        top: 0;
+        z-index: 2;
+        height: 1.5rem;
+        width: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-radius: 50%;
+        padding: 1rem 0 1rem 0;
+      }   
+    </style>
     <!-- Page CSS -->
 
     <!-- Helpers -->
@@ -55,6 +145,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('vendor/assets/js/config.js') }}"></script>
+    
   </head>
 
   <body>
@@ -62,13 +153,13 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-        @include('vendor.layouts.sn-sidebar')
+        {{-- @include('vendor.layouts.sn-sidebar') --}}
         <!-- / Menu -->
 
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-          @include('vendor.layouts.sn-topmenu')
+          {{-- @include('vendor.layouts.sn-topmenu') --}}
           <!-- / Navbar -->
 
           <!-- Content wrapper -->

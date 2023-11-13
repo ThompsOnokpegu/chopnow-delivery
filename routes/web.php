@@ -74,7 +74,9 @@ Route::prefix('orders')->group(function(){
  Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['has.products','auth']);
  Route::post('/checkout',[CheckoutController::class,'placeOrder'])->name('order.checkout');
  Route::get('/cart',[CheckoutController::class,'cartPage'])->name('order.cart');
+ Route::get('/thank-you',[CheckoutController::class,'thankYou'])->name('order.thankyou');
  Route::post('/webhook',[WebhookController::class,'handle']);
+
  
  
  

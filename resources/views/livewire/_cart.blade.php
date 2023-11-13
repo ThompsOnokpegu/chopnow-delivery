@@ -8,12 +8,12 @@
                 <p class="">Your cart is empty! <span><a class="btn-white w-100" style="padding:3px;border-radious:0px;" href="{{ route('restaurants.index') }}"> Back to Restaurants</a></span></p>
                 
             </div>
-        </div>     
+        </div>      
     @else
         @foreach($items as $item)
             <div class="d-flex bd-highlight mb-3 mt-3 single-item-wrap">
                 <div class="p-2 bd-highlight flex-shrink-0">
-                    <img src="{{ asset('product-images/main-dish.png') }}" width="80" class="rounded-2" alt="">
+                    <img src="{{ asset('product-images/'.$item->associatedModel->product_image) }}" width="80" class="rounded-2" alt="{{ $item->associatedModel->slug}}">
                 </div>
                 <div class="p-2 bd-highlight">
                     <h6><a href="{{ route('restaurants.product',$item->id)}}">{{ $item->name }}</a></h6>
@@ -34,7 +34,7 @@
         @endforeach
         <div class="mb-2 mt-2">
             <div class="p-2 flex-shrink-0 text-center">
-                <p class="text-center"><span><a class="btn-white w-100" style="padding:10px;border-radius:5px;" href="{{ route('restaurants.index') }}"> Continue Shopping</a></span></p>    
+                <p class="text-center"><span><a class="btn-white w-100" style="padding:10px;border-radius:5px;" data-bs-dismiss="modal"> Continue Shopping</a></span></p>    
             </div>
         </div>  
     @endif

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use Illuminate\Http\Request;
+
 class CheckoutController extends Controller
 {
 
@@ -12,6 +15,16 @@ class CheckoutController extends Controller
     }
     public function cartPage(){
         return view('frontend.checkout.cart');
+    }
+
+    public function thankYou(Request $request){
+        if ($request->isMethod('get')) {
+            $reference = $request->query('reference');
+            $order = Order::where('reference',$reference)->first()->id;
+            
+            return view('frontend.checkout.thank-you', compact('reference','order'));
+        }
+       
     }
    
 }

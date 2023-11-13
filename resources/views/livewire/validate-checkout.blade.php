@@ -95,7 +95,7 @@
                                     <input wire:model="payment_method" class="form-check-input" value="COD" type="radio" name="flexRadioDefault" id="payment1">
                                     <label class="form-check-label" for="payment1">
                                     </label>
-                                    Cash on delivery
+                                    Cash on Delivery
                                 </div>
                             </li>
                             <li>
@@ -103,7 +103,7 @@
                                     <input wire:model="payment_method" class="form-check-input" value="Paystack" type="radio" name="flexRadioDefault" id="payment2">
                                     <label class="form-check-label" for="payment2">
                                     </label>
-                                    Credit or Debit card
+                                    Credit or Debit Card
                                 </div>
                             </li>
                         </ul>
@@ -118,7 +118,7 @@
                                 <a href="#"><img src="{{ asset('customer/assets/img/icon/card/3.png') }}" alt="img"></a>
                             </li>
                             <li>
-                                <a href="#"><img src="{{ asset('customer/assets/img/icon/card/4.png') }}" alt="img"></a>
+                                <a href="#"><img src="{{ asset('customer/assets/img/icon/card/4.jpeg') }}" alt="img"></a>
                             </li>
                         </ul>
                         

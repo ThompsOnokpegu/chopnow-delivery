@@ -34,20 +34,33 @@ class ProductList extends Component
     }
     
     public function addToCart($product_id){
-        
         //Create Cart instance
         $this->cart = new ChopCart();
-
-        //find the product
-        $product = Menu::findOrFail($product_id);
-
+        
+        //find the vendor of the new product
+        $productToAdd = Menu::where('id',$product_id)->first();
+        
+        /*prevent order from multiple vendors*/
+        //check whether cart is empty
+        if(!$this->cart->isEmpty()){   
+            //find the vendor of the existing product in cart
+            $items = $this->cart->getContent();
+            foreach($items as $item){
+                $productInCart = $item->associatedModel;//associated model is Menu
+                break;
+            }            
+            //compare product vendors
+            if($productInCart->vendor_id != $productToAdd->vendor_id){
+                $this->cart->clear();
+            }
+        }
         //Add to cart
         $this->cart->add(array(
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->regular_price,
+            'id' => $productToAdd->id,
+            'name' => $productToAdd->name,
+            'price' => $productToAdd->regular_price,
             'quantity' => $this->quantity[$product_id],
-            'associatedModel' => $product
+            'associatedModel' => $productToAdd
         ));
         
         $this->dispatch('update-cart'); // Emit an event to update the cart on the frontend.
