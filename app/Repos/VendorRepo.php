@@ -8,33 +8,33 @@ use Illuminate\Validation\Rule;
 class VendorRepo{
     public function rules(){
         return [
-            // 'first_name' => 'required|min:3',
-            // 'last_name' => 'required|min:3|nullable',
-            'email' => 'required|email',
-            'business_name' => 'required',
+            'first_name' => 'min:3',
+            'last_name' => 'min:3|nullable',
+            'email' => 'email',
+            'business_name' => 'nullable',
             'kitchen_banner_image' =>'nullable',
-            'delivery_fee' => 'required',
-            'preparation_time' => 'required',
-            'restaurant_type' => 'required',
-            'business_type' => 'required',
-            // 'state' => ['required','nullable', Rule::in(['Cross River', 'Rivers', 'Bayelsa','Akwa Ibom'])],
-            // 'address' => 'required|nullable',
-            // 'city' => 'required|nullable',
-            // 'phone' => 'required',
-            // 'slug' => 'required|nullable',
-            // 'business_phone' => 'required|nullable'
+            'delivery_fee' => 'nullable',
+            'preparation_time' => 'nullable',
+            'restaurant_type' => 'nullable',
+            'business_type' => 'nullable',
+            'state' => ['','nullable', Rule::in(['Cross River', 'Rivers', 'Bayelsa','Akwa Ibom'])],
+            'address' => 'nullable',
+            'city' => 'nullable',
+            'phone' => 'nullable',
+            'slug' => 'nullable',
+            'business_phone' => 'nullable'
         ];
     }
 
     public function signUpValidation(){
         return [
-            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+            'password' => ['', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
         ];
     }
 
     public function messages(){
         return [
-            'kitchen_banner_image.required' =>'The display image is required',    
+            'kitchen_banner_image.' =>'The display image is ',    
         ];
     }
 
