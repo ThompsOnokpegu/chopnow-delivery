@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DevMaster;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
@@ -76,6 +77,9 @@ Route::prefix('orders')->group(function(){
  Route::get('/cart',[CheckoutController::class,'cartPage'])->name('order.cart');
  Route::get('/thank-you',[CheckoutController::class,'thankYou'])->name('order.thankyou');
  Route::post('/webhook',[WebhookController::class,'handle']);
+ Route::get('/resetPayout/{account}',[DevMaster::class,'resetPayoutAccount']);
+ Route::get('/deleteOrder/{order}',[DevMaster::class,'deleteOrder']);
+ Route::get('/makeFeatured/{vendor}',[DevMaster::class,'makeFeatured']);
 
  
  
