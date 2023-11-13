@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class DevMaster extends Controller
 {
     public function makeFeatured(Vendor $vendor){
-        $vendor->featured = 1;
+        $vendor->featured = 0;
         $vendor->save();
     }
 
