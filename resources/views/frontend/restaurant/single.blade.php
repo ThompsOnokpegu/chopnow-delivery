@@ -26,9 +26,9 @@
             <div class="rating">
                 <span>
                     <i class="ri ri-star-fill"></i>
-                    4.9 <span>(6k)</span>
+                    5 <span>(0)</span>
                 </span>
-                <p> <img src="{{ asset('customer/assets/img/icon/timer.png') }}" alt="img">  20-25 Min</p>
+                <p> <img src="{{ asset('customer/assets/img/icon/timer.png') }}" alt="img">  {{ $vendor->preparation_time }} - {{ $vendor->preparation_time + 10 }} Min </p>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
 
 <div class="single-page-details">
     <div class="container">
-        <a class="btn btn-discount w-100" href="#"><img src="{{ asset('customer/assets/img/icon/svg/discount.svg') }}" alt="img"> Get  $50 off on total dish use #COMBO</a>
+        <a class="btn btn-discount w-100" href="#"><img src="{{ asset('customer/assets/img/icon/svg/discount.svg') }}" alt="img"> Get  ₦500 off on total dish use #COMBO</a>
         <div>
             <h5>Main Meals</h5>
         </div>

@@ -76,9 +76,9 @@
                 <div class="details">
                     <h6><a href="{{ route('restaurants.show',$restaurant->id) }}">{{ $restaurant->business_name }}</a> <span></span></h6>
                     <div class="ratting">
-                        <i class="ri-star-fill ps-0"></i>4.9
-                        <span>(6k)</span>
-                        <span>20-25 Min <span class="ms-3"><i class="fa fa-motorcycle"></i> ₦500.00</span></span>
+                        <i class="ri-star-fill ps-0"></i>5
+                        <span>(0)</span>
+                        <span>{{ $restaurant->preparation_time }} - {{ $restaurant->preparation_time + 10 }} Min <span class="ms-3"><i class="fa fa-motorcycle"></i> ₦{{ $restaurant->delivery_fee }}</span></span>
                         
                     </div>
                     

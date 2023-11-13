@@ -13,9 +13,7 @@ class RestaurantController extends Controller
         //if they choose to add one before the checkout page
         
         $vendors = Vendor::all();
-        for ($i=2; $i < 6; $i++) { 
-            $nearby[] = $vendors[$i];
-        }
+        $nearby = Vendor::where('featured',true)->get();
         return view('frontend.restaurant.index',compact('vendors','nearby'));
     }
 
