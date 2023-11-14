@@ -10,15 +10,11 @@ use Illuminate\Http\Request;
 class DevMaster extends Controller
 {
     public function makeFeatured(Vendor $vendor){
-        $vendor->featured = 0;
+        $vendor->featured = 1;
         $vendor->save();
     }
 
     public function resetPayoutAccount(PayoutAccount $account){
         $account->delete();
-    }
-
-    public function deleteOrder(Order $order){
-        $order->delete();
     }
 }
