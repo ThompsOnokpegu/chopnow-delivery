@@ -24,6 +24,9 @@ class ValidateCheckout extends Component
     protected $listeners = ['address-added' => 'updateAddress'];
     private $cart;
 
+    public $alternate_name;
+    public $alternate_phone;
+    public $alternate_address;
 
     public function render()
     {                
@@ -32,31 +35,36 @@ class ValidateCheckout extends Component
         $cart = $this->cart;
         return view('livewire.validate-checkout',compact('cart','vendor'));
     }
+    
+    //address added listener
     public function updateAddress(){
         $this->address = session('delivery_address');
     }
+
     public function mount(){
         //Initialize Cart
         $this->cart = new ChopCart();
         //find the vendor whose product(s) is in cart
         $vendor = $this->cart->vendor();
-        //add vendor's shipping fee
+        //add vendor's shipping fee to cart
         $this->cart->addShipping($vendor->delivery_fee);
-
+        //set user's delivery details
         $this->email = Auth::user()->email;
         $this->address = session('delivery_address');
+        $this->phone = session('phone');
+        $this->name = Auth::user()->name;
     }
+
     public function placeOrder(){
         //Initialize Cart
         $this->cart = new ChopCart();
-        //validate inputs
-        $validated = $this->validate(CheckoutRepo::rules());
-       
-        //create the order
-        $order = $this->createOrder($validated);  
-              
+        //set delivery details
+        $validated = $this->validate(['payment_method'=>'required','email'=>'email']);
+             
         //Check user's selected payment method
         if($validated['payment_method'] == 'Paystack'){
+            //create the order
+            $order = $this->createOrder('pending');  
             //Initialize payment
             $amount = str_replace(',','', $this->cart->getTotal());
             $vendor_id = $this->cart->vendor()->id;
@@ -72,6 +80,7 @@ class ValidateCheckout extends Component
             //process payment: redirect to Paystack Gateway
             return redirect()->away($response['authorization_url']);   
         }else{
+            $order = $this->createOrder('cod'); 
             //clear cart
             $this->cart->clear();
 
@@ -80,10 +89,10 @@ class ValidateCheckout extends Component
         }
 
         //send order notification - TODO: move this action to webhook
-        $this->notify($order);
+        //$this->notify($order);
     }
-    private function createOrder($validated){
-        //TODO: CREATE ORDER MUST BE A TRANSACTION
+
+    private function createOrder($status){
         //Create Cart instance
         $this->cart = new ChopCart();
         $uuid = Uuid::uuid4()->toString(); // Get the UUID as a string
@@ -91,19 +100,20 @@ class ValidateCheckout extends Component
         $order = new Order();
         
         DB::beginTransaction();
+            //set fields
             $order->reference = $uuid; 
             $order->vendor_id = $this->cart->vendor()->id;
             $order->user_id = Auth::user()->id; // Assuming a customer places the order
-            $order->recipient_address = $validated['address'] .' - '.$validated['address2'];
-            $order->recipient_phone = $validated['phone'];
-            $order->recipient_name = $validated['name'];
-            $order->order_status = "Awaiting Payment";
-            $order->payment_status = "pending";
-            $order->payment_method = $validated['payment_method'];
+            $order->recipient_address = $this->address;
+            $order->recipient_phone = $this->phone;
+            $order->recipient_name = $this->name;
+            $order->order_status = 'Processing';
+            $order->payment_status = $status;
+            $order->payment_method = $this->payment_method;
             $order->discount = 0;
             $order->shipping = $this->cart->vendor()->delivery_fee;
             $order->total = str_replace(',','', $this->cart->getTotal());
-            //$order->tracking_code = "CN-".rand(10111, 99999);
+            //save order
             $order->save();
             
             //get cart items
@@ -135,5 +145,16 @@ class ValidateCheckout extends Component
         // $user->notify(new NewOrder($order->id));
     }
     
+    public function setDeliveryDetails(){
+        //validate inputs
+        $validated = $this->validate(CheckoutRepo::rules());
+   
+        //replace user's delivery details
+        $this->address = $validated['alternate_address'].$validated['address2'];
+        $this->phone = $validated['alternate_phone'];
+        $this->name = $validated['alternate_name'];
+        
+        session()->flash('message', 'Details added.');
+    }
 
 }

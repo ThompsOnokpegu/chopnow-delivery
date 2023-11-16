@@ -11,7 +11,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->enum('payment_status', ['pending', 'paid','cancelled','refunded'])->after('order_status');
+            $table->enum('payment_status', ['pending','cod','paid','cancelled','refunded'])->after('order_status');
         });
     }
 

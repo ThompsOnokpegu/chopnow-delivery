@@ -14,11 +14,15 @@ class UserController extends Controller
     public function showLogin(){
         return view('frontend.user.login');
     }
-    public function register(){
+    public function register(Request $request){
+
+        $url = url()->previous();
+       
+        session(['refUrl' => $url]);//save only the path in session
         return view('frontend.user.register');
     }
     public function address(){
-        return view('frontend.checkout.address');
+        return view('frontend.user.add-address');
     }
 
     public function create(Request $request, UserRepo $va){
@@ -37,9 +41,19 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
-        $user = $request->all();
+       
+        $user = $request->validate(['email'=>'required|lowercase','password'=>'required']);
+        //attempt to login user
         if(Auth::attempt(['email'=>$user['email'],'password'=>$user['password']])){
-            return redirect()->route('order.checkout');
+            //extract the path of the referring url
+            $path = str_replace(url('/'),'',session('refUrl'));
+            //check whether the path is /login
+            if($path == '/login'){
+                //redirect user to home to prevent endless redirect to login
+                return redirect('/');
+            }
+            //redirect user to the url that referred them to login
+            return redirect()->route('user.address');
         }else{
             return back()->with('message','Invalid email or password');
         }

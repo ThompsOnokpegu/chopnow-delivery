@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="modal-header">
+    <div class="modal-header" style="border-bottom:0px;">
         <h5 class="modal-title">Basket</h5>
     </div>
     @if ($cart->isEmpty())
@@ -8,7 +8,13 @@
                 <p class="">Your cart is empty! <span><a class="btn-white w-100" style="padding:3px;border-radious:0px;" href="{{ route('restaurants.index') }}"> Back to Restaurants</a></span></p>
                 
             </div>
-        </div>      
+            
+        </div> 
+        <div class="mb-2 mt-2">
+            <div class="p-2 flex-shrink-0 text-center">
+                <p class="text-center"><span><a class="btn-white w-100" style="padding:10px;border-radius:5px;" data-bs-dismiss="modal"> Continue Shopping</a></span></p>    
+            </div>
+        </div>       
     @else
         @foreach($items as $item)
             <div class="d-flex bd-highlight mb-3 mt-3 single-item-wrap">
@@ -34,7 +40,11 @@
         @endforeach
         <div class="mb-2 mt-2">
             <div class="p-2 flex-shrink-0 text-center">
-                <p class="text-center"><span><a class="btn-white w-100" style="padding:10px;border-radius:5px;" data-bs-dismiss="modal"> Continue Shopping</a></span></p>    
+                @if(url()->current() == route('order.cart'))
+                    <a style="padding:10px;border-radius:5px; background:#ffc244;color:#000000;font-weight:700;" href="{{ route('restaurants.index') }}">Continue Shopping</a>
+                @else
+                    <p class="text-center"><span><a class="btn-white w-100" style="padding:10px;border-radius:5px;" data-bs-dismiss="modal"> Continue Shopping</a></span></p>    
+                @endif
             </div>
         </div>  
     @endif
@@ -52,6 +62,6 @@
             </li>
             <li class="total">Total<span>₦{{ $cart->isEmpty()? '0.00': $cart->getTotal()    }}</span></li>
         </ul>
-        <a class="btn btn-white w-100" href="{{ route('user.checkout') }}"> CHECKOUT</a>
+        <a style="font-size:18px;" class="btn btn-white w-100" href="{{ url()->current() == route('order.cart') ? route('user.checkout') : route('order.cart') }}"> ORDER {{ strtoupper($cart->getContent()->count().' for ₦'.$cart->getTotal())}}</a>
     </form>
 </div>

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="align-items-center d-flex justify-content-center">
         <div class="register-page pt-4">
-            <a class="btn back-page-btn" href="onboard.html"><i class="ri-arrow-left-s-line"></i></a>
+            <a class="btn back-page-btn" href="{{ route('restaurants.index') }}"><i class="ri-arrow-left-s-line"></i></a>
             <h3>Welcome</h3>
             <p>Let’s register you.</p>
             <form class="default-form-wrap" action="{{ route('user.create') }}" method="POST">
@@ -32,11 +32,12 @@
                         <div class="single-input-wrap">
                             <label><img src="{{ asset('customer/assets/img/icon/password.svg') }}" alt="img"></label>
                             <input name="password" type="password" class="form-control" placeholder="Password">
-                            <button class="show-pass-btn"><img src="{{ asset('customer/assets/img/icon/eye.svg') }}" alt="img"></button>
+                            <i class="show-pass-btn"><img src="{{ asset('customer/assets/img/icon/eye.svg') }}" alt="img"></i>
                         </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-base w-100">Register Now</button>
+                
             </form>
             
             <span class="another-way-link">Already have an account? <a href="{{ route('user.login') }}">Sign In</a></span>

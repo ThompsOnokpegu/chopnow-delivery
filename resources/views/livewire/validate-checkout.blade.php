@@ -26,36 +26,75 @@
     
                         <div class="payment-wrap mt-5">
                             
-                                @csrf()
-                                <h4>Delivery Details</h4>
-                                <p class="text-uppercase fw-bold mb-3 text-font">Email address</p>
-                                <p>Logged in as {{ Auth::user()->email }}</p>
-                                <input type="hidden" wire:model="email">
-                                <label>Add a Name<small class="error">*</small></label>
-                                <div class=" style-2">
-                                    <input type="text" wire:model="name" class="form-control" style="height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
-                                    @error('name')
-                                        <div class="error">{{ $message }}</div>
-                                    @enderror
+                            @csrf()
+                            
+                            <input type="hidden" wire:model="email">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="text-uppercase accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                      <h6>Delivery Details</h6>
+                                    </button>
+                                  </h2>
+                                  <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <p>{{ Auth::user()->name }}</p>
+                                        <p>{{ session('delivery_address') }}</p>
+                                        <p>{{ session('phone') }}</p>
+                                        
+                                        
+                                    </div>
+                                  </div>
                                 </div>
-                                <label>Contact Phone<small class="error">*</small></label>
-                                <div class=" style-2">
-                                    <input type="text" wire:model="phone" class="form-control" style=" height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
-                                    @error('phone')
-                                        <div class="error">{{ $message }}</div>
-                                    @enderror
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                      {{ session()->has('message')? 'Order will be sent to '.$alternate_name : 'Send To A Friend' }}
+                                    </button>
+                                  </h2>
+                                  <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        @if (session()->has('message'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                          {{ session('message') }} 
+                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                          
+                                        @endif
+                                        <p>Add their details to help the courier</p>
+                                        <div class="container">
+                                          
+                                            <label>Add a Name<small class="error">*</small></label>
+                                            <div class="single-input-wrap style-2">
+                                                <input type="text" wire:model="alternate_name" class="form-control">
+                                                @error('name')
+                                                    <div class="error">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <label>Contact Phone<small class="error">*</small></label>
+                                            <div class="single-input-wrap style-2">
+                                                <input type="text" wire:model="alternate_phone" class="form-control">
+                                                @error('phone')
+                                                    <div class="error">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <label>Delivery Address<small class="error">*</small></label>
+                                            <div class="single-input-wrap style-2">
+                                                <input type="text" wire:model="alternate_address" class="form-control">
+                                                @error('address')
+                                                    <div class="error">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <label>Floor, Flat, Instruction<small> (optional)</small></label>
+                                            <div class="single-input-wrap style-2">
+                                                <input type="text" wire:model="address2" class="form-control">
+                                            </div>
+                                            <button wire:click ="setDeliveryDetails()" class="btn btn-base w-100">Add Details</a>
+                                        </div>
+                                    </div>
+                                  </div>
                                 </div>
-                                <label>Delivery Address<small class="error">*</small></label>
-                                <div class="style-2">
-                                    <input type="text" wire:model="address" class="form-control" style="height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
-                                    @error('address')
-                                        <div class="error">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <label>Floor, Flat, Instruction<small> (optional)</small></label>
-                                <div class="single-input-wra style-2">
-                                    <input type="text" wire:model="address2" class="form-control" style="height:45px;border-top:0px;border-right:0px;border-left:0px;border-bottom:1px solid #999;">
-                                </div>
+                            </div>
                         </div>
                     </div>
                   </div>

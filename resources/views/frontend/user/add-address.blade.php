@@ -1,5 +1,7 @@
 @extends('frontend.checkout.layouts.main')
 
+
 @section('content')
-    @livewire('user-login')
+
+@livewire('add-phone-address')
 @endsection

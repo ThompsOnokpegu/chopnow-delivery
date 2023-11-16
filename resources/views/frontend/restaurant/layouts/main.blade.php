@@ -10,7 +10,8 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ asset('customer/assets/css/animate.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/bootstrap.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('customer/assets/css/bootstrap.min.css') }}"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('customer/assets/css/magnific.min.css') }}">
     <link rel="stylesheet" href="{{ asset('customer/assets/css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('customer/assets/css/nice-select.min.css') }}">
@@ -96,7 +97,8 @@
 
     <!-- all plugins here -->
     <script src="{{ asset('customer/assets/js/jquery.3.6.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/bootstrap.min.js') }}"></script>
+    {{-- <script src="{{ asset('customer/assets/js/bootstrap.min.js') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('customer/assets/js/imageloded.min.js') }}"></script>
     <script src="{{ asset('customer/assets/js/counterup.js') }}"></script>
     <script src="{{ asset('customer/assets/js/waypoint.js') }}"></script>

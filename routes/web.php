@@ -9,8 +9,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebhookController;
-use App\Livewire\UpdateCart;
-use App\Models\Menu;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,8 +40,6 @@ Route::prefix('vendor')->group(function(){
     Route::get('/compliance',[VendorController::class,'compliance'])->name('vendor.compliance')->middleware('vendor');
     Route::get('/payout',[VendorController::class,'payout'])->name('vendor.payout')->middleware('vendor');
     Route::post('/payout',[VendorController::class,'createRecipient'])->name('vendor.payout')->middleware('vendor');
-
-
 });
 Route::prefix('menus')->group(function(){
     //MENU ROUTE
@@ -56,7 +53,6 @@ Route::prefix('menus')->group(function(){
     Route::delete('/{menu}/delete',[MenuController::class,'destroy'])->name('menus.destroy')->middleware('vendor');
     
     Route::post('/dropzone',[MenuController::class,'storeImage'])->name('menu.image.store')->middleware('vendor');
-
 });
 Route::prefix('orders')->group(function(){
     //ORDER ROUTES
@@ -67,54 +63,29 @@ Route::prefix('orders')->group(function(){
 
 });
 
+/*------------------End Vendor Routes------------------*/
 
  //CUSTOM RESTAURANT ROUTES
  Route::get('/', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
  Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
- Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['has.products','auth']);
- Route::post('/checkout',[CheckoutController::class,'placeOrder'])->name('order.checkout');
- Route::get('/cart',[CheckoutController::class,'cartPage'])->name('order.cart');
+ 
+ 
  Route::get('/thank-you',[CheckoutController::class,'thankYou'])->name('order.thankyou');
  Route::post('/webhook',[WebhookController::class,'handle']);
- Route::get('/resetPayout/{account}',[DevMaster::class,'resetPayoutAccount']);
- Route::get('/deleteOrder/{order}',[DevMaster::class,'deleteOrder']);
- Route::get('/makeFeatured/{vendor}',[DevMaster::class,'makeFeatured']);
+ //Route::get('/resetPayout/{account}',[DevMaster::class,'resetPayoutAccount']);
+ //Route::get('/deleteOrder/{order}',[DevMaster::class,'deleteOrder']);
+ //Route::get('/makeFeatured/{vendor}',[DevMaster::class,'makeFeatured']);
 
- 
- 
- 
  //CUSTOM USER ROUTES
- Route::get('/login',[UserController::class,'showLogin'])->name('user.login')->middleware('has.products');
+ Route::get('/login',[UserController::class,'showLogin'])->name('user.login');
  Route::get('/register',[UserController::class,'register'])->name('user.register');
  Route::post('/register',[UserController::class,'create'])->name('user.create');
  Route::post('/login',[UserController::class,'login'])->name('login');
-
- 
-
-    
-
-
-
-// Route::controller(ItemController::class)->group(function(){
-
-//     Route::get('items', 'index')->name('items.index');
-
-//     Route::post('items', 'store')->name('items.store');
-
-//     Route::get('items/create', 'create')->name('items.create');
-
-//     Route::get('items/{item}', 'show')->name('items.show');
-
-//     Route::put('items/{item}', 'update')->name('items.update');
-
-//     Route::delete('items/{item}', 'destroy')->name('items.destroy');
-
-//     Route::get('items/{item}/edit', 'edit')->name('items.edit');
-
-// });
-
-/*------------------END Vendor Routes------------------*/
+ Route::get('/delivery',[UserController::class,'address'])->name('user.address');
+ Route::get('/cart',[CheckoutController::class,'cartPage'])->name('order.cart');
+ Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['auth','has.products']);
+ Route::post('/checkout',[CheckoutController::class,'placeOrder'])->name('order.checkout');
 
 
 

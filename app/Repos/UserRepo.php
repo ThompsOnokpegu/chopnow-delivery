@@ -7,7 +7,7 @@ class UserRepo{
     public function rules(){
         return [
             'first_name' => 'required|min:3',
-            'email' => 'required|email',
+            'email' => 'required|email|lowercase',
             'password' => ['required','min:8'],
         ];
     }

@@ -17,12 +17,47 @@
     <div class="main-home-area pb-0 mt-5">
         <div class="location-area">
             <a style="padding-left:15px;" class="navbar-brand" href="{{ route('restaurants.index') }}">
-                <img src="{{ asset('customer/assets/img/fevicon.png') }}" alt="img" style="height: 36px;width:auto;">
+                <img src="{{ asset('customer/assets/img/fevicon.png') }}" alt="img" style="height: 32px;width:auto;">
             </a>
             @livewire('view-address')
-            <a class="navbar-brand" href="{{ route('user.register') }}">
-                <img src="{{ asset('customer/assets/img/icon/user.png') }}" alt="img" style="height: 30px;width:auto;">
-            </a> 
+            @auth
+                {{-- // The user is authenticated... --}}
+                
+                <div class="navbar-brand dropdown"> 
+                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="ri-user-line" style="color:#000000"></i>
+                    </a> 
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <span style="font-size:14px;">{{ Auth::user()->name }}({{ Auth::user()->email }})</span>   
+                      </a>
+                    </li>
+                    
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <i class="ri-user-settings-line"></i>
+                          <span>Profile</span>   
+                        </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#" onclick="event.preventDefault(); this.closest('form').submit();">
+                        <i class="ri-logout-circle-line" style="vertical-align: middle;"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+            @endauth
+            
+            @guest
+                {{-- // The user is not authenticated... --}}
+                <a class="navbar-brand" href="{{ route('user.register') }}">
+                    <img src="{{ asset('customer/assets/img/icon/user.png') }}" alt="img" style="height: 30px;width:auto;">
+                </a> 
+            @endguest
+            
+            
         </div>
         <div class="home-search-wrap">
             <div class="default-form-wrap">
