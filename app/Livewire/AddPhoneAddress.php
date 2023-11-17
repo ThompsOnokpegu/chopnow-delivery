@@ -25,13 +25,14 @@ class AddPhoneAddress extends Component
 
         //extract the path of the referring url
         $path = str_replace(url('/'),'',session('refUrl'));
-        //check whether the path is /login
-        if($path == '/login'){
-            //redirect user to home to prevent endless redirect to login
+        //check whether the path is /register
+        if($path == '/register'){
+            //redirect user to home to prevent endless redirect to register
             return redirect('/');
         }
-
+        //Check whether user was trying to checkout
         if($path == '/cart'){
+            //redirect to checkout
             return redirect()->route('order.checkout');
         }
         

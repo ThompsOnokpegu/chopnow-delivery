@@ -41,11 +41,17 @@
                         </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#" onclick="event.preventDefault(); this.closest('form').submit();">
-                        <i class="ri-logout-circle-line" style="vertical-align: middle;"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
+                        <form method="POST" action="{{ route('user.logout') }}">
+                            @csrf
+                          <a class="dropdown-item" href="{{ route('user.logout') }}"
+                          onclick="event.preventDefault();
+                                      this.closest('form').submit();">
+                            <i class="ri-logout-circle-line" style="vertical-align: middle;"></i>
+                            <span class="align-middle">Log Out</span>
+                          </a>
+                        </form>
                     </li>
+                    
                   </ul>
                 </div>
             @endauth

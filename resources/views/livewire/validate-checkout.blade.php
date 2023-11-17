@@ -25,7 +25,7 @@
                         @endforeach
     
                         <div class="payment-wrap mt-5">
-                            
+                             
                             @csrf()
                             
                             <input type="hidden" wire:model="email">
@@ -41,7 +41,9 @@
                                         <p>{{ Auth::user()->name }}</p>
                                         <p>{{ session('delivery_address') }}</p>
                                         <p>{{ session('phone') }}</p>
-                                        
+                                        @if(!session('phone') || !session('delivery_address'))
+                                          <a href="{{ route('user.address') }}"><strong class="alert alert-info">Enter missing details</strong></a>
+                                        @endif
                                         
                                     </div>
                                   </div>
@@ -49,7 +51,7 @@
                                 <div class="accordion-item">
                                   <h2 class="accordion-header" id="flush-headingTwo">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                      {{ session()->has('message')? 'Order will be sent to '.$alternate_name : 'Send To A Friend' }}
+                                      {{ $alternate_name != null ? 'Order will be sent to '.$alternate_name : 'Send To A Friend' }}
                                     </button>
                                   </h2>
                                   <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">

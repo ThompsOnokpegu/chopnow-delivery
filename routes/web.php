@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\DevMaster;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -73,20 +71,23 @@ Route::prefix('orders')->group(function(){
  
  Route::get('/thank-you',[CheckoutController::class,'thankYou'])->name('order.thankyou');
  Route::post('/webhook',[WebhookController::class,'handle']);
- //Route::get('/resetPayout/{account}',[DevMaster::class,'resetPayoutAccount']);
- //Route::get('/deleteOrder/{order}',[DevMaster::class,'deleteOrder']);
- //Route::get('/makeFeatured/{vendor}',[DevMaster::class,'makeFeatured']);
+
 
  //CUSTOM USER ROUTES
  Route::get('/login',[UserController::class,'showLogin'])->name('user.login');
  Route::get('/register',[UserController::class,'register'])->name('user.register');
  Route::post('/register',[UserController::class,'create'])->name('user.create');
  Route::post('/login',[UserController::class,'login'])->name('login');
- Route::get('/delivery',[UserController::class,'address'])->name('user.address');
+ Route::get('/delivery',[UserController::class,'address'])->name('user.address')->middleware(['verified']);
  Route::get('/cart',[CheckoutController::class,'cartPage'])->name('order.cart');
- Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['auth','has.products']);
+ Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['auth','verified','has.products']);
  Route::post('/checkout',[CheckoutController::class,'placeOrder'])->name('order.checkout');
 
+ Route::get('/verify', [UserController::class,'emailVerificationNotice'])->middleware('auth')->name('verification.notice');
+ Route::get('email/verify/{id}/{hash}', [UserController::class,'emailVerificationHandler'])->middleware(['auth', 'signed'])->name('verification.verify');
+ Route::post('email/verification-notification', [UserController::class,'resendEmailLink'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+ Route::post('/logout', [UserController::class,'logout'])->name('user.logout');
 
 
 /*------------------User Routes------------------*/
