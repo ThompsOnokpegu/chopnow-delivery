@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Events\OrderSuccessful;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Notifications\NewOrder;
@@ -56,6 +57,7 @@ class ValidateCheckout extends Component
     }
 
     public function placeOrder(){
+        
         //Initialize Cart
         $this->cart = new ChopCart();
         //set delivery details
@@ -83,11 +85,12 @@ class ValidateCheckout extends Component
             $order = $this->createOrder('cod'); 
             //clear cart
             $this->cart->clear();
-
+            //send notification
+            OrderSuccessful::dispatch($order);
             //redirect to home
             return redirect()->route('restaurants.index');
         }
-
+        
         //send order notification - TODO: move this action to webhook
         //$this->notify($order);
     }

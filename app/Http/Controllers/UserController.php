@@ -26,11 +26,6 @@ class UserController extends Controller
     }
 
     public function address(){
-        //keep previous url to determine where to redirect the user after verification flow
-        $url = url()->previous();
-       
-        session(['refUrl' => $url]);//save only the path in session
-
         return view('frontend.checkout.add-address');
     }
 
@@ -52,10 +47,6 @@ class UserController extends Controller
     }
     //email verification
     public function emailVerificationNotice(){
-        //keep previous url to determine where to redirect the user after verification flow
-        $url = url()->previous();
-       
-        session(['refUrl' => $url]);//save only the path in session
         return view('frontend.user.verify-email');
     }
 
