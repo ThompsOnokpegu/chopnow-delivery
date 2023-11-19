@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\PayoutAccount;
 use App\Models\Vendor;
+use App\Repos\VendorRepo;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
@@ -20,32 +22,38 @@ class ResolveBank extends Component
 
     public function render(){
         $id = Auth::guard('vendor')->user()->id; 
-        $hasPayoutAccount = $this->hasPayoutAccount($id);
+        $hasPayoutAccount = VendorRepo::hasPayoutAccount($id);
         return view('livewire.resolve-bank',compact('hasPayoutAccount'));
     }
 
     public function mount(){
         $vendor = Auth::guard('vendor')->user();
-        $hasPayoutAccount = $this->hasPayoutAccount($vendor->id); 
-            
-        if(!$hasPayoutAccount){
-            $response = Http::get($this->paystack.'/bank?country=nigeria&currency=NGN');
-            $banks = [];
-            if ($response->successful()) {
-                $data = $response->json('data');
-                // Extract the name and code of each bank
-                foreach ($data as $bank) {
-                    $banks[] = [
-                        'name' => $bank['name'],
-                        'code' => $bank['code'],
-                    ];
+        $hasPayoutAccount = VendorRepo::hasPayoutAccount($vendor->id); 
+        if($hasPayoutAccount){
+            $this->account_number = $hasPayoutAccount->account_number;
+            $this->bank_name = $hasPayoutAccount->bank_name;
+            $this->account_name = $hasPayoutAccount->account_name;
+        }else{
+            try {
+                $response = Http::get($this->paystack.'/bank?country=nigeria&currency=NGN');
+                $banks = [];
+                if ($response->successful()) {
+                    $data = $response->json('data');
+                    // Extract the name and code of each bank
+                    foreach ($data as $bank) {
+                        $banks[] = [
+                            'name' => $bank['name'],
+                            'code' => $bank['code'],
+                        ];
+                    }
+                } else {
+                    // Handle API request failure
+                    return session()->flash('error','Try again after some time!');
                 }
-            } else {
-                // Handle API request failure
-                return response()->json(['error' => 'Failed to fetch banks'], $response->status());
+                $this->banks = $banks;
+            } catch (Exception $e) {
+                return session()->flash('error','Could not establish connection');;
             }
-    
-            $this->banks = $banks;
         }
     }
 
@@ -109,21 +117,7 @@ class ResolveBank extends Component
         }
 
         $this->dispatch('payout-account-added');
-    }
-  
-    public function hasPayoutAccount($vendor){
-        /*
-            $vendor = Vendor:id
-        */
-        //fetch vendor with given id
-        $payoutAccount = PayoutAccount::where('vendor_id',$vendor)->first(); 
-        
-        if($payoutAccount){
-            $this->account_number = $payoutAccount->account_number;
-            $this->bank_name = $payoutAccount->bank_name;
-            $this->account_name = $payoutAccount->account_name;
-            return true;
-        }
-        return false;
+
+        return $payout;
     }
 }

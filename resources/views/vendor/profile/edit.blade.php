@@ -81,7 +81,7 @@
               <div class="card-body">
                 <div class="d-flex align-items-start align-items-sm-center gap-4">
                   <img
-                    src="{{ asset('vendor/assets/img/brands/'.$vendor->kitchen_banner_image) }}"
+                    src="{{ asset('storage/vendor-banners/'.$vendor->kitchen_banner_image) }}"
                     alt="brand-image"
                     class="d-block rounded"
                     height="100"

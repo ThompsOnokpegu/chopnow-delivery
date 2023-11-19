@@ -1,9 +1,16 @@
 <?php
 namespace App\Repos;
 
+use App\Models\Order;
+use App\Models\PayoutAccount;
+use App\Models\Transaction;
+use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class VendorRepo{
     public function rules(){
@@ -38,102 +45,69 @@ class VendorRepo{
         ];
     }
 
-    public function resolveBank($account_number, $bank_code){
-
-        $response = Http::get('https://api.paystack.co/bank/resolve?account_number='.$account_number.'&bank_code='.$bank_code);
-        if ($response->successful()) {
-            $data = $response->json('data');
-            return $data;
-        } else {
-            // Handle API request failure
-            return response()->json(['error' => 'Failed to fetch banks'], $response->status());
-        }
-    }
-
-    public function createRecipient($request){
-        $url = "https://api.paystack.co/transferrecipient";
-
-        $fields = [
-            'type' => "nuban",
-            'name' => $request->name,
-            'account_number' => $request->account_number,
-            'bank_code' => $request->bank_code,
-            'currency' => "NGN"
-        ];
-
-        $fields_string = http_build_query($fields);
-
-        //open connection
-        $ch = curl_init();
-        
-        //set the url, number of POST vars, POST data
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_POST, true);
-        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Authorization: Bearer ".env('PAYSTACK_SECRET_KEY'),
-            "Cache-Control: no-cache",
-        ));
-        
-        //So that curl_exec returns the contents of the cURL; rather than echoing it
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-        
-        //execute post
-        $result = curl_exec($ch);
-        return $result;//save recipient_code to DB
-    }
-
-    public function listbanks(){
-   
-        $url = 'https://api.paystack.co/bank?country=nigeria&currency=NGN';
-        $curl = $this->curlHead($url);
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-        
-        if ($err) {
-            return "cURL Error #:" . $err;
-        } else {
-            return $response;
-        }
-    }
     public function fetchBanks(){
-        $response = Http::get('https://api.paystack.co/bank?country=nigeria&currency=NGN');
-        $banks = [];
-        if ($response->successful()) {
-            $data = $response->json('data');
-            // Extract the name and code of each bank
-            foreach ($data as $bank) {
-                $banks[] = [
-                    'name' => $bank['name'],
-                    'code' => $bank['code'],
-                ];
-            }
-        } else {
-            // Handle API request failure
-            return response()->json(['error' => 'Failed to fetch banks'], $response->status());
-        }
+        try {
+            if(VendorRepo::hasPayoutAccount(Auth::guard('vendor')->user()->id)){
+                $response = Http::get('https://api.paystack.co/bank?country=nigeria&currency=NGN');
+                $banks = [];
+                if ($response->successful()) {
+                    $data = $response->json('data');
+                    // Extract the name and code of each bank
+                    foreach ($data as $bank) {
+                        $banks[] = [
+                            'name' => $bank['name'],
+                            'code' => $bank['code'],
+                        ];
+                    }
+                } else {
+                    // Handle API request failure
+                    return session()->flash('error','Request failed!');
+                }
 
-        return $banks;
+                return $banks;
+            }
+            
+        } catch (Exception $e) {
+            return session()->flash('error','Connection failed!');
+        }
+        
     }
 
-    public function curlHead($endpoint){
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $endpoint,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-            "Authorization: Bearer ".env('PAYSTACK_SECRET_KEY'),
-            "Cache-Control: no-cache",
-            ),
-        ));
+    public static function walletBalance($vendor){
+        /*
+            $vendor = Vendor:id
+        */
+        $orders = Order::where('vendor_id',$vendor)
+            ->where('payment_status','paid')
+            ->where('payment_status','cod')
+            ->sum('total');
+
+        $payouts = Transaction::where('vendor_id',$vendor)
+            ->where('status','success')
+            ->sum('amount');
+
+        $balance = $orders - $payouts;
+
+        return $balance;
+    }
+
+    public static function hasPayoutAccount($vendor){
+        /*
+            $vendor = Vendor:id
+        */
+        //fetch vendor with given id
+        $payoutAccount = PayoutAccount::where('vendor_id',$vendor)->first(); 
         
-        return $curl;
+        if($payoutAccount){
+            return $payoutAccount;
+        }
+        return false;
+    }
+
+    public static function storeMenuImage($path,$requestFile){
+        $file = $requestFile;
+        $filename = Str::orderedUuid()->toString().'.'.$file->extension();;
+        Storage::disk('local')->put($path.$filename,file_get_contents($file));
+        return $filename;
     }
 }

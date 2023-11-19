@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
+use App\Models\Order;
 use App\Models\PayoutAccount;
 use App\Models\Vendor;
 use App\Repos\VendorRepo;
@@ -21,7 +23,23 @@ class VendorController extends Controller
     }
 
     public function dashboard(){
-        return view('vendor.index');
+        $id = Auth::guard('vendor')->user()->id;
+        $orders = Order::where('vendor_id',$id)->get();
+       
+        $onlinePayment = $orders->where('payment_status','paid')->sum('total');
+        $cashPayment = $orders->where('payment_status','cod')->sum('total');
+
+        $summary = [
+            'totalSales' => $onlinePayment + $cashPayment,
+            'orderCount' => $orders->count(),
+            'productCount' => Menu::where('vendor_id',$id)->count(),
+            'customerCount' => Order::distinct()->count('user_id'),
+            'onlinePayment' => $onlinePayment,
+            'cashPayment' => $cashPayment,
+            'walletBalance' => VendorRepo::walletBalance($id),
+        ];
+        
+        return view('vendor.index',compact('summary'));
     }
 
     public function verify(Request $request){
@@ -64,7 +82,7 @@ class VendorController extends Controller
     }
 
     public function update(Request $request, Vendor $vendor, VendorRepo $val){
-        
+        $directory = 'public/vendor-banners/';
         $request['slug'] = str()->slug($request->business_name);
         $filename = "";
         //validate input
@@ -74,19 +92,15 @@ class VendorController extends Controller
         //check whether vendor uploaded a new image for this vendor
         if($request->hasFile('kitchen_banner_image')){
             
-            //if product image already exist for this vendor
-            if($vendor->kitchen_banner_image != null){
-                //check if the image is still in the directory: prevent file not found exception
-                if (Storage::exists(public_path('vendor/assets/img/brands/'.$vendor->kitchen_banner_image))){
-                    //delete the old file
-                    $oldfile = public_path('vendor/assests/img/brands/').$vendor->kitchen_banner_image;
-                    unlink($oldfile);
-                }
+            //check if the old image is still in the directory: prevent file not found exception
+            if(Storage::disk('local')->exists('public/vendor-banners/'.$vendor->kitchen_banner_image)){
+                //delete old image
+                Storage::disk('local')->delete('public/vendor-banners/'.$vendor->kitchen_banner_image);
+                //upload the new file
+                $filename = VendorRepo::storeMenuImage($directory,$request->file('kitchen_banner_image'));
             }
             //upload the new file
-            $image = $request->file('kitchen_banner_image');
-            $filename = Str::orderedUuid()->toString().'.'.$image->extension(); 
-            $image->move(public_path('vendor/assets/img/brands/'),$filename);
+            $filename = VendorRepo::storeMenuImage($directory,$request->file('kitchen_banner_image'));
             
         }else{
             //product image did not change
@@ -140,20 +154,6 @@ class VendorController extends Controller
         return view('vendor.profile.account-validation',compact('vendor','banks'));
     }
 
-    public function verifyBank(Request $request, VendorRepo $VendorRepo){
-        $account_number = $request->account_number;
-        $bank_code = $request->bank_code;
-
-        $data = $VendorRepo->resolveBank($account_number,$bank_code);
-
-        return view('vendor.profile.account-validation',compact('data'));
-    }
-
     
-    public function createRecipient(){
-        $vendor = Auth::guard('vendor')->user();
-        
-        return view('vendor.profile.account-validation',compact('vendor'));
-    }
 }
 

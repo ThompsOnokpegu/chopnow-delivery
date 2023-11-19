@@ -109,7 +109,7 @@
                             <div class="thumb">
                                 {{-- <span class="tag">15% Off</span> --}}
                                 <a href="{{ route('restaurants.show',$restaurant->id) }}">
-                                    <img src="{{ asset('vendor/assets/img/brands/'.$restaurant->kitchen_banner_image) }}" alt="img">
+                                    <img src="{{ asset('storage/vendor-banners/'.$restaurant->kitchen_banner_image) }}" alt="img">
                                 </a>
                                 <a class="fav-btn" href="#"><i class="fa fa-heart"></i></a>
                             </div>

@@ -33,6 +33,12 @@
                     ₦{{ $data['amount'] }} sent successfuly!
                 </div>
             @endif
+            @if (session()->has('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }} 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <label class="form-label" for="basic-icon-default-company">Transfer Amount</label>
             <div class="input-group input-group-merge">
                 <span class="input-group-text">₦</span>

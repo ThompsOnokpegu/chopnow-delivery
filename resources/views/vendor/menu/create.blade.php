@@ -37,11 +37,12 @@
                       /> 
                     </label>
                     <p class="text-muted mb-0">Allowed JPEG,JPG, or PNG. Max size of 300K</p>
-                    <img id="preview" src="#" alt="your image" class="mt-3" style="display:none;" width="200"/>    
+                    <img id="preview" src="" alt="your image" class="mt-3" style="display:none;" width="200"/>    
+                    
                 </div>
                 
                 @error('product_image') <div class="error">{{ $message }}</div> @enderror
-                               
+                <img src="{{ asset('storage/menu-images/9aa6858c-b62f-4992-bd2e-b3d077e70f9d.jpg') }}" alt="">             
             </form>
                  
         </div>

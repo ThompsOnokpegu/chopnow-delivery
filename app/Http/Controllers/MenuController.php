@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Repos\MenuRepo;
-use Carbon\Carbon;
+use App\Repos\VendorRepo;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+
 
 class MenuController extends Controller
 {
     public function index(){
+       
         $vendor_id = Auth::guard('vendor')->user()->id;
         $menus = Menu::where('vendor_id', $vendor_id)
                ->orderBy('category')
@@ -29,6 +30,7 @@ class MenuController extends Controller
 
     public function update(Menu $menu, Request $request, MenuRepo $MenuRepo){
         
+        $path = 'public/menu-images/';
         $request['slug'] = str()->slug($request->name);
         $filename = "";
         //validate input
@@ -36,22 +38,15 @@ class MenuController extends Controller
 
         //check whether vendor uploaded a new image for this menu
         if($request->hasFile('product_image')){
-            //dd('has file');
-            //if product image already exist for this menu
-            if($menu->product_image != null){
-                //check if the image is still in the directory: prevent file not found exception
-                if (file_exists(public_path('product-images/'.$menu->product_image)))
-                {
-                    //delete the old file
-                    $oldfile = public_path('product-images/').$menu->product_image;
-                    unlink($oldfile);
-                }
+            //check if the old image is still in the directory: prevent file not found exception
+            if(Storage::disk('local')->exists($path.$menu->product_image)){
+                //delete old image
+                Storage::disk('local')->delete($path.$menu->product_image);
+                //upload the new file
+                $filename = VendorRepo::storeMenuImage($path,$request->file('product_image')); 
             }
-            //upload the new file
-            $image = $request->file('product_image');
-            $filename = Str::orderedUuid()->toString().'.'.$image->extension(); 
-            $image->move(public_path('product-images'),$filename);
-            
+         //upload the new file
+         $filename = VendorRepo::storeMenuImage($path,$request->file('product_image'));     
         }else{
             //product image did not change
             $filename = $menu->product_image;   
@@ -64,8 +59,7 @@ class MenuController extends Controller
         return redirect()->route('menus.index')->with('message','Menu updated successfully!');
     }
 
-    public function create(Menu $menu){    
-        $vendor_id = Auth::guard('vendor')->user()->id;
+    public function create(Menu $menu){  
         return view('vendor.menu.create',compact('vendor_id','menu'));
     }
 
@@ -77,13 +71,7 @@ class MenuController extends Controller
         //validate input
         $validated = $request->validate($MenuRepo->rules());
 
-        if($request->hasFile('product_image')){
-            //upload the image
-            $image = $request->file('product_image');
-            $filename = Str::orderedUuid()->toString().'.'.$image->extension(); 
-            $image->move(public_path('product-images'),$filename);
-        }
-         
+        $filename = VendorRepo::storeMenuImage('public/menu-images/',$request->file('product_image'));
         //inject file name into validated input
         $validated['product_image'] = $filename;
         //create menu
@@ -94,15 +82,16 @@ class MenuController extends Controller
     }
 
     public function destroy(Menu $menu){
-        //delete the product image
-        if ($menu->product_image != 'main-dish.png'){
-            $product_image = public_path('product-images/').$menu->product_image;
-            unlink($product_image);
+        $path = 'public/menu-images/';
+        if(Storage::disk('local')->exists($path.$menu->product_image)){
+            //delete old image
+            Storage::disk('local')->delete($path.$menu->product_image);
         }
         
         $menu->delete();
         return redirect()->route('menus.index');
     }
 
+    
 
 }
