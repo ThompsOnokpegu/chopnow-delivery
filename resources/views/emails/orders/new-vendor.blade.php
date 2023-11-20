@@ -1,7 +1,7 @@
 @component('mail::message')
-# Order {{'CN-'.$order->id  }} Received - ChopNow Delivery
+# New Order {{'CN-'.$order->id  }} - ChopNow Delivery
 
-Your order has been received.
+You have a new order on your store.
 
 #Order Details:<br>
 @component('mail::table')
@@ -14,6 +14,8 @@ Your order has been received.
     | Shipping      | ₦{{ $order->shipping }}      |
     | Total         | ₦{{ $order->total }}      |
 @endcomponent
+
+
 
 Thanks,<br>
 {{ config('app.name') }}
