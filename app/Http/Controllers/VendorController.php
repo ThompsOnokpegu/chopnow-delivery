@@ -43,7 +43,12 @@ class VendorController extends Controller
     }
 
     public function verify(Request $request){
-        $vendor = $request->all();
+
+        $vendor = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
         if(Auth::guard('vendor')->attempt(['email'=>$vendor['email'],'password'=>$vendor['password']])){
             return redirect()->route('vendor.dashboard')->with('message','Login successful');
         }else{
@@ -63,6 +68,14 @@ class VendorController extends Controller
     }
 
     public function create(Request $request){
+
+        $request->validate([
+            'first_name' => 'required|min:3',
+            'email' => 'required|email|lowercase',
+            'password' => 'required|min:8|confirmed',
+
+        ]);
+        
         $vendor = new Vendor;
                      
         $vendor->first_name = $request->first_name;

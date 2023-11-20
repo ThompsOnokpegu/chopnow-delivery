@@ -11,8 +11,8 @@
         id="first_name"
         name="first_name"
         autofocus
-        required
       />
+      @error('first_name') <div class="error">{{ $message }}</div> @enderror
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Email or Username</label>
@@ -21,8 +21,8 @@
         class="form-control"
         id="email"
         name="email"
-        required
       />
+      @error('email') <div class="error">{{ $message }}</div> @enderror
     </div>
     <div class="mb-3 form-password-toggle">
       <label for="password" class="form-label">Password</label>
@@ -36,6 +36,7 @@
         />
         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
       </div>
+      @error('password') <div class="error">{{ $message }}</div> @enderror
     </div>
     <div class="mb-3 form-password-toggle">
       <label for="password" class="form-label">Confirm Password</label>
@@ -48,7 +49,9 @@
           aria-describedby="password_confirmation"
         />
         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+        
       </div>
+      
     </div>
     <div class="mb-3">
       <button class="btn btn-primary d-grid w-100" type="submit">Register</button>
