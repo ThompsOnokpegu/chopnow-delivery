@@ -33,7 +33,7 @@ class VendorController extends Controller
             'totalSales' => $onlinePayment + $cashPayment,
             'orderCount' => $orders->count(),
             'productCount' => Menu::where('vendor_id',$id)->count(),
-            'customerCount' => Order::distinct()->count('user_id'),
+            'customerCount' => Order::where('vendor_id',$id)->distinct()->count('user_id'),
             'onlinePayment' => $onlinePayment,
             'cashPayment' => $cashPayment,
             'walletBalance' => VendorRepo::walletBalance($id),
@@ -154,6 +154,18 @@ class VendorController extends Controller
         return view('vendor.profile.account-validation',compact('vendor','banks'));
     }
 
-    
+    public function deactivateAccount(Request $request){
+
+        $validated = $request->validate([
+            'confirm' => 'required',
+        ]);
+        
+        if(strtolower($validated['confirm']) == "delete"){
+            $id = Auth::guard('vendor')->user()->id;
+            Vendor::destroy($id);
+        }
+        
+        return redirect()->route('vendor.login');
+    }
 }
 

@@ -38,6 +38,7 @@ Route::prefix('vendor')->group(function(){
     Route::get('/compliance',[VendorController::class,'compliance'])->name('vendor.compliance')->middleware('vendor');
     Route::get('/payout',[VendorController::class,'payout'])->name('vendor.payout')->middleware('vendor');
     Route::post('/payout',[VendorController::class,'createRecipient'])->name('vendor.payout')->middleware('vendor');
+    Route::post('/destroy',[VendorController::class,'deactivateAccount'])->name('vendor.destroy')->middleware('vendor');
 });
 Route::prefix('menus')->group(function(){
     //MENU ROUTE
