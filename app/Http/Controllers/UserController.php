@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\User;
+use App\Models\Vendor;
 use App\Repos\UserRepo;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
@@ -70,6 +72,23 @@ class UserController extends Controller
         return redirect()->route('user.login')->with('message','You are logged out');
     }
 
-    
+    public function userProfile(){
+        $vendor = Vendor::where('id',2)->first();
+        return view('frontend.user.user-profile',compact('vendor'));
+    }
+
+    public function deactivateAccount(Request $request){
+
+        $validated = $request->validate([
+            'confirmation' => 'required',
+        ]);
+        
+        if(strtolower($validated['confirmation']) == "delete"){
+            $id = Auth::user()->id;
+            User::destroy($id);
+        }
+        
+        return redirect()->route('user.login')->with('message','Your account has been deactivated!');
+    }
 
 }

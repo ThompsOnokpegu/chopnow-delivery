@@ -87,8 +87,10 @@ Route::prefix('orders')->group(function(){
  Route::get('/verify', [UserController::class,'emailVerificationNotice'])->middleware('auth')->name('verification.notice');
  Route::get('email/verify/{id}/{hash}', [UserController::class,'emailVerificationHandler'])->middleware(['auth', 'signed'])->name('verification.verify');
  Route::post('email/verification-notification', [UserController::class,'resendEmailLink'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+ Route::get('/profile', [UserController::class,'userProfile'])->middleware(['auth'])->name('user.profile');
 
  Route::post('/logout', [UserController::class,'logout'])->name('user.logout');
+ Route::post('/deactivate', [UserController::class,'deactivateAccount'])->name('user.deactivate');
 
 
 /*------------------User Routes------------------*/
