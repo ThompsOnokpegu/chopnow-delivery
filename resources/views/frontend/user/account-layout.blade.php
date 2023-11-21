@@ -41,20 +41,28 @@
     <link rel="stylesheet" href="{{ asset('vendor/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <style>
       .btn-primary,.btn-primary:hover {
-          color: #fff;
+          color: #000000;
           background-color: #FFC244;
           border-color: #FFC244;
           box-shadow: 0 0.125rem 0.25rem 0 rgba(255, 194, 68, 0.4);
       }
-      a,a:hover {
+      .btn-primary:focus, .btn-primary.focus {
+          color: #000000;
+          background-color: #FFC244;
+          border-color: #FFC244;
+          transform: translateY(0);
+          box-shadow: none;
+      }
+      a,a:hover,a:focus {
           color: #cf2c2a;
       }
-      .form-control:hover{
+      .form-control:hover,.form-control:focus{
         border: 1px solid #FFC244;
       }
       span.input-group-text:hover {
           border: 1px solid #FFC244;
       }
+      
     </style>
     <!-- Page CSS -->
 

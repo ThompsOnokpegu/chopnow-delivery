@@ -16,19 +16,29 @@ class UserLogin extends Component
     }
  
     public function login(){
-        $user = $this->validate(['email'=>'email|required|lowercase','password'=>'required']);
+        $request = $this->validate(['email'=>'email|required|lowercase','password'=>'required']);
         //attempt to login user
-        if(Auth::attempt(['email'=>$user['email'],'password'=>$user['password']])){
+        if(Auth::attempt(['email'=>$request['email'],'password'=>$request['password']])){
+            $user = Auth::user();
+            session(['delivery_address' => $user->street]);
+            session(['phone' => $user->phone]);
+
             //extract the path of the referring url
-            $path = str_replace(url('/'),'',url()->previous());
-            //dd($path);
-            //Check whether user was trying to visit profile
-            if($path == '/profile'){
-                //redirect to checkout
-                return redirect()->route('user.profile');
+            $path = str_replace(url('/'),'',session('refUrl'));
+            
+            
+            if($user->street == null || $user->phone == null ){
+                return redirect()->route('user.address');
             }
+
+            //Check whether user was trying to checkout
+            if($path == '/cart'){
+                //redirect to checkout
+                return redirect()->route('order.checkout');
+            }
+
             //redirect user to the address
-            return redirect()->route('user.address');
+            return redirect()->route('restaurants.index');
         }
         return back()->with('message','Invalid email or password');
     }

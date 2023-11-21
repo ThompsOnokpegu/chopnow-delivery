@@ -28,7 +28,23 @@ class UserController extends Controller
     }
 
     public function address(){
-        return view('frontend.checkout.add-address');
+        $user = Auth::user();
+
+        if($user->street == null || $user->phone == null ){
+            return view('frontend.checkout.add-address');
+        }
+
+        session(['delivery_address' => $user->street]);
+        session(['phone' => $user->phone]);
+        //extract the path of the referring url
+        $path = str_replace(url('/'),'',session('refUrl'));
+        //Check whether user was trying to checkout
+        if($path == '/cart'){
+            //redirect to checkout
+            return redirect()->route('order.checkout');
+        }
+        return redirect()->route('restaurants.index');
+        
     }
 
     public function create(Request $request, UserRepo $va){
