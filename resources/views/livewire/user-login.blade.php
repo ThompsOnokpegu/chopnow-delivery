@@ -27,7 +27,7 @@
                             <i class="show-pass-btn"><img src="{{'customer/assets/img/icon/eye.svg'}}" alt="img"></i>
                         </div>
                     </div>
-                    <div class="text-end"><a href="#">Forgot password?</a></div>
+                    <div class="text-end"><a href="{{ route('password.request') }}">Forgot password?</a></div>
                 </div>
                 <button wire:click.prevent="login()" class="btn btn-base w-100">Sign In</button>
             </form>

@@ -6,21 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ChopNow - Food Ordering and Delivery</title>
     <!--fivicon icon-->
-    <link rel="icon" href="{{ asset('customer/assets/img/fevicon.png') }}">
+    <link rel="icon" href="{{ asset('/customer/assets/img/fevicon.png') }}">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/animate.min.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('customer/assets/css/bootstrap.min.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/animate.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('/customer/assets/css/bootstrap.min.css') }}"> --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/magnific.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/jquery-ui.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/nice-select.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/owl.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/slick-slide.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/remixicon/remixicon.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('customer/assets/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/magnific.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/nice-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/owl.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/slick-slide.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/remixicon/remixicon.css') }}">
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/customer/assets/css/responsive.css') }}">
 
     <!--Google Fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -62,27 +62,27 @@
             <ul>
                 <li>
                     <a href="{{ route('restaurants.index') }}">
-                        <img src="{{ asset('customer/assets/img/icon/svg/home.svg') }}" alt="icon">
+                        <img src="{{ asset('/customer/assets/img/icon/svg/home.svg') }}" alt="icon">
                     </a>
                 </li>
                 <li>
                     <a data-bs-toggle="modal" data-bs-target="#searchModal"class="menu-bar">
-                        <img src="{{ asset('customer/assets/img/icon/svg/search.svg') }}" alt="img">
+                        <img src="{{ asset('/customer/assets/img/icon/svg/search.svg') }}" alt="img">
                     </a>
                 </li>
                 <li class="shop-btn">
                     <a data-bs-toggle="modal" data-bs-target="#cartModal"class="menu-bar">
-                        <img src="{{ asset('customer/assets/img/icon/svg/bag.svg') }}" alt="img">
+                        <img src="{{ asset('/customer/assets/img/icon/svg/bag.svg') }}" alt="img">
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="{{ asset('customer/assets/img/icon/svg/discount.svg') }}" alt="img">
+                        <img src="{{ asset('/customer/assets/img/icon/svg/discount.svg') }}" alt="img">
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <img src="{{ asset('customer/assets/img/icon/svg/profile.svg') }}" alt="img">
+                        <img src="{{ asset('/customer/assets/img/icon/svg/profile.svg') }}" alt="img">
                     </a>
                 </li>
             </ul>
@@ -96,23 +96,23 @@
     
 
     <!-- all plugins here -->
-    <script src="{{ asset('customer/assets/js/jquery.3.6.min.js') }}"></script>
-    {{-- <script src="{{ asset('customer/assets/js/bootstrap.min.js') }}"></script> --}}
+    <script src="{{ asset('/customer/assets/js/jquery.3.6.min.js') }}"></script>
+    {{-- <script src="{{ asset('/customer/assets/js/bootstrap.min.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('customer/assets/js/imageloded.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/counterup.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/waypoint.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/magnific.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/nice-select.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/fontawesome.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/owl.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/slick-slider.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/wow.min.js') }}"></script>
-    <script src="{{ asset('customer/assets/js/tweenmax.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/imageloded.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/counterup.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/waypoint.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/magnific.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/nice-select.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/fontawesome.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/owl.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/slick-slider.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/wow.min.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/tweenmax.min.js') }}"></script>
     <!-- main js  -->
-    <script src="{{ asset('customer/assets/js/main.js') }}"></script>
+    <script src="{{ asset('/customer/assets/js/main.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script> --}}
 </body>
 </html>

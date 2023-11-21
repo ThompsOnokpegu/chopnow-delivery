@@ -87,8 +87,12 @@ Route::prefix('orders')->group(function(){
  Route::get('/verify', [UserController::class,'emailVerificationNotice'])->middleware('auth')->name('verification.notice');
  Route::get('email/verify/{id}/{hash}', [UserController::class,'emailVerificationHandler'])->middleware(['auth', 'signed'])->name('verification.verify');
  Route::post('email/verification-notification', [UserController::class,'resendEmailLink'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
- Route::get('/profile', [UserController::class,'userProfile'])->middleware(['auth'])->name('user.profile');
+ Route::get('/forgot-password',[UserController::class,'forgotPassword'])->middleware('guest')->name('password.request');
+ Route::post('/forgot-password', [UserController::class,'sendResetLink'])->middleware('guest')->name('password.email');
+ Route::get('/reset-password/{token}',[UserController::class,'handlePasswordReset'])->middleware('guest')->name('password.reset');
+ Route::post('/reset-password',[UserController::class,'passwordUpdate'])->middleware('guest')->name('password.update');
 
+ Route::get('/profile', [UserController::class,'userProfile'])->middleware(['auth'])->name('user.profile');
  Route::post('/logout', [UserController::class,'logout'])->name('user.logout');
  Route::post('/deactivate', [UserController::class,'deactivateAccount'])->name('user.deactivate');
 

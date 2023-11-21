@@ -9,18 +9,18 @@
     <link rel="icon" href="{{ asset('customer/assets/img/fevicon.png') }}">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{'customer/assets/css/animate.min.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/bootstrap.min.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/magnific.min.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/jquery-ui.min.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/nice-select.min.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/owl.min.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/slick-slide.min.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/fontawesome.min.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/remixicon/remixicon.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/style.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/custom-styles.css'}}">
-    <link rel="stylesheet" href="{{'customer/assets/css/responsive.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/animate.min.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/bootstrap.min.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/magnific.min.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/jquery-ui.min.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/nice-select.min.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/owl.min.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/slick-slide.min.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/fontawesome.min.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/remixicon/remixicon.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/style.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/custom-styles.css'}}">
+    <link rel="stylesheet" href="{{'/customer/assets/css/responsive.css'}}">
 
     <!--Google Fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -74,7 +74,7 @@
                 <a style="padding-left:15px;" class="navbar-brand" href="{{ route('restaurants.index') }}">
                     <img src="{{ asset('customer/assets/img/fevicon.png') }}" alt="img" style="height: 36px;width:auto;">
                 </a>
-                @livewire('view-address')
+                {{-- @livewire('view-address') --}}
                 {{-- <a class="navbar-brand" href="{{ route('restaurants.index') }}">
                     <img src="{{ asset('customer/assets/img/icon/user.png') }}" alt="img" style="height: 30px;width:auto;">
                 </a>  --}}
@@ -92,21 +92,21 @@
     
 
     <!-- all plugins here -->
-    <script src="{{'customer/assets/js/jquery.3.6.min.js'}}"></script>
-    <script src="{{'customer/assets/js/bootstrap.min.js'}}"></script>
-    <script src="{{'customer/assets/js/imageloded.min.js'}}"></script>
-    <script src="{{'customer/assets/js/counterup.js'}}"></script>
-    <script src="{{'customer/assets/js/waypoint.js'}}"></script>
-    <script src="{{'customer/assets/js/magnific.min.js'}}"></script>
-    <script src="{{'customer/assets/js/isotope.pkgd.min.js'}}"></script>
-    <script src="{{'customer/assets/js/jquery-ui.min.js'}}"></script>
-    <script src="{{'customer/assets/js/nice-select.min.js'}}"></script>
-    <script src="{{'customer/assets/js/fontawesome.min.js'}}"></script>
-    <script src="{{'customer/assets/js/owl.min.js'}}"></script>
-    <script src="{{'customer/assets/js/slick-slider.min.js'}}"></script>
-    <script src="{{'customer/assets/js/wow.min.js'}}"></script>
-    <script src="{{'customer/assets/js/tweenmax.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/jquery.3.6.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/bootstrap.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/imageloded.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/counterup.js'}}"></script>
+    <script src="{{'/customer/assets/js/waypoint.js'}}"></script>
+    <script src="{{'/customer/assets/js/magnific.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/isotope.pkgd.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/jquery-ui.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/nice-select.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/fontawesome.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/owl.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/slick-slider.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/wow.min.js'}}"></script>
+    <script src="{{'/customer/assets/js/tweenmax.min.js'}}"></script>
     <!-- main js  -->
-    <script src="{{'customer/assets/js/main.js'}}"></script>
+    <script src="{{'/customer/assets/js/main.js'}}"></script>
 </body>
 </html>
