@@ -68,8 +68,6 @@ Route::prefix('orders')->group(function(){
  Route::get('/', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
  Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
- 
- 
  Route::get('/thank-you',[CheckoutController::class,'thankYou'])->name('order.thankyou');
  Route::post('/webhook',[WebhookController::class,'handle']);
 
@@ -80,6 +78,7 @@ Route::prefix('orders')->group(function(){
  Route::post('/register',[UserController::class,'create'])->name('user.create');
  Route::post('/login',[UserController::class,'login'])->name('login');
  Route::get('/delivery',[UserController::class,'address'])->name('user.address')->middleware(['verified']);
+ 
  Route::get('/cart',[CheckoutController::class,'cartPage'])->name('order.cart');
  Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['auth','verified','has.products']);
  Route::post('/checkout',[CheckoutController::class,'placeOrder'])->name('order.checkout');

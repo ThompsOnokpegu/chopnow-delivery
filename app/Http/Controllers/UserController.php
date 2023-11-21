@@ -128,7 +128,7 @@ class UserController extends Controller
         );
      
         return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
+                    ? redirect()->route('login')->with('message', __($status))
                     : back()->withErrors(['email' => [__($status)]]);
     }
     //end forgot password
@@ -144,18 +144,6 @@ class UserController extends Controller
         return view('frontend.user.user-profile');
     }
 
-    public function deactivateAccount(Request $request){
-
-        $validated = $request->validate([
-            'confirmation' => 'required',
-        ]);
-        
-        if(strtolower($validated['confirmation']) == "delete"){
-            $id = Auth::user()->id;
-            User::destroy($id);
-        }
-        
-        return redirect()->route('user.login')->with('message','Your account has been deactivated!');
-    }
+    
 
 }

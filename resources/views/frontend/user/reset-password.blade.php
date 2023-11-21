@@ -10,11 +10,7 @@
             {{ session('email') }}
         </div>
         @endif
-        @if(session()->has('status'))
-        <div class="alert alert-danger">
-            {{ session('status') }}
-        </div>
-        @endif
+        
         <div class="row">
           <input type="hidden" name="token" value="{{ $token }}">
           <div class="mb-3 col-md-12">

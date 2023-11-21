@@ -43,21 +43,7 @@
                 <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?</h6>
                 <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
               </div>
-              <form action="{{ route('user.deactivate') }}" method="POST">
-                @csrf
-                <div class="mb-3 col-md-6">
-                  <label for="confirm">Type DELETE then click deactivate account to confirm your decision</label>
-                  <input 
-                        type="text" 
-                        class="form-control" 
-                        
-                        name="confirmation" 
-                        placeholder="DELETE"
-                         />
-                </div>
-                @error('confirmation') <div class="error">{{ $message }}</div> @enderror
-                <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
-              </form>
+              @livewire('user.deactivate-account')
             </div>
           </div>
         </div>
