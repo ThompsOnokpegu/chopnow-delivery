@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="single-banner-area" style="background-image: url({{ asset('vendor/assets/img/brands/'.$vendor->kitchen_banner_image) }});">
+<div class="single-banner-area" style="background-image: url({{ asset('storage/vendor-banners/'.$restaurant->kitchen_banner_image) }});">
     <div class="container" style="position: relative;">
         <a class="btn back-page-btn" href="{{ route('restaurants.index') }}"><i class="ri-arrow-left-s-line"></i></a>
         <div class="btn-area">
