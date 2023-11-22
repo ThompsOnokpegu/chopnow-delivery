@@ -60,6 +60,7 @@ class MenuController extends Controller
     }
 
     public function create(Menu $menu){  
+        $vendor_id = Auth::guard('vendor')->user()->id;
         return view('vendor.menu.create',compact('vendor_id','menu'));
     }
 

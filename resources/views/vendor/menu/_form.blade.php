@@ -61,7 +61,7 @@
                     @error('sales_price') <div class="error">{{ $message }}</div> @enderror
                 </div>
             </div>
-            <div class="card-body">
+            {{-- <div class="card-body">
                 
                 <div class="d-flex justify-content-between mb-2">
                     <label for="payment-terms" class="mb-0">Available to Customers?</label>
@@ -71,7 +71,7 @@
                         </div>
                     </label>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
