@@ -40,7 +40,7 @@ id="layout-navbar">
     <li class="nav-item navbar-dropdown dropdown-user dropdown">
       <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
         <div class="avatar avatar-online">
-          <img src="{{asset('storage/vendor-banners/avatar.gif') }}" alt class="w-px-40 h-auto rounded-circle" />
+          <img src="{{asset('vendor/avatar.gif') }}" alt class="w-px-40 h-auto rounded-circle" />
         </div>
       </a>
       <ul class="dropdown-menu dropdown-menu-end">
@@ -49,7 +49,7 @@ id="layout-navbar">
             <div class="d-flex">
               <div class="flex-shrink-0 me-3">
                 <div class="avatar avatar-offline">
-                  <img src="{{asset('storage/vendor-banners/user.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                  <img src="{{asset('vendor/user.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                 </div>
               </div>
               <div class="flex-grow-1">

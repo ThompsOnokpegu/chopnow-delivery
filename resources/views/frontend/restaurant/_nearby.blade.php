@@ -2,12 +2,12 @@
     <div class="container">
         <div class="row">
             @foreach ($nearby as $restaurant)
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 col-md-4">
                     <div class="single-product-wrap">
                         <div class="thumb">
                             {{-- <span class="tag">15% Off</span> --}}
                             <a href="{{ route('restaurants.show',$restaurant->id) }}">
-                                <img src="{{ asset('vendor/assets/img/brands/'.$restaurant->kitchen_banner_image) }}" alt="img">
+                                <img src="{{ url(env('CLOUD_BASE_URL').$restaurant->kitchen_banner_image) }}" alt="img">
                             </a>
                             <a class="fav-btn" href="#"><i class="fa fa-heart"></i></a>
                         </div>
