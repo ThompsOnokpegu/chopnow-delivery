@@ -4,7 +4,7 @@
         <form>
             <div class="d-flex bd-highlight mb-3 single-item-wrap">
                 <div class="p-2 bd-highlight flex-shrink-0">
-                    <img src="{{ asset('storage/menu-images/'.$product->product_image) }}" width="80" class="rounded-2" alt="{{ $product->slug}}">
+                    <img src="{{ url("https://res.cloudinary.com/dydkg8ykt/image/upload/v1700736919/vendor-banners/ei4lfu3nwxsnrxfsrgv3.jpg") }}" width="80" class="rounded-2" alt="{{ $product->slug}}">
                 </div>
                 <div class="p-2 bd-highlight">
                     <h6><a href="{{ route('restaurants.product',$product->id)}}">{{ $product->name }}</a></h6>

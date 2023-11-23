@@ -93,6 +93,9 @@ Route::prefix('orders')->group(function(){
  Route::get('/profile', [UserController::class,'userProfile'])->middleware(['auth'])->name('user.profile');
  Route::post('/logout', [UserController::class,'logout'])->name('user.logout');
  Route::post('/deactivate', [UserController::class,'deactivateAccount'])->name('user.deactivate');
+ Route::get('/cloudinary', function(){
+    return view('vendor.cloudinary');
+ });
 
 
 /*------------------User Routes------------------*/
