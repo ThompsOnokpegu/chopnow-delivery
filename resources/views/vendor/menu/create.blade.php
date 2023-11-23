@@ -37,7 +37,7 @@
                       /> 
                     </label>
                     <p class="text-muted mb-0">Allowed JPEG,JPG, or PNG. Max size of 300K</p>
-                    <img id="preview" src="{{ asset('storage/menu-images/'.$menu->product_image) }}" alt="your image" class="mt-3" style="display:none;" width="200"/>    
+                    <img id="preview" src="" alt="your image" class="mt-3" style="display:none;" width="200"/>    
                     
                 </div>
                 

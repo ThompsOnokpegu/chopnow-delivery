@@ -18,6 +18,11 @@
             </div>
             @else
               <div class="card-body">
+                @if(session()->has('kyc-uploaded'))
+                  <div class="alert alert-success">
+                    {{ session('kyc-uploaded') }}
+                  </div>
+                @endif
                 <form wire:submit="comply">
                 <div class="row">
                     
@@ -54,7 +59,7 @@
                         wire:model="kyc_document"
                         class="account-file-input"
                         hidden
-                        accept="image/png, image/jpeg"
+                        accept="image/png, image/jpeg, application/pdf"
                         />
                         @error('kyc_document') <span class="error">{{ $message }}</span> @enderror
                     </label>

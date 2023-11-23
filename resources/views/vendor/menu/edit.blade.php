@@ -38,7 +38,7 @@
                               <p class="text-muted mb-0">Allowed JPEG,JPG, or PNG. Max size of 300K</p>
                         </div>
                         <div class="col-md-8">
-                            <img id="preview" style="border-radius:5px;" src="{{ asset('storage/menu-images/'.$menu->product_image) }}" alt="product_image" class="mt-3" width="80"/>
+                            <img id="preview" style="border-radius:5px;" src="{{ url(env('CLOUD_BASE_URL').$menu->product_image) }}" alt="product_image" class="mt-3" width="80"/>
                         </div>
                     </div>
                            

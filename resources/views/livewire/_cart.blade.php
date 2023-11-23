@@ -19,7 +19,7 @@
         @foreach($items as $item)
             <div class="d-flex bd-highlight mb-3 mt-3 single-item-wrap">
                 <div class="p-2 bd-highlight flex-shrink-0">
-                    <img src="{{ asset('storage/menu-images/'.$item->associatedModel->product_image) }}" width="80" class="rounded-2" alt="{{ $item->associatedModel->slug}}">
+                    <img src="{{ url(env('CLOUD_BASE_URL').$item->associatedModel->product_image) }}" width="80" class="rounded-2" alt="{{ $item->associatedModel->slug}}">
                 </div>
                 <div class="p-2 bd-highlight">
                     <h6><a href="{{ route('restaurants.product',$item->id)}}">{{ $item->name }}</a></h6>

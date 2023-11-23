@@ -110,4 +110,49 @@ class VendorRepo{
         Storage::disk('local')->put($path.$filename,file_get_contents($file));
         return $filename;
     }
+
+    public static function cloudinaryUpload($path,$file){
+        // First we validate the input from the user
+        // $data = $file->validate([
+        //   'media' => [
+        //     'required',
+        //     'image',
+        //     'mimes:jpeg,jpg,png',
+        //     ],
+        // ]);
+
+        /*Set the transformations required to optimize the images based on recommended optimization*/
+        if($path=='menu-images'){
+            $folder = $path;
+            $media = $file;
+            $width = '800';
+            $height = '800';
+            $quality = 'auto';
+            $fetch = 'auto';
+            $crop = 'scale';
+        }else{
+            $folder = $path;
+            $media = $file;
+            $width = '1053';
+            $height = '468';
+            $quality = 'auto';
+            $fetch = 'auto';
+            $crop = 'scale';
+        }
+        //upload the image to clouldinary
+        $uploadedFileUrl = cloudinary()->upload($media->getRealPath(),[
+            'folder' => 'chopnow/'.$folder,
+            'transformation' => [
+                'width'   => $width,
+                'height'  => $height,
+                'quality' => $quality,
+                'fetch'   => $fetch,
+                'crop'    => $crop
+            ]
+        ])->getSecurePath();
+
+        $dbUrl = Str::after($uploadedFileUrl, 'upload/');//"v1700736919/vendor-banners/ei4lfu3nwxsnrxfsrgv3.jpg"
+        
+        return $dbUrl;
+    }
 }

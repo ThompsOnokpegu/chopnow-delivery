@@ -95,30 +95,41 @@ class VendorController extends Controller
     }
 
     public function update(Request $request, Vendor $vendor, VendorRepo $val){
-        $directory = 'public/vendor-banners/';
+        $directory = 'vendor-banners';
         $request['slug'] = str()->slug($request->business_name);
         $filename = "";
         //validate input
         $validated = $request->validate($val->rules(),$val->messages());
 
         
+        // //check whether vendor uploaded a new image for this vendor
+        // if($request->hasFile('kitchen_banner_image')){
+            
+        //     //check if the old image is still in the directory: prevent file not found exception
+        //     if(Storage::disk('local')->exists('public/vendor-banners/'.$vendor->kitchen_banner_image)){
+        //         //delete old image
+        //         Storage::disk('local')->delete('public/vendor-banners/'.$vendor->kitchen_banner_image);
+        //         //upload the new file
+        //         $filename = VendorRepo::storeMenuImage($directory,$request->file('kitchen_banner_image'));
+        //     }
+        //     //upload the new file
+        //     $filename = VendorRepo::storeMenuImage($directory,$request->file('kitchen_banner_image'));
+            
+        // }else{
+        //     //product image did not change
+        //     $filename = $vendor->kitchen_banner_image;   
+        // }
+        
         //check whether vendor uploaded a new image for this vendor
         if($request->hasFile('kitchen_banner_image')){
-            
-            //check if the old image is still in the directory: prevent file not found exception
-            if(Storage::disk('local')->exists('public/vendor-banners/'.$vendor->kitchen_banner_image)){
-                //delete old image
-                Storage::disk('local')->delete('public/vendor-banners/'.$vendor->kitchen_banner_image);
-                //upload the new file
-                $filename = VendorRepo::storeMenuImage($directory,$request->file('kitchen_banner_image'));
-            }
-            //upload the new file
-            $filename = VendorRepo::storeMenuImage($directory,$request->file('kitchen_banner_image'));
-            
+            //upload the file to cloudinary
+            $filename = VendorRepo::cloudinaryUpload($directory,$validated['kitchen_banner_image']);
         }else{
             //product image did not change
-            $filename = $vendor->kitchen_banner_image;   
+            $filename = $vendor->kitchen_banner_image;
         }
+        
+
         //update the file name
         $validated['kitchen_banner_image'] = $filename;
         

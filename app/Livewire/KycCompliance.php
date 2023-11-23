@@ -6,20 +6,16 @@ use App\Models\Vendor;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\Rule;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class KycCompliance extends Component
 {
     use WithFileUploads;
 
-    #[Rule('required|image|max:1024')] // 1MB Max
     public $kyc_document;
 
-    #[Rule('required')]
     public $kyc_type='';
-    
-    #[Rule('required')]
+
     public $kyc_number='';
 
     public function render(){
@@ -29,21 +25,38 @@ class KycCompliance extends Component
     }
 
     public function comply(){
+
+        //validate file
+        $data = $this->validate([
+            'kyc_document' => [
+              'required',
+              'mimes:jpeg,jpg,png,pdf',
+              ],
+            'kyc_type' => 'required',
+            'kyc_number' => 'required',
+        ]);
+
         $id = Auth::guard('vendor')->user()->id;
-        $vendor = Vendor::where('id',$id)->first();
-        $filename = Uuid::uuid4()->toString();
+        $vendor = Vendor::where('id',$id)->first();        
+
+        // Upload an image file to cloudinary
+        $uploadedFileUrl = cloudinary()->uploadFile($data['kyc_document']->getRealPath(),[
+            'folder'=> 'chopnow/business-certificates',
+        ])->getSecurePath();
+        $filename = Str::after($uploadedFileUrl, 'upload/');
+
         $vendor->kyc_type = $this->kyc_type;
         $vendor->kyc_number = $this->kyc_number;
         $vendor->kyc_document = $filename;
         $vendor->save();
-        // Store the file in the "certificates" directory with the filename
-        $this->kyc_document->storeAs('certificates', $filename);
-
+        
         //Approve if account is Registered Business
         $vendor = Vendor::where('id',$id)->first();
         if($vendor->business_type=="Registered"){
             $vendor->account_status = 'approved';
             $vendor->save();
         }
+
+        session()->flash('kyc-uploaded','Updated successfully!');
     }
 }
