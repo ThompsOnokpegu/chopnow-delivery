@@ -15,7 +15,7 @@
         </div>
         <div class="invite-wrap">
             <p>Invite Friends &
-                You Both Get Up To $10</p>
+                You Both Get Up To ₦1000</p>
             <img src="{{ asset('customer/assets/img/gift.png') }}" alt="img">
         </div>
         <ul class="list-inner">

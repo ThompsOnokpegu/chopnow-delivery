@@ -40,7 +40,7 @@
             <div class="col-md-12 mb-4">
               <div class=" mb-4">
                 <h6>Your Chops</h6>
-                <label class="mb-3">{{ $items->count() }} products from <strong>{{ $order->vendor->business_name }}</strong></label>
+                <label class="mb-3">{{ $items->count()}} {{ $items->count() == 1 ? 'product': 'products'; }} from <strong>{{ $order->vendor->business_name }}</strong></label>
                  
                 @foreach($items as $item)
                     <div class="d-flex bd-highlight"> 
@@ -74,7 +74,7 @@
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                       Products
-                      <span>₦{{ $order->total - $order->shipping }}</span>
+                      <span>₦{{ number_format($order->total - $order->shipping, 2) }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
                       Delivery
@@ -82,7 +82,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                         Services
-                        <span>₦0.0</span>
+                        <span>₦0.00</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-1">
                       <div>
