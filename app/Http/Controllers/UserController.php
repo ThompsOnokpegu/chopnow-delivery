@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Repos\UserRepo;
@@ -141,9 +142,25 @@ class UserController extends Controller
     }
 
     public function userProfile(){  
-        return view('frontend.user.user-profile');
+        return view('frontend.user.profile');
+    }
+    public function myAccount(){  
+        return view('frontend.user.account');
     }
 
+    public function myOrders(){
+        $user = Auth::user();
+        $orders = Order::where('user_id',$user->id)->get();
+
+        return view('frontend.my-orders.my-order-list',compact('orders'));
+    }
+    public function orderDetails(Order $order){
+        
+        $order_id = $order->id;
+        $items = OrderItem::where('order_id',$order_id)->get();
+        
+        return view('frontend.my-orders.details',compact('order','items'));
+    }
     
 
 }

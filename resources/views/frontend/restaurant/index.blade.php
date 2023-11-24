@@ -35,9 +35,9 @@
                     </li>
                     
                     <li>
-                        <a class="dropdown-item" href="{{ route('user.profile') }}">
+                        <a class="dropdown-item" href="{{ route('user.account') }}">
                             <i class="ri-user-settings-line"></i>
-                          <span>Profile</span>   
+                          <span>Account</span>   
                         </a>
                     </li>
                     <li>

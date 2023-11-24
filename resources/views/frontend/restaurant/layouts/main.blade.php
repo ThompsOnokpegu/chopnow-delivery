@@ -57,7 +57,7 @@
     <div class="single-restuarent-area">
 
         @yield('content')
-        
+        @if(Str::beforeLast(str_replace(url('/'),'',url()->current()),'/') != '/my-chops')
         <div class="main-footer-bottom d-block text-center">
             <ul>
                 <li>
@@ -87,6 +87,7 @@
                 </li>
             </ul>
         </div>
+        @endif
     </div>
     <!-- back-to-top end -->
     <div class="back-to-top">

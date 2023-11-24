@@ -91,6 +91,10 @@ Route::prefix('orders')->group(function(){
  Route::post('/reset-password',[UserController::class,'passwordUpdate'])->middleware('guest')->name('password.update');
 
  Route::get('/profile', [UserController::class,'userProfile'])->middleware(['auth'])->name('user.profile');
+ Route::get('/my-account', [UserController::class,'myAccount'])->middleware(['auth'])->name('user.account');
+ Route::get('/my-chops', [UserController::class,'myOrders'])->middleware(['auth'])->name('user.chops');
+ Route::get('/my-chops/{order}', [UserController::class,'orderDetails'])->middleware(['auth'])->name('chop.details');
+
  Route::post('/logout', [UserController::class,'logout'])->name('user.logout');
  Route::post('/deactivate', [UserController::class,'deactivateAccount'])->name('user.deactivate');
 

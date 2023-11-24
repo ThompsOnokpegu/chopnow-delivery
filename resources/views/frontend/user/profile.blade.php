@@ -2,7 +2,11 @@
 
 @section('account')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('restaurants.index') }}"><i class="tf-icons bx bx-arrow-back"></i> Return to Shop</a> /</span> Account</h4>
+    <h4 class="fw-bold py-3 mb-4" style="color:#000;"><span class="text-muted fw-light">
+      <a href="{{ route('user.account') }}" style="font-weight:600;">
+        <i class="tf-icons bx bx-arrow-back"></i> Return
+      </a> /</span> Update
+    </h4>
     @if($message=session('message'))
       <div class="alert alert-success">
         {{ $message }}
@@ -11,7 +15,7 @@
     <div class="row"> 
         <div class="col-md-12"> 
           <div class="card mb-4">
-            <h5 class="card-header">My Information</h5>
+            <h5 class="card-header">Account Information</h5>
             <!-- Account -->
             <hr class="my-0" />
             @livewire('user.update-user')

@@ -9,10 +9,10 @@ class Paystack {
     
     private $api = 'https://api.paystack.co';
     
-    public function getPaymentLink($amount, $vendor_id, $user, $email, $ref) {
+    public function getPaymentLink($amount, $vendor_id, $user, $email, $order) {
         try {
             //set callback url
-            $callback_url = url(route('order.thankyou'));
+            $callback_url = url(route('chop.details',$order));
             //$callback_url = 'https://8b35-102-91-54-66.ngrok-free.app';
 
             // Set the API endpoint
@@ -42,7 +42,7 @@ class Paystack {
             $requestData = [
                 'email' => $email,
                 'amount' => $amount * 100, // Paystack expects the amount in kobo
-                'reference' => $ref,
+                'reference' => $order->reference,
                 'callback_url' => $callback_url,
                 'currency' => 'NGN',
                 'metadata' => $metadata['metadata'],

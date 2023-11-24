@@ -77,7 +77,7 @@
   <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar layout-without-menu">
-      <div class="layout-container">
+      <div class="layout-container" style="background-color:#ffffff;">
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->

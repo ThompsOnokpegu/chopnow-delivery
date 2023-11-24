@@ -74,7 +74,7 @@ class ValidateCheckout extends Component
             $email = $validated['email'];
     
             $paystack = new Paystack();
-            $response = $paystack->getPaymentLink($amount,$vendor_id,$user,$email,$order->reference);
+            $response = $paystack->getPaymentLink($amount,$vendor_id,$user,$email,$order);
             
             //clear cart
             $this->cart->clear();
@@ -88,7 +88,7 @@ class ValidateCheckout extends Component
             //send notification
             OrderSuccessful::dispatch($order);
             //redirect to home
-            return redirect()->route('restaurants.index');
+            return redirect()->route('chop.details',$order);
         }
         
         //send order notification - TODO: move this action to webhook
