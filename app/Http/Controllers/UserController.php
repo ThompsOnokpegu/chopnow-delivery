@@ -54,6 +54,19 @@ class UserController extends Controller
     public function create(Request $request, UserRepo $va){
 
         $validated = $request->validate($va->rules());
+
+        $existingUser = User::withTrashed()->where('email',$validated['email'])->first();
+        //check whether this account already exist
+        if($existingUser){
+            //check whether this user had previously deleted their account
+            if($existingUser->trashed()){
+                //delete old records
+                $existingUser->forceDelete();
+            }else{
+                //redirect user to login
+                return redirect()->route('vendor.login')->with('message','A user with this email address already exist.');
+            }
+        }
         $user = new User();
                      
         $user->name = $validated['first_name'];
@@ -64,8 +77,8 @@ class UserController extends Controller
 
         //send verification email
         event(new Registered($user));
-
-        return redirect()->route('user.login');
+        
+        return redirect()->route('user.login')->with('message','Account created successfully! Please login to access your account.');
     }
     //email verification
     public function emailVerificationNotice(){

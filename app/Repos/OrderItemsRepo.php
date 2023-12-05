@@ -1,6 +1,7 @@
 <?php
 namespace App\Repos;
 
+use App\Models\Menu;
 use App\Models\OrderItem;
 
 class OrderItemsRepo{

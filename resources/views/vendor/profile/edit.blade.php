@@ -42,18 +42,10 @@
                         value="{{ old('last_name',$vendor->last_name) }}" />
                         @error('last_name') <div class="error">{{ $message }}</div> @enderror
                     </div>
+                    
                     <div class="mb-3 col-md-6">
                       <label for="email" class="form-label">E-mail</label>
-                      <input
-                        class="form-control"
-                        type="text"
-                        id="email"
-                        name="email"
-                        value="{{ old('email',$vendor->email) }}"
-                        placeholder="john.doe@example.com"
-                        readonly
-                      />
-                      @error('email') <div class="error">{{ $message }}</div> @enderror
+                      <p class="text-muted mb-0">{{ $vendor->email }}</p>
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label" for="phone">Phone Number</label>

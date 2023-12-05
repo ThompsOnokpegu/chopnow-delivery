@@ -125,6 +125,7 @@ class ValidateCheckout extends Component
             //create new order items
             foreach($cartItems as $item){
                 OrderItem::create([
+                    'menu_id'=> $item->id,
                     'order_id' => $order->id,
                     'name' => $item->name,
                     'price' => $item->price,

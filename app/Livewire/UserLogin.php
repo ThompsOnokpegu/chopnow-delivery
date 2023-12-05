@@ -40,6 +40,6 @@ class UserLogin extends Component
             //redirect user to the address
             return redirect()->route('restaurants.index');
         }
-        return back()->with('message','Invalid email or password');
+        return back()->with('error','Invalid email or password');
     }
 }

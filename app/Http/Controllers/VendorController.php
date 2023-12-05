@@ -52,7 +52,7 @@ class VendorController extends Controller
         if(Auth::guard('vendor')->attempt(['email'=>$vendor['email'],'password'=>$vendor['password']])){
             return redirect()->route('vendor.dashboard')->with('message','Login successful');
         }else{
-            return back()->with('message','Invalid email or password');
+            return back()->with('error','Invalid email or password');
         }
     }
 
@@ -76,6 +76,19 @@ class VendorController extends Controller
 
         ]);
         
+        $existingVendor = Vendor::withTrashed()->where('email',$request->email)->first();
+        //check whether this account already exist
+        if($existingVendor){
+            //check whether user had previously deleted their account
+            if($existingVendor->trashed()){
+                //delete old records
+                $existingVendor->forceDelete();
+            }else{
+                //redirect user to login
+                return redirect()->route('vendor.login')->with('message','A seller with this email address already exist.');
+            }
+        }
+        
         $vendor = new Vendor;
                      
         $vendor->first_name = $request->first_name;
@@ -86,7 +99,7 @@ class VendorController extends Controller
 
         $vendor->save();
 
-        return redirect()->route('vendor.login');
+        return redirect()->route('vendor.login')->with('message','Account created successfully! Please login to access your dashboard.');
     }
 
     public function profile(){
@@ -100,25 +113,6 @@ class VendorController extends Controller
         $filename = "";
         //validate input
         $validated = $request->validate($val->rules(),$val->messages());
-
-        
-        // //check whether vendor uploaded a new image for this vendor
-        // if($request->hasFile('kitchen_banner_image')){
-            
-        //     //check if the old image is still in the directory: prevent file not found exception
-        //     if(Storage::disk('local')->exists('public/vendor-banners/'.$vendor->kitchen_banner_image)){
-        //         //delete old image
-        //         Storage::disk('local')->delete('public/vendor-banners/'.$vendor->kitchen_banner_image);
-        //         //upload the new file
-        //         $filename = VendorRepo::storeMenuImage($directory,$request->file('kitchen_banner_image'));
-        //     }
-        //     //upload the new file
-        //     $filename = VendorRepo::storeMenuImage($directory,$request->file('kitchen_banner_image'));
-            
-        // }else{
-        //     //product image did not change
-        //     $filename = $vendor->kitchen_banner_image;   
-        // }
         
         //check whether vendor uploaded a new image for this vendor
         if($request->hasFile('kitchen_banner_image')){
@@ -128,8 +122,6 @@ class VendorController extends Controller
             //product image did not change
             $filename = $vendor->kitchen_banner_image;
         }
-        
-
         //update the file name
         $validated['kitchen_banner_image'] = $filename;
         
@@ -189,7 +181,7 @@ class VendorController extends Controller
             Vendor::destroy($id);
         }
         
-        return redirect()->route('vendor.login');
+        return redirect()->route('vendor.login')->with('message','Your account has been deleted!');
     }
 }
 

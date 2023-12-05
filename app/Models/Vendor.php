@@ -22,7 +22,7 @@ class Vendor extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
-        'email',
+        //'email', DO NOT MASS ASSIGN
         'password',
         'phone',
         'business_phone',

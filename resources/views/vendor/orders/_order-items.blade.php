@@ -5,7 +5,10 @@
         <div class="d-flex justify-content-start align-items-center text-nowrap">
             <div class="avatar-wrapper">
                 <div class="avatar me-2">
-                    <img src="{{ asset('vendor/assets/img/avatars/1.png') }}" alt="product-Wooden Chair" class="rounded-2">
+                    @php
+                        $menu = App\Models\Menu::where('id',$item->menu_id)->first();
+                    @endphp
+                    <img src="{{ url(env('CLOUD_BASE_URL') . $menu->product_image) }}" alt="menu" class="rounded-2">
                 </div>
             </div>
             <div class="d-flex flex-column">

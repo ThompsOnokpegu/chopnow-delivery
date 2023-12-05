@@ -8,7 +8,7 @@
                     <h4 class="mt-3">Your Order</h4>
                     <h2 style="font-weight:bold;">{{ $vendor->business_name }}</h2>
                     <div class="single-page-details mt-5">
-                        <label>{{ $cart->getContent()->count() }} products from <strong>{{ $vendor->business_name }}</strong></label>
+                        <label>{{ $cart->getContent()->count()}} {{ $cart->getContent()->count() == 1 ? 'product': 'products'; }} from <strong>{{ $vendor->business_name }}</strong></label>
                          
                         @foreach($cart->getContent() as $item)
                             <div class="d-flex bd-highlight"> 

@@ -70,7 +70,7 @@
       </div>
     </div>
   </div>
-  <!-- Total Revenue -->
+  {{-- <!-- Total Revenue -->
   <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
     <div class="card">
       <div class="row row-bordered g-0">
@@ -126,7 +126,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
   <!--/ Total Revenue -->
   <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
     <div class="row">
