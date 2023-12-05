@@ -1,4 +1,4 @@
-@foreach ($menus as $menu)
+@forelse ($menus as $menu)
     <tr>
         <td>
           <div class="d-flex justify-content-start align-items-center text-nowrap">
@@ -33,4 +33,10 @@
             </div>
         </td>
     </tr>
-@endforeach
+@empty
+    <tr>
+      <td>
+        No menu created yet!
+      </td>
+    </tr>
+@endforelse

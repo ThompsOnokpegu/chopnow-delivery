@@ -42,6 +42,7 @@ class WebhookController extends Controller
  
             switch ($event->event) {
                 case 'charge.success':
+                    return response('Webhook Processed', 200);
                     // Find the order associated with the reference
                     $order = Order::where('reference', $reference)->first();
                     if ($order) {
@@ -49,16 +50,17 @@ class WebhookController extends Controller
                         $order->order_status = 'Processing';
                         $order->payment_status = 'paid';
                         $order->save();
-                        return response('Webhook Processed', 200);
+                        
                     }
                     break;
                 case 'transfer.success':
+                    return response('Webook Processed', 200);
                     // Handle transfer.success
                     $transaction = Transaction::where('reference',$reference)->first();
                     if($transaction){
                         $transaction->status = $event->data->status;
                         $transaction->save();
-                        return response('Webook Processed', 200);
+                       
                     }
                     break;
             }

@@ -1,4 +1,7 @@
-@foreach ($orders as $order)
+{{-- @foreach ($orders as $order)
+
+@endforeach --}}
+@forelse ($orders as $order)
 <tr>
     <td><a href="{{ route('orders.detail',$order->id) }}">{{ '#'.$order->id }}</a></td>
     
@@ -8,5 +11,9 @@
     <td><span class="badge bg-label-info me-1">{{ $order->order_status }}</span></td>
     <td><span class="">{{ $order->created_at->toDayDateTimeString() }}</span></td>
 </tr>
-@endforeach
+@empty
+    <tr>
+        <td>You don't have any orders yet!</td>
+    </tr>   
+@endforelse
     

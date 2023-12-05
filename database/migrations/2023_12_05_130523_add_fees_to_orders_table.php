@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->unsignedBigInteger('menu_id');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->decimal('fees')->after('total')->default('0');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('order_items', function (Blueprint $table) {
-            $table->dropColumn('menu_id');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('fees');
         });
     }
 };

@@ -53,10 +53,10 @@ class KycCompliance extends Component
         //Approve if account is Registered Business
         $vendor = Vendor::where('id',$id)->first();
         if($vendor->business_type=="Registered"){
-            $vendor->account_status = 'approved';
+            $vendor->account_status = 'Approved';
             $vendor->save();
         }
 
-        session()->flash('kyc-uploaded','Updated successfully!');
+        session()->flash('kyc-uploaded','Document uploaded for review!');
     }
 }

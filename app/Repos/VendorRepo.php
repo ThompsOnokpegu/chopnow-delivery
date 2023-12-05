@@ -17,7 +17,7 @@ class VendorRepo{
         return [
             'first_name' => 'min:3',
             'last_name' => 'min:3|nullable',
-            'email' => 'email',
+            //'email' => 'email',
             'business_name' => 'nullable',
             'kitchen_banner_image' =>'nullable',
             'delivery_fee' => 'nullable',
@@ -78,15 +78,17 @@ class VendorRepo{
             $vendor = Vendor:id
         */
         $orders = Order::where('vendor_id',$vendor)
+            ->where('payment_method','Paystack')
             ->where('payment_status','paid')
-            ->where('payment_status','cod')
             ->sum('total');
 
         $payouts = Transaction::where('vendor_id',$vendor)
             ->where('status','success')
             ->sum('amount');
 
-        $balance = $orders - $payouts;
+        $fees = Order::where('vendor_id',$vendor)->sum('fees');//fees for both paystack and cod
+
+        $balance = $orders - ($fees + $payouts);
 
         return $balance;
     }
@@ -104,12 +106,12 @@ class VendorRepo{
         return false;
     }
 
-    public static function storeMenuImage($path,$requestFile){
-        $file = $requestFile;
-        $filename = Str::orderedUuid()->toString().'.'.$file->extension();;
-        Storage::disk('local')->put($path.$filename,file_get_contents($file));
-        return $filename;
-    }
+    // public static function storeMenuImage($path,$requestFile){
+    //     $file = $requestFile;
+    //     $filename = Str::orderedUuid()->toString().'.'.$file->extension();;
+    //     Storage::disk('local')->put($path.$filename,file_get_contents($file));
+    //     return $filename;
+    // }
 
     public static function cloudinaryUpload($path,$file){
         // First we validate the input from the user

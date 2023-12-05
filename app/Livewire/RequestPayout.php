@@ -29,14 +29,33 @@ class RequestPayout extends Component
     }
 
     public function transfer(){
-        $id = Auth::guard('vendor')->user()->id;
+        $vendor = Auth::guard('vendor')->user();
+        $id = $vendor->id;
+        //get vendor's balance
         $balance = VendorRepo::walletBalance($id);
+        //check whether vendor has sufficient balance
         if($balance < $this->amount ){
             return session()->flash('error','Insufficient balance!');
         }
+        //check whether vendor meet minimum balance
         if(($balance - $this->amount) < 1000){
             return session()->flash('error','You must maintain a minimum balance of ₦1,000');
         }
+        //check whether vendor type is Registered Business
+        if($vendor->business_type == "Registered"){
+            $isApproved = $vendor->kyc_document ?? $vendor->kyc_number ?? false;
+            //check whether vendor meet KYC compliance
+            if($isApproved==false){
+                return session()->flash('error','You have not submitted your business registration document!');
+            }else{
+                //check whether vendor kyc has been approved
+                if($vendor->account_status!="Approved"){
+                    return session()->flash('error','Your KYC document is under review!');
+                }
+            }
+
+        }
+
         try {
             $ref  = Uuid::uuid4()->toString(); // Get the UUID as a string
             $endpoint = 'https://api.paystack.co/transfer';
@@ -66,40 +85,16 @@ class RequestPayout extends Component
                     'status' => $data['status'],
                 ]); 
                 $this->data = $transaction;
-                
+                return session()->flash('message','Transfer successful!');
             } else {
                 // Handle API request failure
-                return response()->json(['error' => 'Failed to send POST request'], $response->status());
+                return session()->flash('error','Transfer failed!');
             }
         } catch (Exception $e) {
             // Handle exceptions, log them, or return an error response
+            return session()->flash('error','Something went wrong, try again later!');
         }
         
-    }
-    public function getBalance($vendor){
-        /*
-            $vendor = Vendor:id
-        */
-        $orders = Order::where('vendor_id',$vendor)
-            ->where('payment_status','paid')
-            ->get();
-
-        $payouts = Transaction::where('vendor_id',$vendor)
-            ->where('status','success')
-            ->get();
-
-        $order_sum = 0;
-        foreach($orders as $order){
-            $order_sum += $order->total;
-        }
-        $payout_sum = 0;
-        foreach($payouts as $payout){
-            $payout_sum += $payout->amount;
-        }
-
-        $balance = $order_sum - $payout_sum;
-
-        return $balance;
     }
 
     public function hasPayoutAccount($vendor){
