@@ -6,7 +6,7 @@ You have a new order on your store.
 #Order Details:<br>
 @component('mail::table')
     | Item       | Qty         | Price  |
-    | ------------- |:-------------:| --------:|
+    |:------------- |:-------------| --------:|
     @foreach ($items as $item)
         | {{ $item->name  }}      | {{ $item->quantity }} | ₦{{ $item->price * $item->quantity }}      |
     @endforeach

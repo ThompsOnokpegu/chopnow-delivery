@@ -3,15 +3,16 @@
 namespace App\Mail;
 
 use App\Models\Order;
-use Illuminate\Mail\Mailables\Address;
+use App\Models\OrderItem;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
-class VendorNewOrder extends Mailable
+class UserPurchaseNotice extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,8 +22,9 @@ class VendorNewOrder extends Mailable
     public function __construct(
         public Order $order, 
         public $items,
-    )
-    {}
+    ){
+        
+    }
 
     /**
      * Get the message envelope.
@@ -31,7 +33,8 @@ class VendorNewOrder extends Mailable
     {
         return new Envelope(
             from: new Address('notice@chopnow.com', 'ChopNow Delivery'),
-            subject: 'New Order - ChopNow Delivery',
+            subject: 'Your order has been received',
+            
         );
     }
 
@@ -41,7 +44,7 @@ class VendorNewOrder extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.orders.new-vendor',
+            markdown: 'emails.orders.created',
         );
     }
 

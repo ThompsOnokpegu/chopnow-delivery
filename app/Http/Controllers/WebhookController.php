@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderSuccessful;
 use App\Models\Order;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -50,7 +51,8 @@ class WebhookController extends Controller
                         $order->order_status = 'Processing';
                         $order->payment_status = 'paid';
                         $order->save();
-                        
+                        //trigger new order event
+                        OrderSuccessful::dispatch($order);
                     }
                     break;
                 case 'transfer.success':

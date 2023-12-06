@@ -2,8 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Mail\OrderCreated;
-use App\Mail\VendorNewOrder;
+use App\Mail\UserPurchaseNotice;
+use App\Mail\VendorOrderNotice;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Mail;
 
@@ -18,7 +18,7 @@ class SendOrderNotification
         $order = $event->order;
         $items = OrderItem::where('order_id',$order->id)->get();
 
-        Mail::to($order->user->email)->send(new OrderCreated($order,$items));
-        Mail::to($order->vendor->email)->send(new VendorNewOrder($order,$items));
+        Mail::to($order->user->email)->send(new UserPurchaseNotice($order,$items));
+        //Mail::to($order->vendor->email)->send(new VendorOrderNotice($order,$items));
     }
 }

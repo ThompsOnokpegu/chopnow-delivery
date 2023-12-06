@@ -8,7 +8,9 @@ use App\Models\OrderItem;
 use App\Notifications\NewOrder;
 use App\Repos\CheckoutRepo;
 use App\Repos\ChopCart;
+use App\Repos\ChopNow;
 use App\Repos\Paystack;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Ramsey\Uuid\Uuid;
@@ -24,6 +26,7 @@ class ValidateCheckout extends Component
     public $payment_method;
     protected $listeners = ['address-added' => 'updateAddress'];
     private $cart;
+    public $fees;
 
     public $alternate_name;
     public $alternate_phone;
@@ -54,6 +57,7 @@ class ValidateCheckout extends Component
         $this->address = session('delivery_address');
         $this->phone = session('phone');
         $this->name = Auth::user()->name;
+        $this->fees = number_format(100 , 2);
     }
 
     public function placeOrder(){
@@ -67,8 +71,10 @@ class ValidateCheckout extends Component
         if($validated['payment_method'] == 'Paystack'){
             //create the order
             $order = $this->createOrder('pending');  
+            
             //Initialize payment
             $amount = str_replace(',','', $this->cart->getTotal());
+            $amount += $this->fees;
             $vendor_id = $this->cart->vendor()->id;
             $user = Auth::user()->name;
             $email = $validated['email'];
@@ -80,12 +86,18 @@ class ValidateCheckout extends Component
             $this->cart->clear();
 
             //process payment: redirect to Paystack Gateway
-            return redirect()->away($response['authorization_url']);   
+            try {
+                return redirect()->away($response['authorization_url']);
+            } catch (Exception $e) {
+                return session()->flash('message','Connection failed: try again later!');
+            }
+             
+            //New order event is triggered in Webhook charge.success  
         }else{
             $order = $this->createOrder('cod'); 
             //clear cart
             $this->cart->clear();
-            //send notification
+            //trigger new order event
             OrderSuccessful::dispatch($order);
             //redirect to home
             return redirect()->route('chop.details',$order);
@@ -101,6 +113,14 @@ class ValidateCheckout extends Component
         $uuid = Uuid::uuid4()->toString(); // Get the UUID as a string
         //create new order
         $order = new Order();
+        //cart total
+        $amount = str_replace(',','', $this->cart->getTotal());
+        $amount += $this->fees;
+        //set paystack and chopnow fees
+        $paystack = new Paystack();
+        $chopnow = new ChopNow();
+        $charges = $paystack->getTransactionCharges($amount + $this->fees) + $chopnow->orderCharges($amount + $this->fees);
+            
         
         DB::beginTransaction();
             //set fields
@@ -115,7 +135,8 @@ class ValidateCheckout extends Component
             $order->payment_method = $this->payment_method;
             $order->discount = 0;
             $order->shipping = $this->cart->vendor()->delivery_fee;
-            $order->total = str_replace(',','', $this->cart->getTotal());
+            $order->total = $amount;
+            $order->fees = $charges;
             //save order
             $order->save();
             

@@ -12,7 +12,10 @@
                     <span>Open</span>
                 </div> --}}
                 <div class="media-body">
-                    <h3>{{ $order->vendor->business_name }}</h3>
+                    <a href="{{ route('restaurants.show',$order->vendor->id) }}">
+                        <h3>{{ $order->vendor->business_name }}</h3>
+                    </a>
+                    
                     {{-- <p>{{ $vendor->address }}</p> --}}
                 </div>
             </div>
@@ -74,7 +77,7 @@
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                       Products
-                      <span>₦{{ number_format($order->total - $order->shipping, 2) }}</span>
+                      <span>₦{{ number_format($order->total - ($order->shipping + 100), 2) }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
                       Delivery
@@ -82,13 +85,13 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                         Services
-                        <span>₦0.00</span>
+                        <span>₦{{ number_format(100,2) }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-1">
                       <div>
                         <strong>Total amount</strong>
                       </div>
-                      <span><strong>₦{{ $order->total }}</strong></span>
+                      <span><strong>₦{{ number_format($order->total,2) }}</strong></span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                         @if($order->payment_method == "COD")
