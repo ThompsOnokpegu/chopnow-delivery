@@ -7,9 +7,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebhookController;
-
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 /*------------------Vendor Routes------------------*/
-
 Route::prefix('vendor')->group(function(){
     //VENDOR ROUTE
     Route::get('/login',[VendorController::class,'login'])->name('vendor.login');//load login form
@@ -49,7 +45,6 @@ Route::prefix('menus')->group(function(){
     Route::get('/{menu}/edit',[MenuController::class,'edit'])->name('menus.edit')->middleware('vendor');
     Route::put('/{menu}/update',[MenuController::class,'update'])->name('menus.update')->middleware('vendor');
     Route::delete('/{menu}/delete',[MenuController::class,'destroy'])->name('menus.destroy')->middleware('vendor');
-    
     Route::post('/dropzone',[MenuController::class,'storeImage'])->name('menu.image.store')->middleware('vendor');
 });
 Route::prefix('orders')->group(function(){
@@ -57,31 +52,24 @@ Route::prefix('orders')->group(function(){
     Route::get('/', [OrderController::class,'index'])->name('orders.index')->middleware('vendor');
     Route::get('/{order}', [OrderController::class,'orderDetails'])->name('orders.detail')->middleware('vendor');
     Route::post('/{order}',[OrderController::class,'updateOrderStatus'])->name('order.status')->middleware('vendor');
-    
-
 });
-
 /*------------------End Vendor Routes------------------*/
-
- //CUSTOM RESTAURANT ROUTES
+ //CUSTOM GUEST ROUTES
  Route::get('/', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
  Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
- Route::get('/thank-you',[CheckoutController::class,'thankYou'])->name('order.thankyou');
+ Route::get('/restaurants',[RestaurantController::class,'filter'])->name('restaurants.filter');
  Route::post('/webhook',[WebhookController::class,'handle']);
-
-
- //CUSTOM USER ROUTES
  Route::get('/login',[UserController::class,'showLogin'])->name('user.login');
  Route::get('/register',[UserController::class,'register'])->name('user.register');
  Route::post('/register',[UserController::class,'create'])->name('user.create');
  Route::post('/login',[UserController::class,'login'])->name('login');
+ //CUSTOM USER ROUTES
  Route::get('/delivery',[UserController::class,'address'])->name('user.address')->middleware(['verified']);
- 
  Route::get('/cart',[CheckoutController::class,'cartPage'])->name('order.cart');
  Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['auth','verified','has.products']);
  Route::post('/checkout',[CheckoutController::class,'placeOrder'])->name('order.checkout');
-
+ Route::get('/thank-you',[CheckoutController::class,'thankYou'])->name('order.thankyou');
  Route::get('/verify', [UserController::class,'emailVerificationNotice'])->middleware('auth')->name('verification.notice');
  Route::get('email/verify/{id}/{hash}', [UserController::class,'emailVerificationHandler'])->middleware(['auth', 'signed'])->name('verification.verify');
  Route::post('email/verification-notification', [UserController::class,'resendEmailLink'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
@@ -89,12 +77,10 @@ Route::prefix('orders')->group(function(){
  Route::post('/forgot-password', [UserController::class,'sendResetLink'])->middleware('guest')->name('password.email');
  Route::get('/reset-password/{token}',[UserController::class,'handlePasswordReset'])->middleware('guest')->name('password.reset');
  Route::post('/reset-password',[UserController::class,'passwordUpdate'])->middleware('guest')->name('password.update');
-
  Route::get('/profile', [UserController::class,'userProfile'])->middleware(['auth'])->name('user.profile');
  Route::get('/my-account', [UserController::class,'myAccount'])->middleware(['auth'])->name('user.account');
  Route::get('/my-chops', [UserController::class,'myOrders'])->middleware(['auth'])->name('user.chops');
  Route::get('/my-chops/{order}', [UserController::class,'orderDetails'])->middleware(['auth'])->name('chop.details');
-
  Route::post('/logout', [UserController::class,'logout'])->name('user.logout');
  Route::post('/deactivate', [UserController::class,'deactivateAccount'])->name('user.deactivate');
 

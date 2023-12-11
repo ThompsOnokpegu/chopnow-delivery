@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('vendors', function (Blueprint $table) {
-            $table->unsignedBigInteger('restaurant_type_id')->nullable()->default(5)->after('business_type');
+        Schema::create('restaurant_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->string('slug');
+            $table->string('description');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('vendors', function (Blueprint $table) {
-            $table->dropColumn('restaurant_type_id');
-        });
+        Schema::dropIfExists('restaurant_types');
     }
 };

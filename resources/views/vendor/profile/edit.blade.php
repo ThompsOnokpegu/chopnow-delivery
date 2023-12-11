@@ -122,24 +122,13 @@
                     <div class="mb-3 col-md-6">
                       <label for="language" class="form-label">Restaurant Type</label>
                       <select id="language" name="restaurant_type" class="select2 form-select">
-                        <option value="">Restaurant Type</option>
-                        <option value='International' @selected('International' == old('restaurant_type',$vendor->restaurant_type))>International</option>
-                        <option value='Breakfast' @selected('Breakfast' == old('restaurant_type',$vendor->restaurant_type))>Breakfast</option>
-                        <option value='Pastries' @selected('Pastries' == old('restaurant_type',$vendor->restaurant_type))>Pastries</option>
-                        <option value='Shawarma' @selected('Shawarma' == old('restaurant_type',$vendor->restaurant_type))>Shawarma</option>
-                        <option value='Vegeterian' @selected('Vegeterian' == old('restaurant_type',$vendor->restaurant_type))>Vegeterian</option>
-                        <option value='Grill' @selected('Grill' == old('restaurant_type',$vendor->restaurant_type))>Grill</option>
-                        <option value='Bakery and Pastry' @selected('Bakery and Pastry' == old('restaurant_type',$vendor->restaurant_type))>Bakery and Pastry</option>
-                        <option value='Pasta' @selected('Pasta' == old('restaurant_type',$vendor->restaurant_type))>Pasta</option>
-                        <option value='Nigerian' @selected('Nigerian' == old('restaurant_type',$vendor->restaurant_type))>Nigerian</option>
-                        <option value='Snacks' @selected('Snacks' == old('restaurant_type',$vendor->restaurant_type))>Snacks</option>
-                        <option value='Pizza' @selected('Pizza' == old('restaurant_type',$vendor->restaurant_type))>Pizza</option>
-                        <option value='Juices' @selected('Juices' == old('restaurant_type',$vendor->restaurant_type))>Juices</option>
-                        <option value='Deserts' @selected('Deserts' == old('restaurant_type',$vendor->restaurant_type))>Deserts</option>
-                        <option value='Burgers' @selected('Burgers' == old('restaurant_type',$vendor->restaurant_type))>Burgers</option>
-                        <option value='Jollof' @selected('Jollof' == old('restaurant_type',$vendor->restaurant_type))>Jollof</option>
+                          <option value="">Restaurant Type</option>
+                          @foreach($restaurantTypes as $type)
+                              <option id="{{ $type->slug }}" value='{{ $type->type }}' {{ $type->type == old('restaurant_type', $vendor->restaurant_type) ? 'selected' : '' }}>
+                                  {{ $type->type }}
+                              </option>
+                          @endforeach
                       </select>
-                      
                       @error('restaurant_type') <div class="error">{{ $message }}</div> @enderror
                     </div>
                   </div>

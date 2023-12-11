@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\PayoutAccount;
+use App\Models\RestaurantType;
 use App\Models\Vendor;
 use App\Repos\VendorRepo;
 use Carbon\Carbon;
@@ -104,7 +105,9 @@ class VendorController extends Controller
 
     public function profile(){
         $vendor = Auth::guard('vendor')->user();
-        return view('vendor.profile.edit',compact('vendor'));
+        $restaurantTypes = RestaurantType::get();
+        //dd($restaurantTypes);
+        return view('vendor.profile.edit',compact('vendor','restaurantTypes'));
     }
 
     public function update(Request $request, Vendor $vendor, VendorRepo $val){

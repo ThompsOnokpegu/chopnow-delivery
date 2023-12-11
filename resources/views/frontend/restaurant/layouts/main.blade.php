@@ -41,22 +41,80 @@
         </div>
     </div> --}}
     <!-- preloader area end -->
-
-    <!-- search popup area start -->
-    <div class="body-overlay" id="body-overlay"></div>
-    <div class="td-search-popup" id="td-search-popup">
-        <form action="index.html" class="search-form">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search.....">
-            </div>
-            <button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
-        </form>
-    </div>
-    <!-- //. search Popup -->
     
     <div class="single-restuarent-area">
-
+        <div class="container">
+            <div class="main-home-area pb-0 mt-5">
+                <div class="location-area">
+                    <a style="padding-left:15px;" class="navbar-brand" href="{{ route('restaurants.index') }}">
+                        <img src="{{ asset('customer/assets/img/fevicon.png') }}" alt="img" style="height: 32px;width:auto;">
+                    </a>
+                    @livewire('view-address')
+                    @auth
+                        {{-- // The user is authenticated... --}}
+                        
+                        <div class="navbar-brand dropdown"> 
+                            <a class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-user-line" style="color:#000000"></i>
+                            </a> 
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                            <a class="dropdown-item" href="#">
+                                <span style="font-size:14px;">{{ Auth::user()->name }}({{ Auth::user()->email }})</span>   
+                            </a>
+                            </li>
+                            
+                            <li>
+                                <a class="dropdown-item" href="{{ route('user.account') }}">
+                                    <i class="ri-user-settings-line"></i>
+                                <span>Account</span>   
+                                </a>
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('user.logout') }}">
+                                    @csrf
+                                <a class="dropdown-item" href="{{ route('user.logout') }}"
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                                    <i class="ri-logout-circle-line" style="vertical-align: middle;"></i>
+                                    <span class="align-middle">Log Out</span>
+                                </a>
+                                </form>
+                            </li>
+                            
+                        </ul>
+                        </div>
+                    @endauth
+                    
+                    @guest
+                        {{-- // The user is not authenticated... --}}
+                        <a class="navbar-brand" href="{{ route('user.register') }}">
+                            <img src="{{ asset('customer/assets/img/icon/user.png') }}" alt="img" style="height: 30px;width:auto;">
+                        </a> 
+                    @endguest
+                    
+                    
+                </div>
+                <div class="home-search-wrap">
+                    <div class="default-form-wrap">
+                        <div class="single-input-wrap">
+                            <label style="z-index: -1"><img src="{{ asset('customer/assets/img/icon/search.svg') }}" alt="img"></label>
+                            <input type="text" class="form-control" placeholder="Search restaurants" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        </div>
+                        <button type="button" class="btn btn-border" data-bs-toggle="modal" data-bs-target="#categoryyyyyModal">
+                            <img src="{{ asset('customer/assets/img/icon/filter.svg') }}" alt="img">
+                        </button>
+                    </div>
+                </div>   
+            </div>
+        </div>
         @yield('content')
+        <!-- Modals-->
+        @include('frontend.restaurant._filter-popup')
+        {{-- @include('frontend.restaurant._address-popup') --}}
+        @include('frontend.restaurant._category-modal')
+        @include('frontend.restaurant._search-modal')
+        @livewire('view-cart')
         @if(Str::beforeLast(str_replace(url('/'),'',url()->current()),'/') != '/my-chops')
         <div class="main-footer-bottom d-block text-center">
             <ul>
