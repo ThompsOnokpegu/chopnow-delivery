@@ -43,6 +43,7 @@
     <!-- preloader area end -->
     
     <div class="single-restuarent-area">
+        @if(Str::beforeLast(str_replace(url('/'),'',url()->current()),'/') != '/my-chops')
         <div class="container">
             <div class="main-home-area pb-0 mt-5">
                 <div class="location-area">
@@ -108,6 +109,7 @@
                 </div>   
             </div>
         </div>
+        @endif
         @yield('content')
         <!-- Modals-->
         @include('frontend.restaurant._filter-popup')
@@ -134,12 +136,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('restaurants.offers') }}">
                         <img src="{{ asset('/customer/assets/img/icon/svg/discount.svg') }}" alt="img">
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('user.account') }}">
                         <img src="{{ asset('/customer/assets/img/icon/svg/profile.svg') }}" alt="img">
                     </a>
                 </li>

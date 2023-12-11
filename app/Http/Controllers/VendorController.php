@@ -26,15 +26,19 @@ class VendorController extends Controller
     public function dashboard(){
         $id = Auth::guard('vendor')->user()->id;
         $orders = Order::where('vendor_id',$id)->get();
-       
         $onlinePayment = $orders->where('payment_status','paid')->sum('total');
         $cashPayment = $orders->where('payment_status','cod')->sum('total');
 
         $summary = [
             'totalSales' => $onlinePayment + $cashPayment,
-            'orderCount' => $orders->count(),
+            'orderCount' => Order::where('vendor_id',$id)
+                    ->where('payment_status','paid')
+                    ->orWhere('payment_status','cod')->count(),
             'productCount' => Menu::where('vendor_id',$id)->count(),
-            'customerCount' => Order::where('vendor_id',$id)->distinct()->count('user_id'),
+            'customerCount' => Order::where('vendor_id',$id)
+                    ->where('payment_status','paid')
+                    ->orWhere('payment_status','cod')
+                    ->distinct()->count('user_id'),
             'onlinePayment' => $onlinePayment,
             'cashPayment' => $cashPayment,
             'walletBalance' => VendorRepo::walletBalance($id),
@@ -127,6 +131,7 @@ class VendorController extends Controller
         }
         //update the file name
         $validated['kitchen_banner_image'] = $filename;
+        $validated['restaurant_type_id'] = (int)$request->restaurant_type_id;
         
         //update the vendor record
         $vendor->update($validated);

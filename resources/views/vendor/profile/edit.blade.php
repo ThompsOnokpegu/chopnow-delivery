@@ -121,10 +121,10 @@
                     </div>
                     <div class="mb-3 col-md-6">
                       <label for="language" class="form-label">Restaurant Type</label>
-                      <select id="language" name="restaurant_type" class="select2 form-select">
+                      <select id="language" name="restaurant_type_id" class="select2 form-select">
                           <option value="">Restaurant Type</option>
                           @foreach($restaurantTypes as $type)
-                              <option id="{{ $type->slug }}" value='{{ $type->type }}' {{ $type->type == old('restaurant_type', $vendor->restaurant_type) ? 'selected' : '' }}>
+                              <option id="{{ $type->slug }}" value='{{ $type->id }}' {{ $type->id == old('restaurant_type_id', $vendor->restaurant_type_id) ? 'selected' : '' }}>
                                   {{ $type->type }}
                               </option>
                           @endforeach

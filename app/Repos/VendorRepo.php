@@ -22,7 +22,7 @@ class VendorRepo{
             'kitchen_banner_image' =>'nullable',
             'delivery_fee' => 'nullable',
             'preparation_time' => 'nullable',
-            'restaurant_type' => 'nullable',
+            'restaurant_type_id' => 'nullable',
             'business_type' => 'nullable',
             'state' => ['','nullable', Rule::in(['Cross River', 'Rivers', 'Bayelsa','Akwa Ibom'])],
             'address' => 'nullable',

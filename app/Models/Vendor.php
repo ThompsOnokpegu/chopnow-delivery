@@ -38,7 +38,7 @@ class Vendor extends Authenticatable
         'account_status',
         'delivery_fee',
         'preparation_time',
-        'restaurant_type',
+        'restaurant_type_id',
         'business_type',
     ];
 

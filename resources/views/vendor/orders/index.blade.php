@@ -19,9 +19,10 @@
                                 <tr>
                                   <th>ORDER</th>
                                   <th>TOTAL</th>
-                                  <th>CUSTOMER</th>
-                                  <th>PAYMENT</th>
+                                  <th>FEES</th>
                                   <th>STATUS</th>
+                                  <th>PAYMENT CHANNEL</th>
+                                  <th>CUSTOMER</th>
                                   <th>DATE</th>
                                 </tr>
                               </thead>

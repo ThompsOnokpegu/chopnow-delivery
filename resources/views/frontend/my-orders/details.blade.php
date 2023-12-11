@@ -34,9 +34,14 @@
                         <img src="{{ asset('customer/delivery.png') }}" width="50" alt="delivery-status">
                     </div>
                     <div class="p-2 bd-highlight">
-                        <h6 class="mb-0">Chop ID #{{$order->id.': '.$order->order_status }}</h6>    
+                        <h6 class="mb-0">Chop ID #{{$order->id.': '.$order->order_status }}</h6>
                         <span style="font-weight:400;" class="price">{{ \Carbon\Carbon::parse($order->created_at)->format('j F, Y')}}</span>
-                        <p class="mb-0"><small>{{ $order->created_at->diffForHumans() }}</small></p>    
+                        <p class="mb-0"><small>{{ $order->created_at->diffForHumans() }}</small></p>
+                        @if($order->order_status == "Canceled")
+                            <div class="alert alert-warning">
+                                <span>{{ $order->comment }}</span>
+                            </div>
+                        @endif    
                     </div>            
                 </div>    
             </div>

@@ -14,7 +14,7 @@
           id="email"
           wire:model="email"
           placeholder="john.doe@example.com"
-          
+          disabled
         />
         @error('email') <div class="error">{{ $message }}</div> @enderror
       </div>

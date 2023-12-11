@@ -36,6 +36,10 @@ class RestaurantController extends Controller
         return view('frontend.restaurant.restaurant_type_filter',compact('restaurants','restaurant_types','type'));
     }
 
+    public function offers(){
+        return view('frontend.restaurant.vouchers');
+    }
+
     public function restaurant_types(){
          //$categories = Vendor::distinct('restaurant_type')->limit(7)->get(['restaurant_type']);
          $restaurant_types = RestaurantType::withCount('vendors')->orderByDesc('vendors_count')->get();

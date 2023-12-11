@@ -53,12 +53,15 @@ Route::prefix('orders')->group(function(){
     Route::get('/{order}', [OrderController::class,'orderDetails'])->name('orders.detail')->middleware('vendor');
     Route::post('/{order}',[OrderController::class,'updateOrderStatus'])->name('order.status')->middleware('vendor');
 });
+
+
 /*------------------End Vendor Routes------------------*/
  //CUSTOM GUEST ROUTES
  Route::get('/', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
  Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
  Route::get('/restaurants',[RestaurantController::class,'filter'])->name('restaurants.filter');
+ Route::get('/vouchers',[RestaurantController::class,'offers'])->name('restaurants.offers');
  Route::post('/webhook',[WebhookController::class,'handle']);
  Route::get('/login',[UserController::class,'showLogin'])->name('user.login');
  Route::get('/register',[UserController::class,'register'])->name('user.register');

@@ -23,7 +23,6 @@ class UpdateUser extends Component
         $user = User::where('id',$user_id)->first();
 
         $user->name = $this->first_name;
-        $user->email = $this->email;
         $user->last_name = $this->last_name;
 
         $user->save();

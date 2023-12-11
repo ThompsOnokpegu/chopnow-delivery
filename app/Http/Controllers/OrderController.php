@@ -39,11 +39,35 @@ class OrderController extends Controller
         $validated = $request->validate([
             'order_status' => ['required', Rule::in(['Processing','Enroute', 'Delivered','Canceled'])],
         ]); 
-        $order->update($validated);
+        //vendor can only cancel CASH ON DELIVERY orders
+        if($validated['order_status']=='Canceled'){
+            if($order->payment_method == "COD"){
+                $order->payment_status = 'cancelled';
+            }else{
+                session()->flash('message','You can only cancel a Cash on Delivery orders!');    
+            }
+        }
+        $order->order_status = $validated['order_status'];
+        $order->save();
+        //session()->flash('message','Order status has been updated!');
 
         $vendor = Auth::guard('vendor')->user()->id; 
         $orders = Order::where('vendor_id',$vendor)->get();
         return view('vendor.orders.index',compact('orders'))->with('message','Order status has been updated');
                
     }
+    public  static function statusClass($order_status){
+        $bg_label = '';
+        if($order_status == "Processing"){
+            $bg_label = 'bg-label-primary';
+        }elseif($order_status == "Delivered")
+            $bg_label = 'bg-label-success';
+        elseif($order_status == "Canceled"){
+            $bg_label = 'bg-label-danger';
+        }else{
+            $bg_label = 'bg-label-info';
+        }
+        return $bg_label;
+    }
+
 }
