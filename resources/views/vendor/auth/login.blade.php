@@ -13,7 +13,7 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 @endif
-<form id="formAuthentication" class="mb-3" action="{{ route('vendor.verify') }}" method="POST">
+<form id="formAuthentication" class="mb-3" action="{{ route('vendor.login') }}" method="POST">
     @csrf
     <div class="mb-3">
       <label for="email" class="form-label">Email or Username</label>
@@ -24,17 +24,17 @@
         name="email"
         placeholder="Enter your email or username"
         autofocus
-        :value="old('email')" required
+        value="{{ session()->has('verified_email') ? session('verified_email') : old('email') }}"
       />
       @error('email') <div class="error">{{ $message }}</div> @enderror
     </div>
     <div class="mb-3 form-password-toggle">
-      {{-- <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-between">
         <label class="form-label" for="password">Password</label>
-        <a href="auth-forgot-password-basic.html">
+        <a href="{{ route('vendor.password.request') }}">
           <small>Forgot Password?</small>
         </a>
-      </div> --}}
+      </div>
       <div class="input-group input-group-merge">
         <input
           type="password"

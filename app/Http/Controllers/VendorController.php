@@ -18,93 +18,37 @@ use Illuminate\Support\Str;
 
 class VendorController extends Controller
 {
-    //edited manifest.json and ran npm run build
-    public function login(){
-        return view('vendor.login');
-    }
-
-    public function dashboard(){
+    public function dashboard(Request $request){
         $id = Auth::guard('vendor')->user()->id;
+        
         $orders = Order::where('vendor_id',$id)->get();
-        $onlinePayment = $orders->where('payment_status','paid')->sum('total');
-        $cashPayment = $orders->where('payment_status','cod')->sum('total');
+        $paid = $orders->where('payment_status','paid');
+        $cod = $orders->where('payment_status','cod');
+
+        //order sum
+        $onlinePayment = $paid->sum('total');
+        $cashPayment = $cod->sum('total');
+        
+        //order count
+        $codOrders = $cod->count();
+        $paidOrders = $paid->count();
+
+        //customer count
+        $codCustomers = Order::where('vendor_id',$id)->where('payment_status','cod')->distinct()->count('user_id');
+        $paidCustomers = Order::where('vendor_id',$id)->where('payment_status','paid')->distinct()->count('user_id');
+
 
         $summary = [
             'totalSales' => $onlinePayment + $cashPayment,
-            'orderCount' => Order::where('vendor_id',$id)
-                    ->where('payment_status','paid')
-                    ->orWhere('payment_status','cod')->count(),
+            'orderCount' => $codOrders + $paidOrders,
             'productCount' => Menu::where('vendor_id',$id)->count(),
-            'customerCount' => Order::where('vendor_id',$id)
-                    ->where('payment_status','paid')
-                    ->orWhere('payment_status','cod')
-                    ->distinct()->count('user_id'),
+            'customerCount' => $codCustomers + $paidCustomers,
             'onlinePayment' => $onlinePayment,
             'cashPayment' => $cashPayment,
             'walletBalance' => VendorRepo::walletBalance($id),
         ];
         
         return view('vendor.index',compact('summary'));
-    }
-
-    public function verify(Request $request){
-
-        $vendor = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if(Auth::guard('vendor')->attempt(['email'=>$vendor['email'],'password'=>$vendor['password']])){
-            return redirect()->route('vendor.dashboard')->with('message','Login successful');
-        }else{
-            return back()->with('error','Invalid email or password');
-        }
-    }
-
-    public function logout(Request $request){
-        Auth::guard('vendor')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('vendor.login')->with('message','You are logged out');
-    }
-
-    public function register(){
-        return view('vendor.register');
-    }
-
-    public function create(Request $request){
-
-        $request->validate([
-            'first_name' => 'required|min:3',
-            'email' => 'required|email|lowercase',
-            'password' => 'required|min:8|confirmed',
-
-        ]);
-        
-        $existingVendor = Vendor::withTrashed()->where('email',$request->email)->first();
-        //check whether this account already exist
-        if($existingVendor){
-            //check whether user had previously deleted their account
-            if($existingVendor->trashed()){
-                //delete old records
-                $existingVendor->forceDelete();
-            }else{
-                //redirect user to login
-                return redirect()->route('vendor.login')->with('message','A seller with this email address already exist.');
-            }
-        }
-        
-        $vendor = new Vendor;
-                     
-        $vendor->first_name = $request->first_name;
-        $vendor->email = $request->email;
-        $vendor->kitchen_banner_image="brand-image.png";
-        $vendor->password = Hash::make($request->password);
-        $vendor->created_at = Carbon::now();
-
-        $vendor->save();
-
-        return redirect()->route('vendor.login')->with('message','Account created successfully! Please login to access your dashboard.');
     }
 
     public function profile(){

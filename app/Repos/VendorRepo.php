@@ -86,10 +86,15 @@ class VendorRepo{
             ->where('status','success')
             ->sum('amount');
 
-        $fees = Order::where('vendor_id',$vendor)
-            ->where('payment_status','paid')
-            ->orWhere('payment_status','cod')   
-            ->sum('fees');//fees for both paystack and cod
+        $codFees = Order::where('vendor_id',$vendor)
+            ->where('payment_status','cod')   
+            ->sum('fees');
+
+        $paidFees = Order::where('vendor_id',$vendor)
+            ->where('payment_status','paid')  
+            ->sum('fees');
+            
+        $fees = $codFees + $paidFees;
 
         $balance = $orders - ($fees + $payouts);
 

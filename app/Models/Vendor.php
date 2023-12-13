@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Contracts\Auth\CanResetPassword;
 class Vendor extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
@@ -40,6 +40,7 @@ class Vendor extends Authenticatable
         'preparation_time',
         'restaurant_type_id',
         'business_type',
+        'verified',
     ];
 
     /**
@@ -69,5 +70,6 @@ class Vendor extends Authenticatable
     public function orders(){
         return $this->hasMany(Order::class);
     }
+
 
 }

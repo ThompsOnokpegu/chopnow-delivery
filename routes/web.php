@@ -5,6 +5,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorAuthController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
@@ -19,43 +20,55 @@ use Illuminate\Support\Facades\Route;
 |
 */
 /*------------------Vendor Routes------------------*/
-Route::prefix('vendor')->group(function(){
-    //VENDOR ROUTE
-    Route::get('/login',[VendorController::class,'login'])->name('vendor.login');//load login form
-    Route::post('/login',[VendorController::class,'verify'])->name('vendor.verify');//verify vendor credentials
-    Route::get('/dashboard',[VendorController::class,'dashboard'])->name('vendor.dashboard')->middleware('vendor');//redirect to vendor's home
-    Route::post('/logout',[VendorController::class,'logout'])->name('vendor.logout')->middleware('vendor');
-    Route::get('/register',[VendorController::class,'register'])->name('vendor.register');
-    Route::post('/register',[VendorController::class,'create']);
-    Route::get('/profile',[VendorController::class,'profile'])->name('vendor.profile')->middleware('vendor');
-    Route::put('/profile/{vendor}',[VendorController::class,'update'])->name('vendor.update')->middleware('vendor');
-    Route::get('/authentication',[VendorController::class,'changePassword'])->name('vendor.auth')->middleware('vendor');
-    Route::put('authentication',[VendorController::class,'resetPassword'])->name('vendor.resetpassword')->middleware('vendor');
-    Route::get('/compliance',[VendorController::class,'compliance'])->name('vendor.compliance')->middleware('vendor');
-    Route::get('/payout',[VendorController::class,'payout'])->name('vendor.payout')->middleware('vendor');
-    Route::post('/destroy',[VendorController::class,'deactivateAccount'])->name('vendor.destroy')->middleware('vendor');
+Route::prefix('vendor')->middleware(['guest'])->group(function(){
+    //AUTH ROUTES
+    Route::get('/login',[VendorAuthController::class,'showLogin'])->name('vendor.login');//load login form
+    Route::post('/login',[VendorAuthController::class,'login']);//verify vendor credentials
+    Route::get('/register',[VendorAuthController::class,'register'])->name('vendor.register');
+    Route::post('/register',[VendorAuthController::class,'create']);
+    Route::get('/verify',[VendorAuthController::class,'verifyEmail'])->name('vendor.verify');
+    Route::get('/forgot-password',[VendorAuthController::class,'forgotPassword'])->name('vendor.password.request');
+    Route::post('/forgot-password', [VendorAuthController::class,'sendResetLink'])->name('vendor.password.email');
+    Route::get('/reset-password/{token}',[VendorAuthController::class,'handlePasswordReset'])->name('vendor.password.reset');
+    Route::post('/reset-password',[VendorAuthController::class,'passwordUpdate'])->name('vendor.password.update');   
 });
-Route::prefix('menus')->group(function(){
+
+Route::prefix('vendor')->middleware(['vendor','vendor.verified'])->group(function(){
+    Route::get('/email-notice',[VendorAuthController::class,'emailVerificationNotice'])->name('vendor.email.notice')->withoutMiddleware('vendor.verified');
+    Route::post('/email-notice',[VendorAuthController::class,'resendEmail'])->name('vendor.email.send')->withoutMiddleware('vendor.verified');
+    Route::post('/logout',[VendorAuthController::class,'logout'])->name('vendor.logout')->withoutMiddleware('vendor.verified');
+    //ACCOUNT
+    Route::get('/dashboard',[VendorController::class,'dashboard'])->name('vendor.dashboard');//redirect to vendor's home
+    Route::get('/profile',[VendorController::class,'profile'])->name('vendor.profile');
+    Route::put('/profile/{vendor}',[VendorController::class,'update'])->name('vendor.update');
+    Route::get('/authentication',[VendorController::class,'changePassword'])->name('vendor.auth');
+    Route::put('authentication',[VendorController::class,'resetPassword'])->name('vendor.resetpassword');
+    Route::get('/compliance',[VendorController::class,'compliance'])->name('vendor.compliance');
+    Route::get('/payout',[VendorController::class,'payout'])->name('vendor.payout');
+    Route::post('/destroy',[VendorController::class,'deactivateAccount'])->name('vendor.destroy');
+});
+Route::prefix('menus')->middleware(['vendor','vendor.verified'])->group(function(){
     //MENU ROUTE
-    Route::get('/', [MenuController::class,'index'])->name('menus.index')->middleware('vendor');
-    Route::get('/upload', [MenuController::class,'uploadform'])->name('menus.uploadform')->middleware('vendor');
-    Route::post('/upload', [MenuController::class,'upload'])->name('menus.upload')->middleware('vendor');
-    Route::get('/create',[MenuController::class,'create'])->name('menus.create')->middleware('vendor');
-    Route::post('/store',[MenuController::class,'store'])->name('menus.store')->middleware('vendor');
-    Route::get('/{menu}/edit',[MenuController::class,'edit'])->name('menus.edit')->middleware('vendor');
-    Route::put('/{menu}/update',[MenuController::class,'update'])->name('menus.update')->middleware('vendor');
-    Route::delete('/{menu}/delete',[MenuController::class,'destroy'])->name('menus.destroy')->middleware('vendor');
-    Route::post('/dropzone',[MenuController::class,'storeImage'])->name('menu.image.store')->middleware('vendor');
+    Route::get('/', [MenuController::class,'index'])->name('menus.index');
+    Route::get('/upload', [MenuController::class,'uploadform'])->name('menus.uploadform');
+    Route::post('/upload', [MenuController::class,'upload'])->name('menus.upload');
+    Route::get('/create',[MenuController::class,'create'])->name('menus.create');
+    Route::post('/store',[MenuController::class,'store'])->name('menus.store');
+    Route::get('/{menu}/edit',[MenuController::class,'edit'])->name('menus.edit');
+    Route::put('/{menu}/update',[MenuController::class,'update'])->name('menus.update');
+    Route::delete('/{menu}/delete',[MenuController::class,'destroy'])->name('menus.destroy');
+    Route::post('/dropzone',[MenuController::class,'storeImage'])->name('menu.image.store');
 });
-Route::prefix('orders')->group(function(){
+Route::prefix('orders')->middleware(['vendor','vendor.verified'])->group(function(){
     //ORDER ROUTES
-    Route::get('/', [OrderController::class,'index'])->name('orders.index')->middleware('vendor');
-    Route::get('/{order}', [OrderController::class,'orderDetails'])->name('orders.detail')->middleware('vendor');
-    Route::post('/{order}',[OrderController::class,'updateOrderStatus'])->name('order.status')->middleware('vendor');
+    Route::get('/', [OrderController::class,'index'])->name('orders.index');
+    Route::get('/{order}', [OrderController::class,'orderDetails'])->name('orders.detail');
+    Route::post('/{order}',[OrderController::class,'updateOrderStatus'])->name('order.status');
 });
 
 
 /*------------------End Vendor Routes------------------*/
+
  //CUSTOM GUEST ROUTES
  Route::get('/', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
