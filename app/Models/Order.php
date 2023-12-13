@@ -21,6 +21,7 @@ class Order extends Model
         'payment_status',
         'order_status',
         'shipping',
+        'comment',
         'total',
     ];
 
