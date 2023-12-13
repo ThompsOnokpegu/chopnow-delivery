@@ -10,7 +10,7 @@
         {{-- <h5 class="section-title">Popular Restaurant</h5>
         @include('frontend.restaurant._popular') --}}
         <h5 class="section-title">All Restaurant</h5>  
-        <div class="container">
+        <div class="container"> 
             <div class="row">
                 @foreach ($vendors as $restaurant)
                     <div class="col-sm-12 col-md-6">

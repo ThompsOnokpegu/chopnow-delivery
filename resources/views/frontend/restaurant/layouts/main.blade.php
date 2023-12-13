@@ -43,7 +43,10 @@
     <!-- preloader area end -->
     
     <div class="single-restuarent-area">
-        @if(Str::beforeLast(str_replace(url('/'),'',url()->current()),'/') != '/my-chops')
+        @php
+            //$url = Str::beforeLast(str_replace(url('/'),'',url()->current()),'/');
+        @endphp
+        @if(url()->current() == url('/'))
         <div class="container">
             <div class="main-home-area pb-0 mt-5">
                 <div class="location-area">
