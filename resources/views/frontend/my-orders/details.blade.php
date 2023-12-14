@@ -74,7 +74,6 @@
                 </div>
               </div>
             </div>
-          
             <div class="col-md-12 mb-5">
               <div class="mb-5" style="border-radius:10px; border:0px;">
                 <div class="mb-5">

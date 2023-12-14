@@ -81,7 +81,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">{{ $subtotal }}.00</h6>
+                                    <h6 class="mb-0">{{ number_format($subtotal,2) }}</h6>
                                   </div>
                                 </div>
                             </li>
@@ -92,18 +92,18 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">{{ $order->discount }}</h6>
+                                    <h6 class="mb-0">{{ number_format($order->discount,2) }}</h6>
                                   </div>
                                 </div>
                             </li>
                             <li class="d-flex mb-2 pb-1">
                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                   <div class="me-2">
-                                    <h6 class="mb-0">Tax:</h6>
+                                    <h6 class="mb-0">Fees:</h6>
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
-                                    <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">0.00</h6>
+                                    <span class="text-muted">-₦</span>
+                                    <h6 class="mb-0" style="color:red;">{{ number_format($order->fees,2) }}</h6>
                                   </div>
                                 </div>
                             </li>
@@ -114,7 +114,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">{{ ($subtotal - $order->discount) }}.00</h6>
+                                    <h6 class="mb-0">{{ number_format($subtotal - $order->discount -$order->fees,2) }}</h6>
                                   </div>
                                 </div>
                             </li>
@@ -125,7 +125,7 @@
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
                                     <span class="text-muted">₦</span>
-                                    <h6 class="mb-0">{{ $order->shipping }}</h6>
+                                    <h6 class="mb-0">{{ number_format($order->shipping,2) }}</h6>
                                   </div>
                                 </div>
                             </li>
@@ -136,8 +136,7 @@
                                     <h4 class="mb-0">Total:</h4>
                                   </div>
                                   <div class="user-progress d-flex align-items-center gap-1">
-                                    <span class="text-muted">₦</span>
-                                    <h4 class="mb-0">{{ ($subtotal - $order->discount) + $order->shipping }}.00</h4>
+                                    <h4 class="mb-0">{{ '₦'.number_format(($subtotal - $order->discount - $order->fees) + $order->shipping,2) }}</h4>
                                   </div>
                                 </div>
                             </li>

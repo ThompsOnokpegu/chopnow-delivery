@@ -14,7 +14,9 @@ class OrderController extends Controller
     public function index(){ 
         $vendor = Auth::guard('vendor')->user()->id;
           
-        $orders = Order::where('vendor_id',$vendor)->get();
+        $orders = Order::where('vendor_id',$vendor)
+            ->orderByDesc('created_at')
+            ->get();
         foreach($orders as $order){
             $items = new OrderItemsRepo;
             $amount = $items->orderTotal($order->id);

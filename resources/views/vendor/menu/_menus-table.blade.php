@@ -1,6 +1,6 @@
 @forelse ($menus as $menu)
     <tr>
-        <td>
+        <td><a href="{{ route('menus.edit',$menu->id) }}">
           <div class="d-flex justify-content-start align-items-center text-nowrap">
             <div class="avatar-wrapper">
                 <div class="avatar me-2">
@@ -11,7 +11,7 @@
                 <h6 class="text-body mb-0">{{ $menu->name }}</h6>
                 <small class="text-muted">{{ $menu->regular_price }}</small>
             </div>
-          </div>
+          </div></a>
         </td>
         <td><span class="badge bg-label-success me-1">{{ $menu->category }}</span></td>
         <td>

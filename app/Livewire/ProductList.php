@@ -26,7 +26,7 @@ class ProductList extends Component
     }
     
     public function mount($vendorId){
-        //TODO: CHECK CART'S VENOR IS THE SAME
+        
         $this->products = Menu::where('vendor_id',$vendorId)->get();
         foreach($this->products as $product){
             $this->quantity[$product->id] = 1;

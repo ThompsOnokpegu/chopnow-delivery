@@ -43,9 +43,6 @@
     <!-- preloader area end -->
     
     <div class="single-restuarent-area">
-        @php
-            //$url = Str::beforeLast(str_replace(url('/'),'',url()->current()),'/');
-        @endphp
         @if(url()->current() == url('/') || url()->current() == url('/vouchers'))
         <div class="container">
             <div class="main-home-area pb-0 mt-5">

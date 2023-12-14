@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Order;
 use App\Models\PayoutAccount;
 use App\Models\Transaction;
+use App\Repos\Paystack;
 use App\Repos\VendorRepo;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -29,16 +30,18 @@ class RequestPayout extends Component
     }
 
     public function transfer(){
+        $paystack = new Paystack;
+        $amount = $this->amount + $paystack->getTransferCharges($this->amount);
         $vendor = Auth::guard('vendor')->user();
         $id = $vendor->id;
         //get vendor's balance
         $balance = VendorRepo::walletBalance($id);
         //check whether vendor has sufficient balance
-        if($balance < $this->amount ){
+        if($balance < $amount ){
             return session()->flash('error','Insufficient balance!');
         }
         //check whether vendor meet minimum balance
-        if(($balance - $this->amount) < 1000){
+        if(($balance - $amount) < 1000){
             return session()->flash('error','You must maintain a minimum balance of ₦1,000');
         }
         //check whether vendor type is Registered Business
@@ -62,14 +65,14 @@ class RequestPayout extends Component
 
             
             $vendorAccount = PayoutAccount::where('vendor_id',$id)->first();
-            // dd($this->amount);
+            // dd($amount);
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer '.env('PAYSTACK_SECRET_KEY'), 
                 'Content-Type' => 'application/json', 
             ])->post($endpoint, [
                 'source'=> 'balance', 
                 'reason' => 'ChopNow Payout', 
-                'amount' => $this->amount* 100, 
+                'amount' => $amount* 100, 
                 'reference' => $ref,
                 'recipient' => $vendorAccount->recipient_code,
             ]);

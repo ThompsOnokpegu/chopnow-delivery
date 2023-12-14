@@ -21,7 +21,7 @@
                     <img src="{{ url(env('CLOUD_BASE_URL').$item->associatedModel->product_image) }}" width="80" class="rounded-2" alt="{{ $item->associatedModel->slug}}">
                 </div>
                 <div class="p-2 bd-highlight">
-                    <h6><a href="{{ route('restaurants.product',$item->id)}}">{{ $item->name }}</a></h6>
+                    <h6>{{ $item->name }}</h6>
                     
                     <input type="hidden" wire:model="quantity.{{ $item->id }}">
                     
@@ -50,8 +50,8 @@
                     <button class="btn">Apply</button>
                 </div>
             </li>
-            <li class="total">Total<span>₦{{ $cart->isEmpty()? '0.00': number_format(str_replace(',','', $this->cart->getTotal()),2)}}</span></li>
+            <li class="total">Total<span>₦{{ $cart->isEmpty()? '0.00': number_format(str_replace(',','', $cart->getSubTotal()) + $cart->vendor()->delivery_fee,2)}}</span></li>
         </ul>
-        <a style="font-size:18px;" class="btn btn-white w-100" href="{{ url()->current() == route('order.cart') ? route('user.checkout') : route('order.cart') }}"> {{ $cart->isEmpty() ? 'ORDER  FOR ₦0.00' : strtoupper('order '.$cart->getContent()->count().' for ₦'. number_format(str_replace(',','', $this->cart->getTotal()),2))}}</a>
+        <a style="font-size:18px;" class="btn btn-white w-100" href="{{ url()->current() == route('order.cart') ? route('user.checkout') : route('order.cart') }}"> {{ $cart->isEmpty() ? 'ORDER  FOR ₦0.00' : strtoupper('order '.$cart->getContent()->count().' for ₦'. number_format(str_replace(',','', $cart->getSubTotal()) + $cart->vendor()->delivery_fee,2))}}</a>
     </form>
 </div>

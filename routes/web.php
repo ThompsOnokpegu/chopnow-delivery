@@ -72,7 +72,7 @@ Route::prefix('orders')->middleware(['vendor','vendor.verified'])->group(functio
  //CUSTOM GUEST ROUTES
  Route::get('/', [RestaurantController::class,'index'])->name('restaurants.index');
  Route::get('/restaurants/{vendor}', [RestaurantController::class,'show'])->name('restaurants.show');
- Route::get('/restaurants/menu/{menu}',[RestaurantController::class,'productDetails'])->name('restaurants.product');
+
  Route::get('/restaurants',[RestaurantController::class,'filter'])->name('restaurants.filter');
  Route::get('/vouchers',[RestaurantController::class,'offers'])->name('restaurants.offers');
  Route::post('/webhook',[WebhookController::class,'handle']);

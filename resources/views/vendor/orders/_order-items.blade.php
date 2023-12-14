@@ -17,9 +17,9 @@
             </div>
         </div>
     </td>
-    <td>{{ '₦'.$item->price }}</td>
+    <td>{{ '₦'.number_format($item->price,2) }}</td>
     <td><span class="">{{ $item->quantity }}</span></td>
-    <td><span class="">{{ '₦'.$item->quantity * $item->price }}</span></td>
+    <td><span class="">{{ '₦'.number_format($item->quantity * $item->price,2) }}</span></td>
 </tr>
 
 @endforeach

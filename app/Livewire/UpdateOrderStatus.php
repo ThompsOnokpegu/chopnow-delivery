@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -11,6 +12,7 @@ class UpdateOrderStatus extends Component
     public $order_id;
     public $order_status;
     public $comment;
+    public $timeLaps;
 
     public function render()
     {    
@@ -21,10 +23,14 @@ class UpdateOrderStatus extends Component
         $this->order_id = $order->id;
         $this->order_status = $order->order_status;
         $this->comment = $order->comment;
+        //prevent order cancellation after 10mins
+        $date = Carbon::parse($order->created_at);
+        $now = Carbon::now();
+        $this->timeLaps = $date->diffInMinutes($now);
     }
 
     public function updateOrderStatus(){
-        $order = Order::where('id', $this->order_id)->first();
+        $order = Order::where('id', $this->order_id)->first();        
         $validated = $this->validate([
             'order_status' => ['required', Rule::in(['Processing','Enroute', 'Delivered','Canceled'])],
         ]); 

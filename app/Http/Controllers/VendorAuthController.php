@@ -8,12 +8,9 @@ use App\Models\VerifyVendor;
 use App\Notifications\SendPasswordResetLink;
 use App\Notifications\VendorRegistered;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
 
@@ -33,8 +30,7 @@ class VendorAuthController extends Controller
         ]);
        
         if(Auth::guard('vendor')->attempt(['email'=>$vendor['email'],'password'=>$vendor['password']])){
-            
-            return redirect()->route('vendor.dashboard')->with('message','Login successful');
+            return redirect()->route('vendor.dashboard')->with('message','Welcome to your dashboard!');
         }else{
             return back()->with('error','Invalid email or password');
         }
@@ -43,7 +39,7 @@ class VendorAuthController extends Controller
         Auth::guard('vendor')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('vendor.login')->with('message','You are logged out');
+        return redirect()->route('vendor.login')->with('message','You are logged out!');
     }
     public function create(Request $request){
 
@@ -79,9 +75,9 @@ class VendorAuthController extends Controller
 
         if($saved){
             $this->sendVerificationEmail($vendor);
-            return redirect()->route('vendor.login')->with('message','You need to verify your email address! We have sent you instructions. Please check your email.');
+            return redirect()->route('vendor.login')->with('message','You need to verify your email address! We have sent you the instructions. Please check your email.');
         }else{
-            return redirect()->back()->with('error','Something went wrong, failed to register.');
+            return redirect()->back()->with('error','Something went wrong, failed to register you.');
         }
     }
 
@@ -109,7 +105,7 @@ class VendorAuthController extends Controller
             'token' => $token,
         ]);
 
-        $message = 'Thank you for signing up. We just need you to verify your email to complete your account setup.';
+        $message = 'Thank you for signing up. We just need you to verify your email address to complete your account setup.';
 
         if($vendor->notify( new VendorRegistered($message,$actionUrl,$vendor->first_name))){
             //verification link was sent
@@ -151,7 +147,7 @@ class VendorAuthController extends Controller
         //submits email address to receive reset link
         $request->validate(['email' => 'required|email']);
         
-        return $this->sendPasswordResetLink($request->email) ? back()->with('message','We have sent you instructions to reset your password') : back()->with('error','Something went wrong, failed to send.');
+        return $this->sendPasswordResetLink($request->email) ? back()->with('message','We have sent you the instructions to reset your password') : back()->with('error','Something went wrong, failed to send.');
     }
     public function handlePasswordReset(string $token){
         //clicks on reset password link
@@ -181,7 +177,7 @@ class VendorAuthController extends Controller
                     //delete token
                     VendorPasswordResetToken::where('email',$request->email)->delete();
 
-                    return redirect()->route('vendor.login')->with('message','Password was reset successfully. You can login now.');
+                    return redirect()->route('vendor.login')->with('message','New password was set successfully. You can login now.');
                 }else{
                     return redirect()->route('vendor.password.reset')->with('error','Something went wrong, try again later!');
                 }

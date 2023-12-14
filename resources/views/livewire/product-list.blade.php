@@ -7,7 +7,7 @@
                     <img src="{{ url(env('CLOUD_BASE_URL').$product->product_image) }}" width="80" class="rounded-2" alt="{{ $product->slug}}">
                 </div>
                 <div class="p-2 bd-highlight">
-                    <h6><a href="{{ route('restaurants.product',$product->id)}}">{{ $product->name }}</a></h6>
+                    <h6>{{ $product->name }}</a></h6>
                     <p>{{ Illuminate\Support\Str::limit($product->description, 45) }}</p>
                     <h6 style="font-weight:500;" class="price">₦{{ $product->regular_price }} 
                         @if(isset($cart[$product->id]))

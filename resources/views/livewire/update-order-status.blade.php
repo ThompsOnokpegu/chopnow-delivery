@@ -11,11 +11,7 @@
                     {{ session('message') }}
                 </div>
             @endif
-            @if(session()->has('error'))
-                <div class="alert alert-info">
-                    {{ session('error') }}
-                </div>
-            @endif
+            
             <select id="OrderStatus" wire:model.live="order_status" class="form-select text-capitalize">
               <option value="">Status</option>
               <option @selected('Processing' == $order_status)>Processing</option>
@@ -25,10 +21,16 @@
             </select>
             <div class="mt-3">
                 @if($order_status == 'Canceled')
+                  @if($timeLaps > 10)
+                    <div class="alert alert-info">
+                      <i class="menu-icon tf-icons bx bx-info-circle"></i> <span>Order cannot be cancelled after 10mins!</span>
+                    </div>
+                  @else
                     <label class="form-label" for="basic-default-reason">Reason for Cancellation</label>
                     <input type="text" wire:model="comment" class="form-control" id="basic-default-reason" />
                     <small>Let the customer know why you cannot fulfill this order.</small>
                     @error('comment') <div class="error">{{ $message }}</div> @enderror
+                  @endif   
                 @endif
             </div>
           </div>
