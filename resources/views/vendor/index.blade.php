@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 mb-4">
+      <div class="col-md-3 col-sm-6 mb-4"><a href="{{ route('orders.index') }}">
         <div class="card">
           <div class="card-body">
             <div class="card-title d-flex align-items-start justify-content-between">
@@ -35,8 +35,8 @@
             <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +0%</small>
           </div>
         </div>
-      </div>
-      <div class="col-md-3 col-sm-6 mb-4">
+      </div></a>
+      <div class="col-md-3 col-sm-6 mb-4"><a href="{{ route('menus.index') }}">
         <div class="card">
           <div class="card-body">
             <div class="card-title d-flex align-items-start justify-content-between">
@@ -51,7 +51,7 @@
             <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +0%</small>
           </div>
         </div>
-      </div>
+      </div></a>
       <div class="col-md-3 col-sm-6 mb-4">
         <div class="card">
           <div class="card-body">

@@ -98,7 +98,7 @@
         </a>
       </li> --}}
       <li class="menu-item">
-        <a href="#" class="menu-link">
+        <a href="{{ route('vendor.dashboard') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-bar-chart"></i>
           <div data-i18n="Extended UI">Sales Report</div>
         </a>
