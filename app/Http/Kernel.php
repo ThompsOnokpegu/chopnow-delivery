@@ -66,7 +66,10 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         'vendor' => \App\Http\Middleware\Vendor::class,
-        'has.products' => \App\Http\Middleware\CartHasProducts::class,
+        'cart.empty' => \App\Http\Middleware\CartHasProducts::class,
         'vendor.verified' => \App\Http\Middleware\IsVendorEmailVerified::class,
+        'kyc.compliant' => \App\Http\Middleware\KYCCompliant::class,
+        'menu.owner' => \App\Http\Middleware\MenuOwner::class,
+        'order.owner' => \App\Http\Middleware\OrderOwner::class,
     ];
 }

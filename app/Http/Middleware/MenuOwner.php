@@ -2,13 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use App\Repos\ChopCart;
+use App\Models\Vendor;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
-use Darryldecode\Cart\Cart;
 
-class CartHasProducts
+class MenuOwner
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,9 @@ class CartHasProducts
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $cart = new ChopCart(); 
-
-        if($cart->isEmpty()){
-            return redirect()->route('order.cart')->with('message',"Your cart is empty");
+        $vendor = Auth::guard('vendor')->user();
+        if($vendor->id != $request->menu->vendor_id){
+            return redirect()->route('menus.index')->with('permission','You do not have permission to perform this action!');
         }
         return $next($request);
     }

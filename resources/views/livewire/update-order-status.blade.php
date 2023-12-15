@@ -11,6 +11,11 @@
                     {{ session('message') }}
                 </div>
             @endif
+            @if(session()->has('error'))
+                <div class="alert alert-success">
+                    {{ session('error') }}
+                </div>
+            @endif
             
             <select id="OrderStatus" wire:model.live="order_status" class="form-select text-capitalize">
               <option value="">Status</option>

@@ -47,21 +47,21 @@ Route::prefix('vendor')->middleware(['vendor','vendor.verified'])->group(functio
     Route::get('/payout',[VendorController::class,'payout'])->name('vendor.payout');
     Route::post('/destroy',[VendorController::class,'deactivateAccount'])->name('vendor.destroy');
 });
-Route::prefix('menus')->middleware(['vendor','vendor.verified'])->group(function(){
+Route::prefix('menus')->middleware(['vendor','vendor.verified','kyc.compliant'])->group(function(){
     //MENU ROUTE
     Route::get('/', [MenuController::class,'index'])->name('menus.index');
     Route::get('/upload', [MenuController::class,'uploadform'])->name('menus.uploadform');
     Route::post('/upload', [MenuController::class,'upload'])->name('menus.upload');
     Route::get('/create',[MenuController::class,'create'])->name('menus.create');
     Route::post('/store',[MenuController::class,'store'])->name('menus.store');
-    Route::get('/{menu}/edit',[MenuController::class,'edit'])->name('menus.edit');
-    Route::put('/{menu}/update',[MenuController::class,'update'])->name('menus.update');
-    Route::delete('/{menu}/delete',[MenuController::class,'destroy'])->name('menus.destroy');
+    Route::get('/{menu}/edit',[MenuController::class,'edit'])->name('menus.edit')->middleware('menu.owner');
+    Route::put('/{menu}/update',[MenuController::class,'update'])->name('menus.update')->middleware('menu.owner');
+    Route::delete('/{menu}/delete',[MenuController::class,'destroy'])->name('menus.destroy')->middleware('menu.owner');
     Route::post('/dropzone',[MenuController::class,'storeImage'])->name('menu.image.store');
 });
-Route::prefix('orders')->middleware(['vendor','vendor.verified'])->group(function(){
+Route::prefix('orders')->middleware(['vendor','vendor.verified','order.owner'])->group(function(){
     //ORDER ROUTES
-    Route::get('/', [OrderController::class,'index'])->name('orders.index');
+    Route::get('/', [OrderController::class,'index'])->name('orders.index')->withoutMiddleware('order.owner');
     Route::get('/{order}', [OrderController::class,'orderDetails'])->name('orders.detail');
     Route::post('/{order}',[OrderController::class,'updateOrderStatus'])->name('order.status');
 });
@@ -83,7 +83,7 @@ Route::prefix('orders')->middleware(['vendor','vendor.verified'])->group(functio
  //CUSTOM USER ROUTES
  Route::get('/delivery',[UserController::class,'address'])->name('user.address')->middleware(['verified']);
  Route::get('/cart',[CheckoutController::class,'cartPage'])->name('order.cart');
- Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['auth','verified','has.products']);
+ Route::get('/checkout',[CheckoutController::class,'checkoutPage'])->name('user.checkout')->middleware(['auth','verified','cart.empty']);
  Route::post('/checkout',[CheckoutController::class,'placeOrder'])->name('order.checkout');
  Route::get('/thank-you',[CheckoutController::class,'thankYou'])->name('order.thankyou');
  Route::get('/verify', [UserController::class,'emailVerificationNotice'])->middleware('auth')->name('verification.notice');

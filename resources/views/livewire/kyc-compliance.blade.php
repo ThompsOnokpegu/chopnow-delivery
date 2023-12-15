@@ -11,6 +11,11 @@
           <!-- Account -->
           
           <hr class="my-0" />
+          @if(session()->has('kyc-compliant'))
+            <div class="alert alert-info">
+              {{ session('kyc-compliant') }}
+            </div>
+          @endif
           @if ($business=='Registered')
             @if($approved == "approved")
             <div class="card-body">

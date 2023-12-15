@@ -13,6 +13,11 @@
             
                 <div class="row">
                     <div class="col-lg-12">
+                      @if(session()->has('permission'))
+                        <div class="alert alert-danger">
+                          {{ session('permission') }}
+                        </div>
+                      @endif
                         <div class="table-responsive text-nowrap">
                             <table class="table card-table">
                               <thead>
