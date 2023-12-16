@@ -24,7 +24,7 @@ class VendorRepo{
             'preparation_time' => 'nullable',
             'restaurant_type_id' => 'nullable',
             'business_type' => 'nullable',
-            'state' => ['','nullable', Rule::in(['Cross River', 'Rivers', 'Bayelsa','Akwa Ibom'])],
+            'state' => ['','nullable', Rule::in(['Cross River'])],
             'address' => 'nullable',
             'city' => 'nullable',
             'phone' => 'nullable',
@@ -130,7 +130,6 @@ class VendorRepo{
         //     'mimes:jpeg,jpg,png',
         //     ],
         // ]);
-
         /*Set the transformations required to optimize the images based on recommended optimization*/
         if($path=='menu-images'){
             $folder = $path;

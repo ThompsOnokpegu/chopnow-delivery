@@ -98,10 +98,12 @@
                     <i class="bx bx-reset d-block d-sm-none"></i>
                     <span class="d-none d-sm-block">Reset</span>
                     </button>
-                    <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 200K</p>
+                    
                     @error('kitchen_banner_image') <div class="error">{{ $message }}</div> @enderror
                   </div>
+                  
                 </div>
+                <p class="text-muted mb-0 mt-1">Recommended Size: 1053 x 468px. Allowed JPG or PNG.</p>
               </div>
               <hr class="my-0" />
               <div class="card-body">
