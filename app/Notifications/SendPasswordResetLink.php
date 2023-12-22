@@ -40,7 +40,7 @@ class SendPasswordResetLink extends Notification
     {
         return (new MailMessage)
                     ->subject('Password Reset')
-                    ->from('notice@chopnow.com', 'ChopNow')
+                    ->from('chop@choppingz.com', 'Choppingz Food Ordering')
                     ->greeting('Hello '.$this->name.',')
                     ->line($this->message)
                     ->action('Reset Password', $this->actionURL);

@@ -7,15 +7,15 @@
 
   <div class="card">
     <div class="card-header">
-      {{-- <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
         
-        <div class="d-flex flex-column justify-content-center">
+        {{-- <div class="d-flex flex-column justify-content-center">
           <h5 class="card-title">Filter</h5>
-        </div>
+        </div> --}}
         <div class="d-flex align-content-center flex-wrap gap-3">
           <a href="{{ route('menus.create') }}" class="btn btn-md btn-outline-primary"><i class="bx bx-plus-circle me-1"></i>New Menu</a>
         </div>
-      </div> --}}
+      </div>
       
       <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
         @if(session()->has('permission'))

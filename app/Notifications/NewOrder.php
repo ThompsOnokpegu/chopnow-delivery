@@ -36,11 +36,11 @@ class NewOrder extends Notification
     {
         return (new MailMessage)
                     ->subject('New Order')
-                    ->from('notice@chopnow.com', 'ChopNow')
+                    ->from('chop@choppingz.com', 'Choppingz Food Ordering')
                     ->greeting('Hello,')
                     ->line('New order #'.$this->message.' on your store')
                     ->action('View in dashboard', url('/vendor/dashboard'))
-                    ->line('Thank you for using ChopNow!');
+                    ->line('Thank you for using Choppingz!');
     }
 
     /**

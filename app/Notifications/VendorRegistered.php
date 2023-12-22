@@ -39,12 +39,12 @@ class VendorRegistered extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('Verify Email')
-                    ->from('notice@chopnow.com', 'ChopNow')
+                    ->subject('Verify Your Email')
+                    ->from('chop@choppingz.com', 'Choppingz Food Ordering')
                     ->greeting('Hello '.$this->name.',')
                     ->line($this->message)
                     ->action('Verify Email', $this->actionURL)
-                    ->line('Thank you for using ChopNow!');
+                    ->line('Thank you for using Choppingz!');
     }
 
     /**

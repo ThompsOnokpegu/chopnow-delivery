@@ -18,7 +18,7 @@ class VendorRepo{
             'first_name' => 'min:3',
             'last_name' => 'min:3|nullable',
             //'email' => 'email',
-            'business_name' => 'nullable',
+            'business_name' => 'required',
             'kitchen_banner_image' =>'nullable',
             'delivery_fee' => 'nullable',
             'preparation_time' => 'nullable',

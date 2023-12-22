@@ -109,7 +109,7 @@
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bolder">Chop</span>
+                  <span class="app-brand-text demo text-body fw-bolder">Choppingz</span>
                 </a>
               </div>
               <!-- /Logo -->
