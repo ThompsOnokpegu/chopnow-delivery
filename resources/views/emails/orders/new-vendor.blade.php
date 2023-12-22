@@ -1,5 +1,5 @@
 @component('mail::message')
-# New Order {{'CN-'.$order->id  }} - ChopNow Delivery
+# New Order {{'CN-'.$order->id  }}
 
 You have a new order on your store.
 

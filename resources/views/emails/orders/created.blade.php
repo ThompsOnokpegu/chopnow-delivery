@@ -1,5 +1,5 @@
 @component('mail::message')
-# Order {{'CN-'.$order->id  }} Received - ChopNow Delivery
+# Order {{'CN-'.$order->id  }} Received.
 
 Your order has been received.
 

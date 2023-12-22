@@ -30,8 +30,8 @@ class VendorOrderNotice extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('notice@chopnow.com', 'ChopNow Delivery'),
-            subject: 'New Order - ChopNow Delivery',
+            from: new Address('chop@choppingz.com', 'Choppingz Food Ordering'),
+            subject: 'New Order from Choppingz Food',
         );
     }
 
