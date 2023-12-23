@@ -5,14 +5,14 @@
     <div class="main-home-area pt-0">
          {{--Categories  --}}
         @include('frontend.restaurant._category')
-        <h5 class="section-title">Promotions</h5>
+        @if($vendors->count()>0)<h5 class="section-title">Promotions</h5>@endif
         @include('frontend.restaurant._nearby')    
         {{-- <h5 class="section-title">Popular Restaurant</h5>
         @include('frontend.restaurant._popular') --}}
-        <h5 class="section-title">All Restaurant</h5>  
+        @if($vendors->count()>0)<h5 class="section-title">All Restaurant</h5>@endif  
         <div class="container"> 
             <div class="row">
-                @foreach ($vendors as $restaurant)
+                @forelse ($vendors as $restaurant)
                     <div class="col-sm-12 col-md-6">
                         <div class="single-product-wrap">
                             <div class="thumb">
@@ -32,7 +32,9 @@
                             </div>
                         </div> 
                     </div>
-                @endforeach
+                @empty
+                    <div>We are registering new restaurants!</div>
+                @endforelse
             </div>
         </div>
     </div>
