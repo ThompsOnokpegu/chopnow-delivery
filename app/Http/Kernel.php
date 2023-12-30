@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
         'kyc.compliant' => \App\Http\Middleware\KYCCompliant::class,
         'menu.owner' => \App\Http\Middleware\MenuOwner::class,
         'order.owner' => \App\Http\Middleware\OrderOwner::class,
+        'updated.profile' => \App\Http\Middleware\UpdatedProfile::class,
     ];
 }

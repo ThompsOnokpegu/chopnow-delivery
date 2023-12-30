@@ -7,15 +7,15 @@
       <div class="col-md-12">
         @include('vendor.profile._header')
         <div class="card mb-4">
+          @if(session()->has('kyc-compliant'))
+            <div class="alert alert-danger">
+              {{ session('kyc-compliant') }}
+            </div>
+          @endif
           <h5 class="card-header">KYC Compliance</h5>
           <!-- Account -->
           
           <hr class="my-0" />
-          @if(session()->has('kyc-compliant'))
-            <div class="alert alert-info">
-              {{ session('kyc-compliant') }}
-            </div>
-          @endif
           @if ($business=='Registered')
             @if($approved == "approved")
             <div class="card-body">

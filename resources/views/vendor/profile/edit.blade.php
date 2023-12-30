@@ -15,6 +15,11 @@
           <div class="col-md-12">
             @include('vendor.profile._header')
             <div class="card mb-4">
+              @if(session()->has('updated-profile'))
+                <div class="alert alert-danger">
+                  {{ session('updated-profile') }}
+                </div>
+              @endif
               <h5 class="card-header">Business Owner</h5>
               <!-- Account -->
               <hr class="my-0" />

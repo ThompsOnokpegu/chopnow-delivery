@@ -37,23 +37,13 @@ class MenuController extends Controller
         $validated = $request->validate($MenuRepo->rules());
 
         //check whether vendor uploaded a new image for this menu
-        // if($request->hasFile('product_image')){
-        //     //check if the old image is still in the directory: prevent file not found exception
-        //     if(Storage::disk('local')->exists($path.$menu->product_image)){
-        //         //delete old image
-        //         Storage::disk('local')->delete($path.$menu->product_image);
-        //         //upload the new file
-        //         $filename = VendorRepo::storeMenuImage($path,$request->file('product_image')); 
-        //     }
-        //  //upload the new file
-        //  $filename = VendorRepo::storeMenuImage($path,$request->file('product_image'));     
-        // }else{
-        //     //product image did not change
-        //     $filename = $menu->product_image;   
-        // }
-        
-        //Upload file to cloudinary
-        $filename = VendorRepo::cloudinaryUpload($path,$validated['product_image']);
+        if($request->hasFile('product_image')){
+            //Upload file to cloudinary
+            $filename = VendorRepo::cloudinaryUpload($path,$validated['product_image']);
+        }else{
+            //product image did not change
+            $filename = $menu->product_image;
+        }
         //update the file name
         $validated['product_image'] = $filename;
         //update the menu record

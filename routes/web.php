@@ -47,7 +47,7 @@ Route::prefix('vendor')->middleware(['vendor','vendor.verified'])->group(functio
     Route::get('/payout',[VendorController::class,'payout'])->name('vendor.payout');
     Route::post('/destroy',[VendorController::class,'deactivateAccount'])->name('vendor.destroy');
 });
-Route::prefix('menus')->middleware(['vendor','vendor.verified','kyc.compliant'])->group(function(){
+Route::prefix('menus')->middleware(['vendor','vendor.verified','updated.profile','kyc.compliant'])->group(function(){
     //MENU ROUTE
     Route::get('/', [MenuController::class,'index'])->name('menus.index');
     Route::get('/upload', [MenuController::class,'uploadform'])->name('menus.uploadform');

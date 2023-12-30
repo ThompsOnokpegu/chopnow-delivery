@@ -16,7 +16,7 @@
     />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Dashboard - Analytics | ChopNow</title>
+    <title>Choppingz Dashboard</title>
 
     <meta name="description" content="" />
 
@@ -55,6 +55,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('vendor/assets/js/config.js') }}"></script>
+    @livewireStyles
   </head>
 
   <body>
@@ -131,5 +132,6 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    @livewireScripts
   </body>
 </html>
