@@ -52,7 +52,7 @@ class RequestPayout extends Component
                 return session()->flash('error','You have not submitted your business registration document!');
             }else{
                 //check whether vendor kyc has been approved
-                if($vendor->account_status!="Approved"){
+                if($vendor->account_status!="approved"){
                     return session()->flash('error','Your KYC document is under review!');
                 }
             }
