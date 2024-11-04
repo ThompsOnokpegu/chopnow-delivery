@@ -43,7 +43,7 @@ class WebhookController extends Controller
  
             switch ($event->event) {
                 case 'charge.success':
-                    return response('Webhook Processed', 200);
+                    
                     // Find the order associated with the reference
                     $order = Order::where('reference', $reference)->first();
                     if ($order) {
@@ -56,7 +56,7 @@ class WebhookController extends Controller
                     }
                     break;
                 case 'transfer.success':
-                    return response('Webook Processed', 200);
+                   
                     // Handle transfer.success
                     $transaction = Transaction::where('reference',$reference)->first();
                     if($transaction){
@@ -66,6 +66,7 @@ class WebhookController extends Controller
                     }
                     break;
             }
+            return response('Webhook Processed', 200);
         } else {
             // Signatures do not match, reject the request.
 
