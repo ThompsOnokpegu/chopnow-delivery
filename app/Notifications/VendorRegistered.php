@@ -40,7 +40,7 @@ class VendorRegistered extends Notification
     {
         return (new MailMessage)
                     ->subject('Verify Your Email')
-                    ->from('chop@choppingz.com', 'Choppingz Food Ordering')
+                    ->from('info@choppingz.com', 'Choppingz Food Ordering')
                     ->greeting('Hello '.$this->name.',')
                     ->line($this->message)
                     ->action('Verify Email', $this->actionURL)
