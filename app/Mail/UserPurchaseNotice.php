@@ -32,7 +32,7 @@ class UserPurchaseNotice extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('chop@choppingz.com', 'Choppingz Food Ordering'),
+            from: new Address('info@choppingz.com', 'Choppingz Food Ordering'),
             subject: 'Your order has been received',
             
         );

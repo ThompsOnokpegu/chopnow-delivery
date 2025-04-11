@@ -36,7 +36,7 @@ class NewOrder extends Notification
     {
         return (new MailMessage)
                     ->subject('New Order')
-                    ->from('chop@choppingz.com', 'Choppingz Food Ordering')
+                    ->from('info@choppingz.com', 'Choppingz Food Ordering')
                     ->greeting('Hello,')
                     ->line('New order #'.$this->message.' on your store')
                     ->action('View in dashboard', url('/vendor/dashboard'))
