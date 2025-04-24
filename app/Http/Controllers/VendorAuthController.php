@@ -67,7 +67,8 @@ class VendorAuthController extends Controller
                      
         $vendor->first_name = $request->first_name;
         $vendor->email = $request->email;
-        $vendor->kitchen_banner_image="v1744361220/chopnow/vendor-banners/v8z2sycu02qiqauqqaey.png";//default kitchen banner - cloudinary
+        $vendor->kitchen_banner_image="https://res.cloudinary.com/dy4k6jokm/image/upload/v1745008511/chop_a3flev.png";//default kitchen banner - cloudinary
+        //$vendor->kitchen_banner_pid = "chop_a3flev";//default kitchen banner - cloudinary
         $vendor->password = Hash::make($request->password);
         $vendor->created_at = Carbon::now();
 

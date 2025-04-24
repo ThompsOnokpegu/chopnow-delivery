@@ -4,7 +4,7 @@
           <div class="d-flex justify-content-start align-items-center text-nowrap">
             <div class="avatar-wrapper">
                 <div class="avatar me-2">
-                    <img src="{{ url(env('CLOUD_BASE_URL') . $menu->product_image) }}" alt="product image" class="rounded-2">
+                    <img src="{{ url( $menu->product_image) }}" alt="product image" class="rounded-2">
                 </div>
             </div>
             <div class="d-flex flex-column">

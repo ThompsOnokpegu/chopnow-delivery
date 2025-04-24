@@ -8,8 +8,10 @@ use App\Models\PayoutAccount;
 use App\Models\RestaurantType;
 use App\Models\Vendor;
 use App\Repos\VendorRepo;
+use App\Services\CloudinaryService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +20,21 @@ use Illuminate\Support\Str;
 
 class VendorController extends Controller
 {
+    /**
+     * The Cloudinary service instance.
+     *
+     * @var \App\Services\CloudinaryService
+     */
+    // protected $cloudinary;
+    protected CloudinaryService $cloudinary;
+
+    public function __construct(CloudinaryService $cloudinary)
+    {
+        // Initialize the Cloudinary service instance.
+        // This allows us to use the Cloudinary service for file uploads and deletions.
+        $this->cloudinary = $cloudinary;
+    }
+
     public function dashboard(Request $request){
         $id = Auth::guard('vendor')->user()->id;
         
@@ -59,7 +76,16 @@ class VendorController extends Controller
     }
 
     public function update(Request $request, Vendor $vendor, VendorRepo $val){
-        $directory = 'vendor-banners';
+        //check if the vendor is logged in
+        if(!Auth::guard('vendor')->check()){
+            return redirect()->route('vendor.login')->with('error','You are not logged in!');
+        }
+        //check if the vendor is the owner of the account
+        if($vendor->id != Auth::guard('vendor')->user()->id){
+            return redirect()->route('vendor.login')->with('error','You are not authorized to update this account!');
+        }
+
+        $directory = 'chopnow/vendor-banners';
         $request['slug'] = str()->slug($request->business_name);
         $filename = "";
         //validate input
@@ -67,8 +93,21 @@ class VendorController extends Controller
         
         //check whether vendor uploaded a new image for this vendor
         if($request->hasFile('kitchen_banner_image')){
-            //upload the file to cloudinary
-            $filename = VendorRepo::cloudinaryUpload($directory,$validated['kitchen_banner_image']);
+            //check if the old image exists
+            if($vendor->kitchen_banner_pid){
+                //delete old image from cloudinary
+                $this->cloudinary->delete($vendor->kitchen_banner_pid);
+            }
+             
+            //Upload file to cloudinary
+             $upload = $this->cloudinary->upload(request()->file('kitchen_banner_image'), $directory);
+            //store the file name in the database
+             $vendor->update([
+                 'kitchen_banner_image' => $upload['url'],
+                 'kitchen_banner_pid' => $upload['public_id'],
+             ]);
+             
+            $filename = $upload['url'];
         }else{
             //product image did not change
             $filename = $vendor->kitchen_banner_image;

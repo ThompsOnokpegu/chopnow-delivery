@@ -10,7 +10,7 @@
     <a href="{{ route('chop.details',$order->id)}}">
         <div class="d-flex bd-highlight mb-3 mt-3 single-item-wrap">
             <div class="bd-highlight flex-shrink-0">
-                <img src="{{ url(env('CLOUD_BASE_URL').$order->vendor->kitchen_banner_image) }}" width="150" class="rounded-2" alt="restaurant-image">
+                <img src="{{ url($order->vendor->kitchen_banner_image) }}" width="150" class="rounded-2" alt="restaurant-image">
             </div>
             <div class="p-2 bd-highlight">
                 <p style="font-size:0.9rem;font-weight:700;"class="mb-0">{{ $order->vendor->business_name }}</p>    

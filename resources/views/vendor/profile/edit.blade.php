@@ -77,8 +77,9 @@
               <!-- Account -->
               <div class="card-body">
                 <div class="d-flex align-items-start align-items-sm-center gap-4">
+                  
                   <img
-                    src="{{ url(env('CLOUD_BASE_URL') . $vendor->kitchen_banner_image) }}"
+                    src="{{ $vendor->kitchen_banner_image }}"
                     alt="brand-image"
                     class="d-block rounded"
                     height="100"

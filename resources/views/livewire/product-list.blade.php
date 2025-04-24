@@ -4,7 +4,7 @@
         <form>
             <div class="d-flex bd-highlight mb-3 single-item-wrap">
                 <div class="p-2 bd-highlight flex-shrink-0">
-                    <img src="{{ url(env('CLOUD_BASE_URL').$product->product_image) }}" width="80" class="rounded-2" alt="{{ $product->slug}}">
+                    <img src="{{ url($product->product_image) }}" width="80" class="rounded-2" alt="{{ $product->slug}}">
                 </div>
                 <div class="p-2 bd-highlight">
                     <h6>{{ $product->name }}</a></h6>

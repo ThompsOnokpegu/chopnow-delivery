@@ -19,12 +19,14 @@ return new class extends Migration
             $table->string('password');
             $table->string('business_name')->nullable();
             $table->string('kitchen_banner_image')->nullable();
+            $table->string('kitchen_banner_pid')->nullable();//kitchen banner image public id
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->enum('kyc_type', ['BN', 'CAC'])->nullable();
             $table->string('kyc_number')->nullable();
             $table->string('kyc_document')->nullable();
+            $table->string('kyc_document_pid')->nullable();
             $table->enum('account_status', ['approved', 'pending'])->nullable();
             // Add more vendor-specific fields as needed
             $table->timestamp('email_verified_at')->nullable();

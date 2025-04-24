@@ -69,7 +69,7 @@ class ValidateCheckout extends Component
              
         //Check user's selected payment method
         if($validated['payment_method'] == 'Paystack'){
-            //create the order
+            //create the order with pending status
             $order = $this->createOrder('pending');  
             
             //Initialize payment
@@ -107,7 +107,7 @@ class ValidateCheckout extends Component
         //$this->notify($order);
     }
 
-    private function createOrder($status){
+    private function createOrder($payment_status){
         //Create Cart instance
         $this->cart = new ChopCart();
         $uuid = Uuid::uuid4()->toString(); // Get the UUID as a string
@@ -121,7 +121,7 @@ class ValidateCheckout extends Component
         $chopnow = new ChopNow();
         $charges = $paystack->getTransactionCharges($amount + $this->fees) + $chopnow->orderCharges($amount + $this->fees);
             
-        
+        $order_status = $payment_status == 'cod' ? 'Processing' : 'Awaiting Payment';
         DB::beginTransaction();
             //set fields
             $order->reference = $uuid; 
@@ -130,8 +130,8 @@ class ValidateCheckout extends Component
             $order->recipient_address = $this->address;
             $order->recipient_phone = $this->phone;
             $order->recipient_name = $this->name;
-            $order->order_status = 'Processing';
-            $order->payment_status = $status;
+            $order->order_status = $order_status;
+            $order->payment_status = $payment_status;
             $order->payment_method = $this->payment_method;
             $order->discount = 0;
             $order->shipping = $this->cart->vendor()->delivery_fee;

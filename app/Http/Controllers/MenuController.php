@@ -4,15 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Repos\MenuRepo;
-use App\Repos\VendorRepo;
-use Illuminate\Validation\Rule;
+use App\Services\CloudinaryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 
 class MenuController extends Controller
 {
+    /**
+     * The Cloudinary service instance.
+     *
+     * @var \App\Services\CloudinaryService
+     */
+    // protected $cloudinary;
+    protected CloudinaryService $cloudinary;
+
+    public function __construct(CloudinaryService $cloudinary)
+    {
+        // Initialize the Cloudinary service instance.
+        // This allows us to use the Cloudinary service for file uploads and deletions.
+        $this->cloudinary = $cloudinary;
+    }
+
     public function index(){
        
         $vendor_id = Auth::guard('vendor')->user()->id;
@@ -30,16 +43,30 @@ class MenuController extends Controller
 
     public function update(Menu $menu, Request $request, MenuRepo $MenuRepo){
         
-        $path = 'menu-images';
+        $directory = 'chopnow/menu-images';
         $request['slug'] = str()->slug($request->name);
         $filename = "";
         //validate input
         $validated = $request->validate($MenuRepo->rules());
 
-        //check whether vendor uploaded a new image for this menu
+        //check if the product image has changed
         if($request->hasFile('product_image')){
-            //Upload file to cloudinary
-            $filename = VendorRepo::cloudinaryUpload($path,$validated['product_image']);
+            
+            //check if the old image exists
+            if($menu->product_image_pid){
+                //delete old image from cloudinary
+                $this->cloudinary->delete($menu->banner_public_id);
+            }
+            
+            //upload new image to cloudinary
+             $upload = $this->cloudinary->upload(request()->file('product_image'), $directory);
+            //store the file name in the database
+             $menu->update([
+                 'product_image' => $upload['url'],
+                 'product_image_pid' => $upload['public_id'],
+             ]);
+            
+            $filename = $upload['url'];
         }else{
             //product image did not change
             $filename = $menu->product_image;
@@ -58,33 +85,41 @@ class MenuController extends Controller
 
     
     public function store(Request $request, MenuRepo $MenuRepo){
+        $directory = 'chopnow/menu-images';
         $request['slug'] = str()->slug($request->name);
-        //set default product image
-        $filename = "main-dish.png";
+        
         //validate input
         $validated = $request->validate($MenuRepo->rules());
-
-        $filename = VendorRepo::cloudinaryUpload('menu-images',$validated['product_image']);
-        //inject file name into validated input
-        $validated['product_image'] = $filename;
+         //check if the product image has changed
+        if($request->hasFile('product_image')){
+            //upload new image to cloudinary
+             $upload = $this->cloudinary->upload(request()->file('product_image'), $directory);
+            
+            //inject file name into validated input
+            $validated['product_image'] = $upload['url'];
+            $validated['product_image_pid'] = $upload['public_id'];
+        }else{
+            //set default product image
+            $validated['product_image'] = "https://res.cloudinary.com/dy4k6jokm/image/upload/v1745244843/default_menu_mogbyi.png";
+            
+        }
+        
         //create menu
         Menu::create($validated);
         //redirect vendor to enter new record
         return redirect()->route('menus.create')->with('message','Menu created successfully!');     
 
     }
-
     public function destroy(Menu $menu){
-        $path = 'public/menu-images/';
-        if(Storage::disk('local')->exists($path.$menu->product_image)){
-            //delete old image
-            Storage::disk('local')->delete($path.$menu->product_image);
+        //check if the menu has a product image
+        if($menu->product_image_pid){
+            //delete old image from cloudinary
+            $this->cloudinary->delete($menu->product_image_pid);
         }
-        
+        //delete the menu record
         $menu->delete();
-        return redirect()->route('menus.index');
-    }
-
+        return redirect()->route('menus.index')->with('message','Menu deleted successfully!');
+    }   
     
 
 }

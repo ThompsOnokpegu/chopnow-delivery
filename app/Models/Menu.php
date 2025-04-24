@@ -19,6 +19,7 @@ class Menu extends Model
         'vendor_id',
         'status',
         'product_image',
+        'product_image_pid', // Cloudinary public ID
     ];
 
     // Define relationships here, e.g., owner (Vendor), orders, etc.

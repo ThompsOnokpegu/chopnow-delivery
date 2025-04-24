@@ -21,6 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('vendor_id'); // Vendor ID
             $table->enum('status', ['active', 'inactive']);
             $table->string('product_image')->nullable();
+            $table->string('product_image_pid')->nullable(); // Cloudinary public ID
+
             // Add more menu-related fields as needed
             $table->timestamps();
         });

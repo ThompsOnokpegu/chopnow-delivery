@@ -2,7 +2,7 @@
 
 
 @section('content')
-<div class="single-banner-area" style="background-image: url({{ url(env('CLOUD_BASE_URL').$order->vendor->kitchen_banner_image) }});">
+<div class="single-banner-area" style="background-image: url({{ url($order->vendor->kitchen_banner_image) }});">
     <div class="container" style="position: relative;">
         <a class="btn back-page-btn" href="{{ route('user.chops') }}"><i class="ri-arrow-left-s-line"></i></a>
         <div class="restuarent-details">
