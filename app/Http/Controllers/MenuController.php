@@ -55,7 +55,7 @@ class MenuController extends Controller
             //check if the old image exists
             if($menu->product_image_pid){
                 //delete old image from cloudinary
-                $this->cloudinary->delete($menu->banner_public_id);
+                $this->cloudinary->delete($menu->product_image_pid);
             }
             
             //upload new image to cloudinary
