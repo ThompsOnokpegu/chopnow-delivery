@@ -69,7 +69,7 @@
     <ul class="menu-inner py-1">
       <!-- Dashboard -->
       <li class="menu-item active">
-        <a wire:navigate href="{{ route('vendor.dashboard') }}" class="menu-link">
+        <a href="{{ route('vendor.dashboard') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Dashboard</div>
         </a>
@@ -80,13 +80,13 @@
       </li>
       <!-- Extended components -->
       <li class="menu-item">
-        <a  wire:navigate href="{{ route('orders.index') }}" class="menu-link">
+        <a href="{{ route('orders.index') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-shopping-bag"></i>
           <div data-i18n="Extended UI">Orders</div>
         </a>
       </li>
       <li class="menu-item">
-        <a  wire:navigate href="{{ route('menus.index') }}" class="menu-link">
+        <a href="{{ route('menus.index') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-dish"></i>
           <div data-i18n="Extended UI">Menu</div>
         </a>
@@ -98,7 +98,7 @@
         </a>
       </li> --}}
       <li class="menu-item">
-        <a  wire:navigate href="{{ route('vendor.dashboard') }}" class="menu-link">
+        <a href="{{ route('vendor.dashboard') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-bar-chart"></i>
           <div data-i18n="Extended UI">Sales Report</div>
         </a>
@@ -107,25 +107,25 @@
         <span class="menu-header-text">Account</span>
       </li>
       <li class="menu-item">
-        <a  wire:navigate class="menu-link" href="{{ route('vendor.profile') }}">
+        <a class="menu-link" href="{{ route('vendor.profile') }}">
           <i class="bx bx-cog me-2"></i>
           <span class="align-middle">My Profile</span>
         </a>
       </li>
       <li class="menu-item">
-        <a  wire:navigate class="menu-link" href="{{ route('vendor.payout') }}">
+        <a class="menu-link" href="{{ route('vendor.payout') }}">
           <i class="bx bx-transfer me-2"></i>
           <span class="align-middle">Payout</span>
         </a>
       </li>
       <li class="menu-item">
-        <a  wire:navigate class="menu-link" href="{{ route('vendor.compliance') }}">
+        <a class="menu-link" href="{{ route('vendor.compliance') }}">
           <i class="bx bx-certification me-2"></i>
           <span class="align-middle">Compliance</span>
         </a>
       </li>
       <li class="menu-item">
-        <a  wire:navigate class="menu-link" href="{{ route('vendor.auth') }}">
+        <a class="menu-link" href="{{ route('vendor.auth') }}">
             <i class="flex-shrink-0 bx bx-lock me-2"></i>
             <span class="flex-grow-1 align-middle">Change Password</span>
         </a>

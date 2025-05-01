@@ -38,7 +38,7 @@
                 <button wire:click.prevent="login()" class="btn btn-base w-100">Sign In</button>
             </form>
             
-            <span class="another-way-link">Don’t have an account? <a href="{{ route('user.register') }}">Registor</a></span>
+            <span class="another-way-link">Don’t have an account? <a href="{{ route('user.register') }}">Register</a></span>
         </div>           
     </div>
 </div>

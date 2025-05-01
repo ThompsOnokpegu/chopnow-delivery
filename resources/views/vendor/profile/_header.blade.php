@@ -21,7 +21,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a wire:navigate class="nav-link" href="{{ route('vendor.dashboard') }}">
+      <a class="nav-link" href="{{ route('vendor.dashboard') }}">
         <i class="bx bx-exit me-1"></i> 
         Return to Dashboard</a>
     </li>
